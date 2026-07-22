@@ -8,11 +8,11 @@ The objective is to demonstrate practical understanding of enterprise identity, 
 
 ## Organization
 
-**Organization:** Osegbo Technologies Limited  
+**Organization:** Tonie-Osegbo Technologies Limited  
 **Industry:** Telecommunications and Technology  
 **Number of Users:** 250  
 **Primary Location:** Abuja, Nigeria  
-**Regional Offices:** Lagos and Enugu
+**Regional Offices:** Lagos, Enugu and PHC
 
 ## Project Objectives
 
