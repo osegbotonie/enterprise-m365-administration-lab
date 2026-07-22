@@ -17,8 +17,11 @@ The objective is to ensure that employees receive appropriate access when they j
 ## 2. Organization Profile
 
 **Organization:** Tonie-Osegbo Technologies Limited
+
 **Industry:** Telecommunications and Technology
+
 **Number of Employees:** 250
+
 **Headquarters:** Abuja, Nigeria
 
 ### Regional Offices
@@ -49,24 +52,9 @@ Department managers may approve additional role-specific access where required.
 
 ### High-Level Process
 
-```text
-HR
- |
- | Employee Lifecycle Event
- v
-IT / Identity Administration
- |
- v
-Microsoft Entra ID
- |
- +-- User Account
- +-- Department
- +-- Job Title
- +-- Organizational Level
- +-- Location
- +-- Manager
- +-- Group Membership
-```
+**HR → IT / Identity Administration → Microsoft Entra ID**
+
+The employee lifecycle event begins with HR. IT and Identity Administration then implement the required identity and access changes within Microsoft Entra ID and other relevant Microsoft 365 services.
 
 ---
 
@@ -76,29 +64,17 @@ A **Joiner** is a new employee joining Tonie-Osegbo Technologies Limited.
 
 The Joiner process ensures that the employee receives an appropriately configured identity and the access required to perform their job.
 
-### 4.1 Joiner Process Flow
+### 4.1 Joiner Process
 
-```text
-HR Confirms Employment
-          |
-          v
-Employee Information Sent to IT
-          |
-          v
-User Account Created
-          |
-          v
-User Attributes Configured
-          |
-          v
-Groups and Licenses Assigned
-          |
-          v
-Security Policies Applied
-          |
-          v
-Employee Receives Approved Access
-```
+The onboarding process follows these general steps:
+
+1. HR confirms the employee's employment.
+2. HR provides the required employee information to IT.
+3. IT creates the user account.
+4. User attributes are configured.
+5. Appropriate groups and licenses are assigned.
+6. Required security policies are applied.
+7. The employee receives approved access.
 
 ### 4.2 Required Employee Information
 
@@ -126,10 +102,12 @@ Access should be assigned based on the employee's:
 #### Example
 
 **Department:** Technology
+
 **Job Title:** Network Engineer
+
 **Location:** Abuja
 
-Potential group memberships:
+Potential group memberships may include:
 
 * `Technology-Users`
 * `Network-Operations`
@@ -155,18 +133,13 @@ Examples include:
 
 ### 5.1 Department Transfer
 
-#### Example
+For example, an employee may move from:
 
-```text
-Finance
-   |
-   v
-Technology
-```
+**Finance → Technology**
 
 When an employee changes department, their identity attributes and access should be reviewed.
 
-#### Required Actions
+### Required Actions
 
 * Update the department attribute.
 * Update the job title where applicable.
@@ -176,30 +149,6 @@ When an employee changes department, their identity attributes and access should
 * Remove access no longer required.
 * Add the appropriate new department groups.
 * Grant approved role-specific access.
-
-### 5.2 Mover Process Flow
-
-```text
-HR Confirms Change
-          |
-          v
-IT Receives Notification
-          |
-          v
-User Attributes Updated
-          |
-          v
-Previous Access Reviewed
-          |
-          v
-Unnecessary Access Removed
-          |
-          v
-New Groups and Access Assigned
-          |
-          v
-Access Validated
-```
 
 The employee should not retain unnecessary access from their previous role unless there is a documented business requirement and appropriate approval.
 
@@ -216,29 +165,17 @@ A promotion may result in changes to an employee's:
 * Group membership
 * Access permissions
 
-### Example
+### Example Career Progression
 
-```text
-Network Engineer
-        |
-        v
-Senior Network Engineer
-        |
-        v
-Network Manager
-```
+**Network Engineer → Senior Network Engineer → Network Manager**
 
 When an employee is promoted, the employee's identity attributes and access should be reviewed.
 
 ### Example Group Change
 
-**Previous Group:**
+**Previous Group:** `Network-Engineers`
 
-`Network-Engineers`
-
-**New Group:**
-
-`Network-Managers`
+**New Group:** `Network-Managers`
 
 Access should be reviewed to ensure that the employee receives the permissions appropriate for the new role.
 
@@ -257,38 +194,20 @@ A **Leaver** is an employee who is leaving the organization.
 
 The primary objective of the Leaver process is to prevent unauthorized access while preserving information that may be required for legitimate business, legal, regulatory, audit, or investigative purposes.
 
-### 7.1 Leaver Process Flow
+### 7.1 Leaver Process
 
-```text
-HR Confirms Departure
-          |
-          v
-IT Receives Notification
-          |
-          v
-Sign-In Blocked
-          |
-          v
-Active Sessions Revoked
-          |
-          v
-Access Reviewed and Removed
-          |
-          v
-Corporate Devices Secured
-          |
-          v
-Required Data Preserved
-          |
-          v
-License Reclaimed
-          |
-          v
-Retention Requirements Reviewed
-          |
-          v
-Account Deletion Considered
-```
+The offboarding process may include the following actions:
+
+1. HR confirms the employee's departure.
+2. IT receives the departure notification.
+3. User sign-in is blocked.
+4. Active sessions are revoked.
+5. Access to organizational resources is reviewed and removed.
+6. Corporate devices are secured.
+7. Required data is preserved.
+8. Licenses are reclaimed.
+9. Retention requirements are reviewed.
+10. Account deletion is considered in accordance with applicable policies.
 
 ### 7.2 Immediate Actions
 
@@ -315,8 +234,6 @@ The account or associated data may need to be retained for:
 * Internal investigations
 * Audit purposes
 * Data retention requirements
-
-The preferred approach is:
 
 > **Disable first. Delete later, subject to applicable retention and organizational policies.**
 
