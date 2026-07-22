@@ -1,1 +1,11 @@
-
+EmployeeID,FirstName,LastName,Department,JobTitle,OrganizationalLevel,OfficeLocation,Manager,EmploymentStatus
+TOT-0001,Anthony,Okafor,Executive Management,Chief Executive Officer,Executive,Abuja,,Active
+TOT-0002,Michael,Obi,Network Operations,Network Manager,Management,Abuja,Anthony Okafor,Active
+TOT-0003,John,Doe,Network Operations,Network Engineer,Senior Staff,Abuja,Michael Obi,Active
+TOT-0004,Sarah,Ade,Finance,Accountant,Staff,Lagos,,Active
+TOT-0005,Chinedu,Eze,Technology,Cloud Administrator,Senior Staff,Enugu,,Active
+TOT-0006,Grace,Okoro,Human Resources,HR Manager,Management,Abuja,,Active
+TOT-0007,David,Umeh,Sales and Marketing,Sales Executive,Staff,Port Harcourt,,Active
+TOT-0008,Emeka,Nwosu,Customer Service,Customer Support Specialist,Staff,Lagos,,Active
+TOT-0009,Daniel,Okafor,Legal and Regulatory Affairs,Regulatory Analyst,Senior Staff,Abuja,,Active
+TOT-0010,Amaka,Obi,Administration,Administrative Officer,Staff,Enugu,,Active
