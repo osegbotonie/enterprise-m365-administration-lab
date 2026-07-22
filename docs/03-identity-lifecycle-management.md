@@ -50,7 +50,7 @@ Microsoft Entra ID
  ├── Manager
  └── Group Membership
 
-1. Joiner Process
+#### 1. Joiner Process
 
 A Joiner is a new employee joining Tonie-Osegbo Technologies Limited.
 
