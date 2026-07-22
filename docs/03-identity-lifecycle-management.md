@@ -99,7 +99,7 @@ Access should be assigned based on the employee's:
 * Office location
 * Business responsibilities
 
-#### Example
+**Example:**
 
 **Department:** Technology
 
