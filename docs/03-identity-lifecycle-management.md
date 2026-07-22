@@ -70,13 +70,13 @@ Microsoft Entra ID
 
 ---
 
-# 4. Joiner Process
+## 4. Joiner Process
 
 A **Joiner** is a new employee joining Tonie-Osegbo Technologies Limited.
 
 The Joiner process ensures that the employee receives an appropriately configured identity and the access required to perform their job.
 
-## 4.1 Joiner Process Flow
+### 4.1 Joiner Process Flow
 
 ```text
 HR Confirms Employment
@@ -100,7 +100,7 @@ Security Policies Applied
 Employee Receives Approved Access
 ```
 
-## 4.2 Required Employee Information
+### 4.2 Required Employee Information
 
 The following information should be captured during the onboarding process:
 
@@ -113,7 +113,7 @@ The following information should be captured during the onboarding process:
 * Manager
 * Employment start date
 
-## 4.3 Initial Access Assignment
+### 4.3 Initial Access Assignment
 
 Access should be assigned based on the employee's:
 
@@ -123,7 +123,7 @@ Access should be assigned based on the employee's:
 * Office location
 * Business responsibilities
 
-### Example
+#### Example
 
 **Department:** Technology
 **Job Title:** Network Engineer
@@ -140,7 +140,7 @@ The principle of **least privilege** should be applied. Employees should receive
 
 ---
 
-# 5. Mover Process
+## 5. Mover Process
 
 A **Mover** is an employee whose organizational role or responsibilities change.
 
@@ -153,9 +153,9 @@ Examples include:
 * Change of manager
 * Change in job responsibilities
 
-## 5.1 Department Transfer
+### 5.1 Department Transfer
 
-### Example
+#### Example
 
 ```text
 Finance
@@ -166,7 +166,7 @@ Technology
 
 When an employee changes department, their identity attributes and access should be reviewed.
 
-### Required Actions
+#### Required Actions
 
 * Update the department attribute.
 * Update the job title where applicable.
@@ -177,7 +177,7 @@ When an employee changes department, their identity attributes and access should
 * Add the appropriate new department groups.
 * Grant approved role-specific access.
 
-## 5.2 Mover Process Flow
+### 5.2 Mover Process Flow
 
 ```text
 HR Confirms Change
@@ -205,7 +205,7 @@ The employee should not retain unnecessary access from their previous role unles
 
 ---
 
-# 6. Promotion Process
+## 6. Promotion Process
 
 A promotion may result in changes to an employee's:
 
@@ -251,13 +251,13 @@ Promotion should not automatically result in unrestricted access. Access should 
 
 ---
 
-# 7. Leaver Process
+## 7. Leaver Process
 
 A **Leaver** is an employee who is leaving the organization.
 
 The primary objective of the Leaver process is to prevent unauthorized access while preserving information that may be required for legitimate business, legal, regulatory, audit, or investigative purposes.
 
-## 7.1 Leaver Process Flow
+### 7.1 Leaver Process Flow
 
 ```text
 HR Confirms Departure
@@ -290,7 +290,7 @@ Retention Requirements Reviewed
 Account Deletion Considered
 ```
 
-## 7.2 Immediate Actions
+### 7.2 Immediate Actions
 
 Depending on the circumstances of the employee's departure, IT may need to:
 
@@ -303,7 +303,7 @@ Depending on the circumstances of the employee's departure, IT may need to:
 * Preserve required business data.
 * Reclaim licenses.
 
-## 7.3 Account Retention
+### 7.3 Account Retention
 
 User accounts should not necessarily be deleted immediately after an employee leaves the organization.
 
@@ -324,7 +324,7 @@ During the retention period, access to the account should remain restricted. Aut
 
 ---
 
-# 8. Identity Lifecycle Summary
+## 8. Identity Lifecycle Summary
 
 | Lifecycle Stage | Primary Trigger                     | Key Actions                                                                                   |
 | --------------- | ----------------------------------- | --------------------------------------------------------------------------------------------- |
@@ -334,35 +334,35 @@ During the retention period, access to the account should remain restricted. Aut
 
 ---
 
-# 9. Identity Lifecycle Principles
+## 9. Identity Lifecycle Principles
 
-## 9.1 Least Privilege
+### 9.1 Least Privilege
 
 Users should receive only the access required to perform their approved responsibilities.
 
-## 9.2 Separation of Duties
+### 9.2 Separation of Duties
 
 Identity administration, access approval, and business ownership should be appropriately separated to reduce the risk of unauthorized access.
 
-## 9.3 Timely Access Changes
+### 9.3 Timely Access Changes
 
 Access should be reviewed and updated promptly when an employee's role or responsibilities change.
 
-## 9.4 Secure Offboarding
+### 9.4 Secure Offboarding
 
 Departing employees should lose access promptly while required organizational information is preserved according to applicable policies.
 
-## 9.5 Auditability
+### 9.5 Auditability
 
 Identity and access changes should be recorded and traceable.
 
-## 9.6 Automation
+### 9.6 Automation
 
 Where possible, repetitive identity lifecycle activities should be automated to reduce errors and improve efficiency.
 
 ---
 
-# 10. Future Enhancements
+## 10. Future Enhancements
 
 Future versions of this identity lifecycle design may include:
 
