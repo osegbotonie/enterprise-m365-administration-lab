@@ -14,23 +14,23 @@
 
 ## 2. Business Objective
 
-Traditional access control makes decisions primarily based on:
+Traditional access control decisions are primarily based on:
 
 * Username.
 * Password.
 * User permissions.
 
-Modern identity security requires additional context.
+Modern identity security requires additional context when evaluating access requests.
 
-A legitimate user's account may become risky because:
+A legitimate user account may become a security risk if:
 
-* Credentials may have been compromised.
-* The user may be signing in from an unusual location.
-* The sign-in may show suspicious characteristics.
-* The user's identity may have been exposed in a breach.
-* The authentication behaviour may be abnormal.
+* The user's credentials have been compromised.
+* The user is signing in from an unusual location.
+* The sign-in exhibits suspicious characteristics.
+* The user's credentials have been exposed in a data breach.
+* The user's authentication behaviour deviates from established patterns.
 
-The objective of this policy is to evaluate risk and apply an appropriate security response.
+The objective of this policy is to evaluate relevant risk signals and apply an appropriate security response based on the level of risk identified.
 
 ---
 
@@ -58,34 +58,38 @@ Risk Evaluation
        Block or Remediate
 ```
 
+The access decision should be proportionate to the level of risk associated with the user and the authentication attempt.
+
 ---
 
 ## 4. User Risk and Sign-In Risk
 
-Risk-based access should distinguish between:
+Risk-based access should distinguish between user risk and sign-in risk.
 
 ### User Risk
 
-User risk represents the likelihood that an identity or account has been compromised.
+User risk represents the likelihood that a user identity or account has been compromised.
 
-Examples may include:
+Potential indicators may include:
 
 * Compromised credentials.
 * Leaked credentials.
 * Suspicious account activity.
+* Evidence of credential exposure.
 
 ### Sign-In Risk
 
-Sign-in risk represents the likelihood that a particular authentication attempt may be suspicious.
+Sign-in risk represents the likelihood that a particular authentication attempt is suspicious or potentially malicious.
 
-Examples may include:
+Potential indicators may include:
 
 * Unusual sign-in behaviour.
-* Suspicious location.
+* Suspicious geographic location.
 * Anonymous IP address.
 * Unfamiliar sign-in properties.
+* Other indicators associated with potentially malicious activity.
 
-These signals can be used to make more informed access decisions.
+These signals can be evaluated together to support more informed access decisions.
 
 ---
 
@@ -114,11 +118,13 @@ Risk Level
         └── High
 ```
 
+The risk evaluation should consider the available security signals relevant to the access request.
+
 ---
 
 ## 6. Risk Response
 
-The response should be proportional to the level of risk.
+The security response should be proportional to the identified level of risk.
 
 ### Low Risk
 
@@ -133,6 +139,10 @@ Normal Authentication
    ▼
 Access Granted
 ```
+
+A low-risk authentication attempt may proceed through the organization's normal authentication requirements.
+
+---
 
 ### Medium Risk
 
@@ -151,6 +161,10 @@ Risk Reduction
 Access Granted
 ```
 
+Additional controls may be required before access is granted.
+
+---
+
 ### High Risk
 
 Possible actions:
@@ -166,6 +180,8 @@ Block Access
 Require Remediation
 ```
 
+High-risk activity may require access to be blocked or the underlying risk to be remediated before access is permitted.
+
 ---
 
 ## 7. Policy Scope
@@ -177,13 +193,15 @@ The organization should define:
 * Risk levels covered.
 * Authentication requirements.
 * Remediation requirements.
-* Exceptions.
+* Approved exceptions.
 
-Privileged administrators may require stronger controls due to their elevated access.
+Privileged administrators may require stronger controls because compromise of an administrative account could have a significantly greater impact on the Microsoft 365 environment.
 
 ---
 
 ## 8. Deployment Lifecycle
+
+The policy should follow a controlled deployment process:
 
 ```text id="7s5o6k"
 Risk Configuration
@@ -206,6 +224,8 @@ Monitor
         ▼
 Production Enforcement
 ```
+
+This process helps the organization understand the behaviour and accuracy of risk detections before broad enforcement.
 
 ---
 
@@ -255,11 +275,13 @@ Access Blocked
 or Remediation Required
 ```
 
+The organization should validate that the response is appropriate to the level of risk detected.
+
 ---
 
 ## 10. Incident Response Integration
 
-Risk-based access should connect with the organization's security incident response process.
+Risk-based access should integrate with the organization's security incident response process.
 
 ```text id="4ud4sn"
 Risk Detected
@@ -278,11 +300,20 @@ Security Investigation
        Account Remediation
              │
              ▼
-       Password / Credential Reset
+       Credential Reset
              │
              ▼
         Security Monitoring
 ```
+
+Depending on the nature of the event, remediation may include:
+
+* Credential reset.
+* Session revocation.
+* Additional authentication.
+* Account investigation.
+* Device investigation.
+* Increased security monitoring.
 
 ---
 
@@ -298,7 +329,7 @@ Administrators should monitor:
 * Repeated risky activity.
 * Administrative account risk.
 
-Risk monitoring should be integrated with the wider security monitoring process.
+Risk monitoring should be integrated with the organization's broader security monitoring and incident response processes.
 
 ---
 
@@ -308,20 +339,20 @@ Risk-based policies should have carefully controlled exceptions.
 
 Any exception should document:
 
-* User or group.
-* Business reason.
+* Affected user or group.
+* Business justification.
 * Risk assessment.
 * Compensating controls.
 * Approver.
 * Review date.
 
-Exceptions should be minimized.
+Exceptions should be minimized and reviewed regularly.
 
 ---
 
 ## 13. Relationship with Other Conditional Access Policies
 
-Risk-based access should work alongside:
+Risk-based access should operate alongside the other Conditional Access controls:
 
 ```text id="h9b9u5"
 CA-001 — Require MFA
@@ -339,7 +370,14 @@ CA-004 — Require Compliant Devices
 CA-005 — Risk-Based Access
 ```
 
-Together, these policies create a layered access control model.
+Together, these policies create a layered access control model based on:
+
+* Identity.
+* Authentication strength.
+* Administrative privilege.
+* Authentication protocol.
+* Device security.
+* Risk context.
 
 ---
 
@@ -377,15 +415,15 @@ Access Decision
 
 If the policy creates unexpected business disruption:
 
-1. Identify the affected user or sign-in.
-2. Review risk details.
-3. Review Conditional Access results.
-4. Determine whether the event is a false positive.
+1. Identify the affected user or authentication attempt.
+2. Review the associated risk details.
+3. Review the Conditional Access results.
+4. Determine whether the event may be a false positive.
 5. Resolve the underlying risk where appropriate.
-6. Adjust policy scope if necessary.
-7. Continue monitoring.
+6. Adjust the policy scope or configuration if necessary.
+7. Continue monitoring the affected scenario.
 
-Any temporary exception should be documented and reviewed.
+Any temporary exception should be documented, approved where required, and reviewed regularly.
 
 ---
 
@@ -410,11 +448,11 @@ Risk Evaluation
 
 > **Access decisions should respond to the level of risk associated with the user and the authentication attempt.**
 
-The organization should move from:
+The organization should move beyond the question:
 
 > **“Is the password correct?”**
 
-to:
+and instead ask:
 
 > **“Is this access request sufficiently trustworthy based on the available security signals?”**
 
