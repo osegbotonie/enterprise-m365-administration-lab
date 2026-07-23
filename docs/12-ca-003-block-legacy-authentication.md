@@ -14,11 +14,11 @@
 
 ## 2. Business Objective
 
-The objective of this policy is to prevent authentication methods that do not support modern security controls such as Multifactor Authentication.
+The objective of this policy is to block authentication methods that do not support modern security controls such as Multifactor Authentication (MFA).
 
-Legacy authentication protocols can expose user accounts to increased risk because they may rely primarily on usernames and passwords.
+Legacy authentication protocols may expose user accounts to increased risk because they often rely primarily on usernames and passwords and may not support modern identity security controls.
 
-The organization should therefore reduce or eliminate legacy authentication where operationally possible.
+The organization should therefore reduce and, where operationally possible, eliminate legacy authentication.
 
 ---
 
@@ -28,7 +28,7 @@ Traditional authentication methods may allow an attacker to attempt authenticati
 
 ### Risk Model
 
-```text
+```text id="m4s7qk"
 Attacker
    │
    ▼
@@ -44,7 +44,7 @@ Modern Authentication Controls May Not Apply
 Increased Risk of Unauthorized Access
 ```
 
-Blocking legacy authentication reduces this attack surface.
+Blocking legacy authentication reduces the available attack surface and supports the organization's broader identity security strategy.
 
 ---
 
@@ -52,7 +52,7 @@ Blocking legacy authentication reduces this attack surface.
 
 The preferred authentication model is:
 
-```text
+```text id="k2v5ny"
 User
   │
   ▼
@@ -71,30 +71,33 @@ Conditional Access Evaluation
    Access Decision
 ```
 
+Modern authentication allows the organization to apply additional security controls based on the context of each access request.
+
 ---
 
 ## 5. Policy Scope
 
-The policy should be designed to block legacy authentication attempts.
+The policy should be designed to block authentication attempts using legacy authentication protocols.
 
-The organization should carefully evaluate:
+Before enforcement, the organization should carefully evaluate:
 
 * Users.
 * Applications.
 * Devices.
 * Existing authentication dependencies.
+* Automated systems and services.
 
-The policy should initially be tested in a controlled manner.
+The policy should initially be tested in a controlled manner to identify legitimate dependencies and avoid unexpected business disruption.
 
 ---
 
 ## 6. Policy Condition
 
-The policy should identify authentication attempts using legacy authentication protocols.
+The policy should identify authentication attempts that use legacy authentication protocols.
 
 The intended control is:
 
-```text
+```text id="q8r2xv"
 Legacy Authentication Attempt
           │
           ▼
@@ -104,11 +107,13 @@ Conditional Access Evaluation
              Block
 ```
 
+Authentication attempts using modern authentication should continue through the applicable Conditional Access policies.
+
 ---
 
 ## 7. Authentication Protocol Considerations
 
-Before enforcement, the organization should identify whether any legitimate business applications or devices depend on older authentication methods.
+Before enforcement, the organization should identify whether any legitimate business applications, devices, or services depend on older authentication methods.
 
 Potential dependencies may include:
 
@@ -119,15 +124,17 @@ Potential dependencies may include:
 * Older automated systems.
 * Applications using outdated authentication methods.
 
-Any exception must be documented and reviewed.
+Any identified dependency should be evaluated to determine whether it can be upgraded, replaced, or otherwise remediated.
+
+Any exception must be documented, approved where appropriate, and periodically reviewed.
 
 ---
 
 ## 8. Deployment Lifecycle
 
-The policy should follow this process:
+The policy should follow a controlled deployment process:
 
-```text
+```text id="6p0k2w"
 Discovery
    │
    ▼
@@ -152,15 +159,17 @@ Pilot Enforcement
 Production Enforcement
 ```
 
+The organization should avoid immediate broad enforcement without first understanding existing authentication dependencies.
+
 ---
 
 ## 9. Testing Plan
 
 ### Test 1 — Modern Authentication
 
-Expected result:
+**Expected Result:**
 
-```text
+```text id="b7q3mf"
 Modern Authentication
         │
         ▼
@@ -170,13 +179,15 @@ Conditional Access Evaluation
 Access Granted
 ```
 
+The request should continue through the applicable Conditional Access policies.
+
 ---
 
 ### Test 2 — Legacy Authentication
 
-Expected result:
+**Expected Result:**
 
-```text
+```text id="a3x8vc"
 Legacy Authentication
         │
         ▼
@@ -186,13 +197,15 @@ Conditional Access Evaluation
 Access Blocked
 ```
 
+The authentication attempt should be blocked by the policy.
+
 ---
 
 ### Test 3 — Existing Application Dependency
 
 If an existing application is found to depend on legacy authentication:
 
-```text
+```text id="d4w9pk"
 Application
      │
      ▼
@@ -206,13 +219,13 @@ Business and Security Review
      └── Documented Temporary Exception
 ```
 
-Exceptions should not become permanent without review.
+Any exception should be time-bound where possible and should not become permanent without formal review.
 
 ---
 
 ## 10. Monitoring
 
-After deployment, administrators should monitor:
+Following deployment, administrators should monitor:
 
 * Blocked legacy authentication attempts.
 * Applications generating legacy authentication attempts.
@@ -220,26 +233,27 @@ After deployment, administrators should monitor:
 * Authentication errors.
 * Helpdesk incidents.
 * Security alerts.
+* Repeated authentication attempts from the same source.
 
-The purpose of monitoring is to ensure that the policy is achieving its security objective without creating unexpected business disruption.
+Monitoring should be used to confirm that the policy is achieving its security objective without causing unexpected business disruption.
 
 ---
 
 ## 11. Exception Management
 
-Any exception should document:
+Any approved exception should document:
 
-* Application or user affected.
-* Business reason.
-* Security risk.
-* Owner.
-* Compensating controls.
-* Approval.
-* Expiry or review date.
+* The affected application, user, device, or service.
+* The business justification.
+* The associated security risk.
+* The exception owner.
+* Required compensating controls.
+* Approval details.
+* Expiry date or review date.
 
-Example:
+### Exception Process
 
-```text
+```text id="n5c1jh"
 Exception
    │
    ▼
@@ -252,19 +266,23 @@ Risk Assessment
 Approval
    │
    ▼
-Compensating Control
+Compensating Controls
    │
    ▼
 Periodic Review
 ```
 
+Exceptions should be minimized and should remain in place only for as long as necessary.
+
 ---
 
 ## 12. Relationship with MFA
 
-Blocking legacy authentication and requiring MFA are complementary controls.
+Blocking legacy authentication and requiring MFA are complementary security controls.
 
-```text
+### Modern Authentication
+
+```text id="v8m3rt"
 Modern Authentication
         │
         ▼
@@ -274,7 +292,9 @@ MFA Required
 Additional Security Control
 ```
 
-```text
+### Legacy Authentication
+
+```text id="p1x6sq"
 Legacy Authentication
         │
         ▼
@@ -282,6 +302,8 @@ Blocked
 ```
 
 The organization should not assume that MFA alone eliminates the risks associated with legacy authentication.
+
+Legacy authentication should be blocked because it may prevent the consistent application of modern authentication and Conditional Access controls.
 
 ---
 
@@ -292,37 +314,50 @@ This policy may interact with:
 * CA-001 — Require MFA.
 * CA-002 — Protect Administrative Access.
 * Device-based Conditional Access policies.
-* Risk-based policies.
+* Risk-based Conditional Access policies.
 
-The combined effect should be tested before production enforcement.
+The combined effect of these policies should be tested before production enforcement.
+
+The organization should verify that:
+
+* Modern authentication continues to function as expected.
+* MFA requirements are applied correctly.
+* Administrative access remains appropriately protected.
+* Legitimate applications are not unexpectedly blocked.
+* Approved emergency access procedures remain available.
 
 ---
 
-## 14. Rollback Plan
+## 14. Rollback and Remediation Plan
 
 If unexpected business disruption occurs:
 
 1. Identify the affected authentication attempt.
-2. Review sign-in logs.
-3. Confirm that legacy authentication was the cause.
-4. Identify the affected application or user.
-5. Remediate the application where possible.
+2. Review the relevant sign-in logs.
+3. Confirm that legacy authentication blocking caused the issue.
+4. Identify the affected application, user, device, or service.
+5. Remediate the application or authentication dependency where possible.
 6. Use a documented temporary exception only where necessary.
-7. Review the exception regularly.
+7. Apply appropriate compensating controls.
+8. Review the exception regularly.
+9. Return to full legacy authentication blocking once remediation is complete.
 
-The objective should be to return to full legacy authentication blocking.
+The objective should be to resolve the underlying dependency rather than permanently weaken the security policy.
 
 ---
 
 ## 15. Final Policy Model
 
-```text
+```text id="f7c2qa"
 Authentication Attempt
         │
         ▼
 Is Modern Authentication Used?
         │
-        ├── Yes ──► Continue Conditional Access Evaluation
+        ├── Yes
+        │     │
+        │     ▼
+        │  Continue Conditional Access Evaluation
         │
         └── No
               │
@@ -334,8 +369,10 @@ Is Modern Authentication Used?
 
 ## 16. Final Principle
 
-> **Legacy authentication should be eliminated where possible because modern identity security controls cannot be consistently applied to authentication methods that do not support them.**
+> **Legacy authentication should be eliminated wherever possible because authentication methods that do not support modern security controls prevent the consistent application of stronger identity protections.**
 
-The organization should use a controlled process of:
+The organization should follow a controlled process:
 
 **Discover → Test → Remediate → Enforce → Monitor**
+
+The objective is to reduce the authentication attack surface while maintaining a controlled process for identifying and resolving legitimate business dependencies.
