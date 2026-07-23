@@ -14,29 +14,29 @@
 
 ## 2. Business Objective
 
-The purpose of this policy is to ensure that access to organizational resources is not based solely on user identity.
+The purpose of this policy is to ensure that access to organizational resources is not determined solely by user identity.
 
-A legitimate user account may still represent a security risk if the device used to access organizational resources is:
+A legitimate user account may still present a security risk if the device used to access organizational resources is:
 
 * Unmanaged.
 * Compromised.
 * Unencrypted.
-* Out of date.
+* Outdated.
 * Missing required security controls.
 
-The organization should therefore consider the security posture of the device as part of the access decision.
+The organization should therefore consider the security posture of the device as part of the overall access decision.
 
 ---
 
 ## 3. Zero Trust Principle
 
-The policy supports the Zero Trust principle:
+This policy supports the Zero Trust principle:
 
 > **Never trust, always verify.**
 
-The access decision should consider:
+Access decisions should consider multiple security signals, including:
 
-```text id="s9jylh"
+```text
 User Identity
       +
 Device Security
@@ -51,38 +51,42 @@ Risk
 Access Decision
 ```
 
+The identity of the user alone should not be considered sufficient to establish trust.
+
 ---
 
 ## 4. Security Problem
 
-A valid username and password do not guarantee that the device is safe.
+A valid username and password do not guarantee that the device being used to access organizational resources is secure.
 
 ### Example
 
-```text id="e4vrna"
+```text
 Legitimate User
       │
       ▼
 Compromised Personal Device
       │
       ▼
-User Signs In Successfully
+Successful User Authentication
       │
       ▼
 Potential Organizational Data Exposure
 ```
 
-Conditional Access can help reduce this risk by evaluating device compliance.
+A compromised device may expose organizational credentials, data, or sessions even when the user account itself is legitimate.
+
+Conditional Access can help reduce this risk by evaluating the compliance status of the device before granting access.
 
 ---
 
 ## 5. Device Compliance Model
 
-The device must first be evaluated by the organization's device management platform.
+The device should first be evaluated by the organization's device management platform.
 
 For example:
 
-```text id="0h4xoj"
+```text
 Device
   │
   ▼
@@ -103,40 +107,49 @@ Compliance Evaluation
       or Remediation Required
 ```
 
+The device compliance status is then used as a security signal in the Conditional Access decision.
+
 ---
 
 ## 6. Possible Compliance Requirements
 
-The organization may define requirements such as:
+The organization may define device compliance requirements based on its security needs and risk appetite.
 
-### Security
+### Security Requirements
+
+These may include:
 
 * Device encryption.
 * Secure password or PIN.
 * Screen lock.
 * Supported operating system.
-* Security software.
+* Required security software.
 * Firewall enabled.
 
-### Device Management
+### Device Management Requirements
 
-* Device enrolled in management.
-* Device registered with the organization.
+These may include:
+
+* Enrollment in organizational device management.
+* Registration with the organization.
 * Required configuration profiles applied.
+* Required security settings enabled.
 
 ### Compliance Status
 
-* No critical compliance issues.
-* Device not marked as compromised.
-* Required security controls active.
+The device may also be required to:
 
-The exact requirements should reflect the organization's risk appetite.
+* Have no critical compliance issues.
+* Not be marked as compromised.
+* Maintain all required security controls.
+
+The specific requirements should be defined according to the sensitivity of the resources being protected.
 
 ---
 
 ## 7. Conditional Access Decision Model
 
-```text id="n5l9xv"
+```text
 User Attempts Access
         │
         ▼
@@ -151,31 +164,33 @@ Device Compliance Evaluated
                │
                ▼
           Access Blocked
-          or Remediation
+          or Remediation Required
 ```
 
 ---
 
 ## 8. Policy Scope
 
-The organization should carefully define:
+The organization should clearly define:
 
 * Users included.
 * Applications protected.
-* Device platforms.
+* Supported device platforms.
 * Device types.
 * Exclusions.
 * Business exceptions.
 
-The policy should initially be tested with a controlled group.
+The policy should initially be tested with a controlled group before broader enforcement.
+
+The scope should also reflect the sensitivity of the applications and data being protected.
 
 ---
 
 ## 9. Deployment Lifecycle
 
-The policy should follow:
+The policy should follow a controlled deployment process:
 
-```text id="2x2qjz"
+```text
 Define Compliance Requirements
           │
           ▼
@@ -197,13 +212,15 @@ Pilot Deployment
 Production Enforcement
 ```
 
+This approach helps identify technical and operational issues before the policy is broadly enforced.
+
 ---
 
 ## 10. Testing Plan
 
 ### Test 1 — Compliant Device
 
-```text id="y6rq88"
+```text
 User
  │
  ▼
@@ -216,11 +233,15 @@ Conditional Access Evaluation
 Access Granted
 ```
 
+### Expected Result
+
+The user should be able to access the protected resource, provided all other applicable Conditional Access requirements are satisfied.
+
 ---
 
 ### Test 2 — Non-Compliant Device
 
-```text id="x6v9go"
+```text
 User
  │
  ▼
@@ -234,62 +255,72 @@ Access Blocked
 or Remediation Required
 ```
 
+### Expected Result
+
+Access should be blocked or the user should be directed to remediate the compliance issue, depending on the configured policy.
+
 ---
 
 ### Test 3 — Unmanaged Device
 
-The organization should define its policy for unmanaged devices.
+The organization should define how unmanaged devices are handled.
 
 Possible outcomes include:
 
 * Block access.
-* Require approved browser access.
+* Require access through an approved browser.
 * Allow limited access.
 * Require device enrollment.
+* Apply application-level protection controls.
 
-The decision should be based on the sensitivity of the resource.
+The appropriate decision should depend on the sensitivity of the resource being accessed.
 
 ---
 
 ## 11. Application Sensitivity
 
-Not all applications necessarily require the same level of device control.
+Not all applications and resources necessarily require the same level of device control.
 
 For example:
 
-```text id="a2b6jy"
+```text
 Low-Sensitivity Resource
         │
         ▼
 Basic Access Controls
 ```
 
-```text id="0g9fse"
+```text
 Sensitive Corporate Data
         │
         ▼
 Stronger Device Requirements
 ```
 
-The organization should consider applying stronger controls to sensitive resources.
+The organization should consider applying stronger device requirements to sensitive applications, confidential information, and critical business resources.
 
 ---
 
 ## 12. BYOD Considerations
 
-Bring Your Own Device environments require careful consideration.
-
-A personal device may not be fully managed by the organization.
+Bring Your Own Device (BYOD) environments require careful consideration because personal devices may not be fully managed by the organization.
 
 Possible controls include:
 
 * Application protection policies.
 * Browser-based access.
 * Limited data access.
-* Data loss prevention controls.
+* Data Loss Prevention controls.
 * Device enrollment requirements.
 
-The organization should balance security, privacy, and employee productivity.
+The organization should balance:
+
+* Security.
+* Employee privacy.
+* Business requirements.
+* Employee productivity.
+
+The appropriate control should depend on the sensitivity of the data and the level of risk associated with the personal device.
 
 ---
 
@@ -302,10 +333,10 @@ After deployment, administrators should monitor:
 * Compliance failures.
 * Device enrollment issues.
 * Operating system problems.
-* User complaints.
+* User support incidents.
 * Repeated policy failures.
 
-The goal is to identify whether the policy is improving security without causing unnecessary disruption.
+Monitoring should help determine whether the policy is improving security without creating unnecessary operational disruption.
 
 ---
 
@@ -316,12 +347,12 @@ Exceptions should be:
 * Documented.
 * Approved.
 * Time-limited where possible.
-* Assigned an owner.
+* Assigned to an owner.
 * Reviewed regularly.
 
-Example:
+The exception process should follow a controlled approach:
 
-```text id="i6f5vw"
+```text
 Business Requirement
         │
         ▼
@@ -340,13 +371,15 @@ Compensating Controls
 Periodic Review
 ```
 
+Exceptions should not become a permanent way to bypass the organization's security requirements.
+
 ---
 
 ## 15. Relationship with Intune
 
 The overall architecture is:
 
-```text id="3bslr3"
+```text
 Device
   │
   ▼
@@ -367,30 +400,32 @@ Conditional Access
 Access Decision
 ```
 
-Intune determines device compliance.
+Microsoft Intune evaluates and manages device compliance.
 
-Conditional Access uses that compliance signal as part of the access decision.
+Conditional Access uses the compliance signal as part of the access decision.
 
 ---
 
 ## 16. Rollback Plan
 
-If unexpected disruption occurs:
+If unexpected business disruption occurs:
 
-1. Identify affected users and devices.
+1. Identify the affected users and devices.
 2. Review Conditional Access sign-in logs.
-3. Review device compliance status.
+3. Review the device compliance status.
 4. Identify the failed compliance requirement.
-5. Remediate the device.
+5. Remediate the device where possible.
 6. Adjust the policy if necessary.
-7. Re-test.
+7. Re-test the affected scenario.
 8. Continue enforcement after successful validation.
+
+Any temporary policy adjustment should be documented and reviewed.
 
 ---
 
 ## 17. Final Policy Model
 
-```text id="p7wn0d"
+```text
 User
  │
  ▼
