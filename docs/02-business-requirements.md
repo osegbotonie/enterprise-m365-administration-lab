@@ -2,7 +2,7 @@
 
 ## 1. Organization Overview
 
-Tonie-Osegbo Technologies Limited is a telecommunications and technology organization with approximately 250 employees.
+Tonie-Osegbo Technologies Limited is a simulated telecommunications and technology organization with approximately 250 employees.
 
 The organization operates from its headquarters in Abuja, Nigeria, with regional offices in:
 
@@ -10,48 +10,53 @@ The organization operates from its headquarters in Abuja, Nigeria, with regional
 * Enugu
 * Port Harcourt
 
-The organization has multiple departments, employee levels, job roles, and locations that require secure and structured access to corporate resources.
+The organization has multiple departments, job roles, organizational levels, managers, and locations. As the organization grows, employees may join, change departments, receive promotions, change locations, or leave the organization.
+
+The Microsoft 365 environment must therefore provide a structured way to manage employee identities and access throughout the employee lifecycle.
 
 ---
 
 ## 2. Business Problem
 
-As the organization grows, manually managing users, departments, groups, access rights, devices, and security policies becomes increasingly difficult.
+The main business problem is the need to manage the organization's people, identities, access, devices, and security controls in a consistent and scalable way.
 
-The organization needs a centralized Microsoft 365 environment that can support:
+As the organization grows, manually managing users and access becomes increasingly difficult.
 
-* User identity management
-* Department and organizational structure
-* Role-based access control
-* Employee onboarding and offboarding
-* Device management
-* Security monitoring
-* Collaboration
-* Data protection
-* Compliance and auditing
+The organization needs to be able to answer questions such as:
 
-The environment must also be scalable as the organization grows.
+* Who is this employee?
+* Which department does the employee belong to?
+* What is the employee's current position and organizational level?
+* Which groups should the employee belong to?
+* What resources should the employee be able to access?
+* What should happen when the employee changes department?
+* What should happen when the employee is promoted?
+* What should happen when the employee leaves the organization?
+
+The Microsoft 365 environment should provide the structure needed to answer these questions and ensure that access reflects the employee's current business responsibilities.
 
 ---
 
 ## 3. Identity and User Management Requirements
 
-The organization needs a centralized system for managing employee identities.
+The organization requires a centralized system for managing employee identities.
 
-The system should allow administrators to:
+The system should allow authorized administrators to:
 
 * Create and manage user accounts.
-* Assign users to departments.
+* Assign departments.
 * Assign job titles and organizational levels.
 * Assign office locations.
 * Assign managers.
 * Manage group memberships.
 * Manage Microsoft 365 licenses.
-* Manage user access to organizational resources.
-* Disable accounts when employees leave the organization.
-* Preserve required data after employee departure.
+* Manage access to organizational resources.
+* Restrict accounts when employees leave.
+* Preserve required data and account information after employee departure.
 
 Employee identity information should be maintained consistently and should support the Joiner, Mover, and Leaver lifecycle.
+
+The user's identity should remain consistent throughout their employment, while their access and group memberships may change as their business responsibilities change.
 
 ---
 
@@ -59,13 +64,13 @@ Employee identity information should be maintained consistently and should suppo
 
 The organization requires a structure that can represent:
 
-* Departments
-* Job titles
-* Organizational levels
-* Office locations
-* Managers
-* Business units
-* Employee groups
+* Departments.
+* Job titles.
+* Organizational levels.
+* Office locations.
+* Managers.
+* Business units.
+* Employee groups.
 
 ### Example Departments
 
@@ -95,19 +100,19 @@ The organization requires a structure that can represent:
 * Enugu
 * Port Harcourt
 
-This structure should support efficient access management and future automation.
+This structure should support access management, reporting, governance, and future automation.
 
 ---
 
 ## 5. Access Management Requirements
 
-Access to organizational resources should be based on the employee's business role.
+Access to organizational resources should be based on an employee's current business responsibilities.
 
 The organization requires:
 
 * Role-based access management.
 * Department-based access management.
-* Location-based access management.
+* Location-based access management where appropriate.
 * Least-privilege access.
 * Separation of duties.
 * Regular access reviews.
@@ -123,6 +128,8 @@ Access should be reviewed when an employee:
 * Changes location.
 * Leaves the organization.
 
+A change in an employee's role should trigger an access review rather than simply adding new access to the employee's existing permissions.
+
 ---
 
 ## 6. Security Requirements
@@ -131,10 +138,10 @@ The organization must protect its users, devices, identities, and data from exte
 
 The Microsoft 365 environment should support:
 
-* Multi-factor authentication.
+* Multifactor Authentication.
 * Conditional Access.
 * Identity protection.
-* Secure authentication.
+* Modern and secure authentication.
 * Protection against phishing.
 * Protection against malicious email.
 * Protection against unauthorized access.
@@ -142,7 +149,12 @@ The Microsoft 365 environment should support:
 * Audit logging.
 * Security alerts.
 
-The organization should be able to investigate suspicious activities and respond to security incidents.
+The organization should be able to investigate suspicious activity and respond appropriately to security incidents.
+
+Security controls should be designed to protect both:
+
+* External access to organizational resources.
+* Internal access and misuse of organizational resources.
 
 ---
 
@@ -159,9 +171,11 @@ IT should be able to:
 * Deploy applications.
 * Manage operating system updates.
 * Restrict access from non-compliant devices.
-* Remotely wipe corporate data where required.
+* Protect or remotely wipe corporate data where required.
 
-Device management should support a secure working environment for employees working from different office locations.
+Device management should support employees working from the Abuja headquarters and the Lagos, Enugu, and Port Harcourt regional offices.
+
+The organization should also be able to distinguish between managed and compliant devices and devices that do not meet the organization's security requirements.
 
 ---
 
@@ -179,7 +193,7 @@ The organization requires:
 * Team collaboration spaces.
 * Secure external collaboration where approved.
 
-Collaboration tools should be managed centrally and should follow organizational security policies.
+Collaboration tools should be centrally managed and should follow organizational security, access, and data protection policies.
 
 ---
 
@@ -195,13 +209,15 @@ The organization should be able to:
 * Protect business documents.
 * Apply appropriate retention policies.
 * Investigate data-related incidents.
-* Support regulatory and legal requirements.
+* Support applicable legal, regulatory, and business requirements.
+
+Data protection should be considered throughout the lifecycle of information, including creation, sharing, storage, retention, and eventual deletion.
 
 ---
 
 ## 10. Monitoring and Audit Requirements
 
-The organization requires visibility into activities within the Microsoft 365 environment.
+The organization requires visibility into important activities within the Microsoft 365 environment.
 
 Administrators should be able to investigate:
 
@@ -213,7 +229,13 @@ Administrators should be able to investigate:
 * Suspicious activities.
 * Data access and sharing activities.
 
-Audit logs should support security investigations, compliance requirements, and internal reviews.
+Audit logs should support:
+
+* Security investigations.
+* Compliance requirements.
+* Internal reviews.
+* Troubleshooting.
+* Accountability for administrative changes.
 
 ---
 
@@ -221,39 +243,118 @@ Audit logs should support security investigations, compliance requirements, and 
 
 The Microsoft 365 environment should support the complete employee lifecycle.
 
+The expected process is:
+
+```text
+HR Business Event
+       │
+       ▼
+HR Notifies or Initiates Request
+       │
+       ▼
+IT Reviews and Implements Change
+       │
+       ▼
+Microsoft 365 Identity and Access Updated
+```
+
+HR is the primary source of information about employee lifecycle events.
+
+IT is responsible for implementing the required technical changes in the Microsoft 365 environment.
+
+---
+
 ### Joiner
 
 When a new employee joins the organization:
 
-* A user identity should be created.
-* Employee attributes should be configured.
-* The employee should be assigned to the appropriate department.
-* Appropriate groups should be assigned.
-* Required licenses should be assigned.
-* Security policies should be applied.
-* Approved access should be provided.
+1. HR confirms the employee's employment and provides the required information to IT.
+2. IT creates or provisions the user's Microsoft 365 identity.
+3. The employee's attributes are configured.
+4. The employee is assigned to the appropriate department.
+5. The employee is assigned to the relevant groups.
+6. Required licenses are assigned.
+7. Appropriate security policies are applied.
+8. Approved access is provided.
+
+The new employee should receive only the access required for the role.
+
+---
 
 ### Mover
 
-When an employee changes role or department:
+A Mover event occurs when an employee:
 
-* Employee information should be updated.
-* Previous access should be reviewed.
-* Unnecessary access should be removed.
-* New access should be granted based on the new role.
-* Group memberships should be updated.
+* Changes department.
+* Changes job role.
+* Is promoted.
+* Changes location.
+* Moves into a new area of responsibility.
+
+For example:
+
+```text
+Engineer
+   │
+   ▼
+Promotion
+   │
+   ▼
+Network Manager
+```
+
+When this occurs:
+
+1. HR confirms the change.
+2. IT updates the employee's relevant attributes.
+3. The employee's existing access is reviewed.
+4. Access no longer required for the previous role is removed where appropriate.
+5. New access required for the new role is granted.
+6. Group memberships are updated.
+7. The change is documented.
+
+For example, an employee promoted from an Engineering role to a Management role may need access to management resources and may no longer require access to certain Engineer-specific groups.
+
+The objective is to ensure that access reflects the employee's current responsibilities.
+
+---
 
 ### Leaver
 
 When an employee leaves the organization:
 
-* Sign-in should be blocked.
-* Active sessions should be revoked.
-* Access should be removed.
-* Corporate devices should be secured.
-* Required data should be preserved.
-* Licenses should be reclaimed.
-* Account deletion should be considered according to applicable policies.
+1. HR notifies IT.
+2. Sign-in access is blocked.
+3. Active sessions are revoked where appropriate.
+4. Access to organizational resources is removed.
+5. Corporate devices and organizational data are secured.
+6. Required data is preserved.
+7. Licenses are reviewed for reclamation.
+8. The account is retained where required by business, legal, regulatory, or investigation requirements.
+9. Permanent deletion is considered only after the applicable retention requirements have been reviewed.
+
+The preferred lifecycle is:
+
+```text
+Active Employee
+      │
+      ▼
+Employee Leaves
+      │
+      ▼
+Access Restricted
+      │
+      ▼
+Account and Required Data Retained
+      │
+      ▼
+Retention Review
+      │
+      ▼
+Permanent Deletion Where Appropriate
+```
+
+The account should not be deleted immediately without considering the organization's retention and business requirements.
 
 ---
 
@@ -268,12 +369,14 @@ The design should remain manageable if the organization grows from:
 The environment should minimize unnecessary manual administration through:
 
 * Group-based access.
-* Dynamic groups.
-* Automated provisioning.
-* Automated license assignment.
+* Dynamic groups where appropriate.
+* Automated provisioning where available.
+* Automated license assignment where appropriate.
 * Identity lifecycle workflows.
 * Standardized naming conventions.
 * Centralized policies.
+
+Automation should be introduced where it improves consistency and efficiency without creating unnecessary operational risk.
 
 ---
 
@@ -291,11 +394,31 @@ The following principles should apply:
 * Security policies should be documented.
 * Regular reviews should be conducted.
 
+A typical process should therefore follow:
+
+```text
+HR
+ │
+ ├── New Employee
+ ├── Department Transfer
+ ├── Promotion
+ └── Employee Departure
+       │
+       ▼
+      IT
+       │
+       ├── Creates or Updates Identity
+       ├── Updates Attributes
+       ├── Updates Groups
+       ├── Updates Access
+       └── Restricts Account Where Required
+```
+
 ---
 
 ## 14. Expected Business Outcomes
 
-The Microsoft 365 environment should help the organization achieve the following outcomes:
+The Microsoft 365 environment should help the organization achieve the following outcomes.
 
 ### Improved Security
 
@@ -311,11 +434,15 @@ Clear ownership and accountability for identity and access management.
 
 ### Faster Employee Onboarding
 
-New employees can receive the required access more efficiently.
+New employees can receive the access required for their roles more efficiently.
+
+### Better Access Management During Employee Changes
+
+Promotions and department transfers can trigger an appropriate review of existing access.
 
 ### Better Offboarding
 
-Employee access can be removed promptly when an employee leaves the organization.
+Employee access can be restricted promptly when an employee leaves the organization, while required information can be retained appropriately.
 
 ### Improved Visibility
 
@@ -351,7 +478,7 @@ Tonie-Osegbo Technologies Limited requires a secure, scalable, and centrally man
 
 The primary business challenge is to effectively manage users, groups, departments, organizational levels, locations, devices, access, and security across the organization.
 
-The Microsoft 365 environment must provide a foundation for:
+The environment must provide a foundation for:
 
 * Secure identity management.
 * Controlled access.
@@ -365,3 +492,8 @@ The Microsoft 365 environment must provide a foundation for:
 
 These business requirements will guide the technical architecture and implementation decisions documented throughout this project.
 
+The core design principle is:
+
+> **The right person should receive the right access, based on their current business responsibilities, using an appropriate device and under appropriate security controls.**
+
+Access should change when the employee's role changes, and access should be restricted when the employee's relationship with the organization ends.
