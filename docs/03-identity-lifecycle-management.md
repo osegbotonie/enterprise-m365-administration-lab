@@ -2,7 +2,7 @@
 
 ## 1. Overview
 
-Identity Lifecycle Management defines how user identities, access rights, and associated resources are managed throughout an employee's relationship with Tonie-Osegbo Technologies Limited.
+Identity Lifecycle Management defines how employee identities, access rights, and associated resources are managed throughout an employee's relationship with Tonie-Osegbo Technologies Limited.
 
 The lifecycle consists of three primary stages:
 
@@ -10,7 +10,11 @@ The lifecycle consists of three primary stages:
 * **Mover** — An employee's role, department, location, or responsibilities change.
 * **Leaver** — An employee leaves the organization.
 
-The objective is to ensure that employees receive appropriate access when they join, that access is reviewed and updated when their roles change, and that access is securely removed when they leave.
+The objective is straightforward:
+
+> **Employees should receive the access they need when they join, their access should be reviewed when their responsibilities change, and their access should be restricted when they leave.**
+
+The user's identity may remain the same throughout their employment, but the access associated with that identity should change as the employee's business relationship with the organization changes.
 
 ---
 
@@ -20,7 +24,7 @@ The objective is to ensure that employees receive appropriate access when they j
 
 **Industry:** Telecommunications and Technology
 
-**Number of Employees:** 250
+**Number of Employees:** Approximately 250
 
 **Headquarters:** Abuja, Nigeria
 
@@ -30,283 +34,476 @@ The objective is to ensure that employees receive appropriate access when they j
 * Enugu
 * Port Harcourt
 
+The organization has multiple departments, job roles, organizational levels, and locations. This means that a user's identity must contain enough information to support access management and administration.
+
+Examples of relevant user attributes include:
+
+* Department.
+* Job title.
+* Organizational level.
+* Office location.
+* Manager.
+* Employment status.
+
 ---
 
-## 3. Identity Lifecycle Ownership
+## 3. Lifecycle Ownership
 
-Human Resources (HR) is the authoritative source for employee lifecycle events.
-
-HR is responsible for notifying the IT and Identity Administration team of:
-
-* New employees
-* Department changes
-* Job title changes
-* Promotions
-* Transfers
-* Location changes
-* Employee departures
-
-The IT and Identity Administration team is responsible for implementing the required identity, access, device, and security changes.
-
-Department managers may approve additional role-specific access where required.
+The employee lifecycle begins with a business event, usually originating from HR.
 
 ### High-Level Process
 
-**HR → IT / Identity Administration → Microsoft Entra ID**
+```text
+Employee Lifecycle Event
+          │
+          ▼
+         HR
+          │
+          ▼
+    HR Notifies IT
+          │
+          ▼
+      IT Reviews
+          │
+          ▼
+IT Implements Technical Change
+          │
+          ▼
+Microsoft 365 / Entra ID
+```
 
-The employee lifecycle event begins with HR. IT and Identity Administration then implement the required identity and access changes within Microsoft Entra ID and other relevant Microsoft 365 services.
+### HR Responsibilities
+
+HR is the authoritative source for employee lifecycle events.
+
+HR is responsible for confirming or communicating events such as:
+
+* New employees.
+* Department changes.
+* Job title changes.
+* Promotions.
+* Transfers.
+* Location changes.
+* Employee departures.
+
+### IT / Identity Administration Responsibilities
+
+IT is responsible for implementing the technical changes required as a result of the business event.
+
+This may include:
+
+* Creating or updating user accounts.
+* Updating user attributes.
+* Managing group memberships.
+* Assigning or removing licenses.
+* Managing access.
+* Applying security controls.
+* Restricting accounts.
+* Preserving required information.
+
+### Department Manager Responsibilities
+
+Department managers may be involved in:
+
+* Confirming the employee's role.
+* Approving role-specific access.
+* Confirming access requirements after a transfer or promotion.
+
+The exact approval process should be defined by organizational policy.
 
 ---
 
-## 4. Joiner Process
+# 4. Joiner Process
 
 A **Joiner** is a new employee joining Tonie-Osegbo Technologies Limited.
 
-The Joiner process ensures that the employee receives an appropriately configured identity and the access required to perform their job.
+The objective of the Joiner process is to create a usable and secure digital identity for the employee and provide the access required for the employee to begin working.
 
-### 4.1 Joiner Process
+## 4.1 Joiner Workflow
+
+```text
+HR Confirms Employment
+          │
+          ▼
+HR Provides Employee Information
+          │
+          ▼
+IT Creates User Identity
+          │
+          ▼
+Attributes Are Configured
+          │
+          ▼
+Groups and Licenses Assigned
+          │
+          ▼
+Security Controls Applied
+          │
+          ▼
+Approved Access Provided
+```
+
+## 4.2 Joiner Process
 
 The onboarding process follows these general steps:
 
 1. HR confirms the employee's employment.
 2. HR provides the required employee information to IT.
-3. IT creates the user account.
+3. IT creates or provisions the user's Microsoft 365 identity.
 4. User attributes are configured.
-5. Appropriate groups and licenses are assigned.
-6. Required security policies are applied.
-7. The employee receives approved access.
+5. The employee is assigned to the appropriate department and groups.
+6. Required licenses are assigned.
+7. Security policies are applied.
+8. Approved access is provided.
 
-### 4.2 Required Employee Information
-
-The following information should be captured during the onboarding process:
-
-* Full name
-* Employee ID
-* Department
-* Job title
-* Organizational level
-* Office location
-* Manager
-* Employment start date
-
-### 4.3 Initial Access Assignment
-
-Access should be assigned based on the employee's:
-
-* Department
-* Job title
-* Organizational level
-* Office location
-* Business responsibilities
-
-**Example:**
-
-**Department:** Technology
-
-**Job Title:** Network Engineer
-
-**Location:** Abuja
-
-Potential group memberships may include:
-
-* `Technology-Users`
-* `Network-Operations`
-* `Abuja-Office`
-* `Network-Engineers`
-
-The principle of **least privilege** should be applied. Employees should receive only the access required to perform their approved responsibilities.
+The employee should receive only the access required to perform the approved role.
 
 ---
 
-## 5. Mover Process
+## 4.3 Required Employee Information
+
+The following information should be captured during onboarding:
+
+* Full name.
+* Employee ID.
+* Department.
+* Job title.
+* Organizational level.
+* Office location.
+* Manager.
+* Employment start date.
+* Employment status.
+
+These attributes can later be used to support:
+
+* Group membership.
+* Access management.
+* Reporting.
+* Automation.
+* Governance.
+
+---
+
+## 4.4 Example Joiner
+
+**Department:** Network Operations
+
+**Job Title:** Network Engineer
+
+**Organizational Level:** Senior Staff
+
+**Location:** Abuja
+
+**Manager:** Network Operations Manager
+
+Potential group memberships may include:
+
+```text
+Technology-Users
+Network-Operations
+Abuja-Office
+Network-Engineers
+```
+
+The exact access assigned should depend on the employee's actual responsibilities rather than simply adding the employee to every group associated with the department.
+
+This is an important distinction.
+
+> **Department membership can help identify what a user may need, but business responsibility should determine what the user actually receives.**
+
+---
+
+# 5. Mover Process
 
 A **Mover** is an employee whose organizational role or responsibilities change.
 
 Examples include:
 
-* Department transfer
-* Promotion
-* Change of job title
-* Change of location
-* Change of manager
-* Change in job responsibilities
+* Department transfer.
+* Promotion.
+* Change of job title.
+* Change of location.
+* Change of manager.
+* Change in job responsibilities.
 
-### 5.1 Department Transfer
+A Mover event should trigger an access review.
 
-For example, an employee may move from:
-
-**Finance → Technology**
-
-When an employee changes department, their identity attributes and access should be reviewed.
-
-### Required Actions
-
-* Update the department attribute.
-* Update the job title where applicable.
-* Update the manager.
-* Update the office location where applicable.
-* Review existing group memberships.
-* Remove access no longer required.
-* Add the appropriate new department groups.
-* Grant approved role-specific access.
-
-The employee should not retain unnecessary access from their previous role unless there is a documented business requirement and appropriate approval.
+The employee's existing access should not simply remain unchanged while new access is added.
 
 ---
 
-## 6. Promotion Process
+## 5.1 Department Transfer
+
+For example:
+
+```text
+Finance
+   │
+   ▼
+Department Transfer
+   │
+   ▼
+Technology
+```
+
+When an employee changes department:
+
+1. HR confirms the change.
+2. IT updates the relevant employee attributes.
+3. The employee's existing access is reviewed.
+4. Access no longer required is removed where appropriate.
+5. New department access is assigned.
+6. Group memberships are updated.
+7. Additional role-specific access is granted where approved.
+
+### Example
+
+An employee moving from Finance to Technology may no longer require membership of finance-specific groups.
+
+At the same time, the employee may require access to technology resources.
+
+The user's account remains the same, but the access associated with the account changes.
+
+---
+
+## 5.2 Promotion
 
 A promotion may result in changes to an employee's:
 
-* Job title
-* Organizational level
-* Department responsibilities
-* Manager
-* Group membership
-* Access permissions
+* Job title.
+* Organizational level.
+* Responsibilities.
+* Manager.
+* Group membership.
+* Access requirements.
 
 ### Example Career Progression
 
-**Network Engineer → Senior Network Engineer → Network Manager**
+```text
+Network Engineer
+        │
+        ▼
+Senior Network Engineer
+        │
+        ▼
+Network Manager
+```
 
-When an employee is promoted, the employee's identity attributes and access should be reviewed.
+When an employee is promoted, the user's attributes and access should be reviewed.
 
-### Example Group Change
+For example:
 
-**Previous Group:** `Network-Engineers`
+```text
+Previous Role:
+Network Engineer
 
-**New Group:** `Network-Managers`
+New Role:
+Network Manager
+```
 
-Access should be reviewed to ensure that the employee receives the permissions appropriate for the new role.
+The employee may need access to:
 
-Promotion should not automatically result in unrestricted access. Access should continue to follow the principles of:
+```text
+Network-Managers
+Management-Users
+```
 
-* Least privilege
-* Role-based access
-* Separation of duties
-* Business need
+However, the employee may no longer require access to certain groups intended specifically for Network Engineers.
+
+This does not mean every previous permission must automatically be removed. The correct approach is to review access against the employee's new responsibilities.
+
+The principle is:
+
+> **A promotion should trigger an access review, not an automatic accumulation of permissions.**
 
 ---
 
-## 7. Leaver Process
+## 5.3 Location Change
+
+An employee may also change office location.
+
+For example:
+
+```text
+Abuja
+   │
+   ▼
+Location Change
+   │
+   ▼
+Lagos
+```
+
+The employee's location attribute should be updated.
+
+Location-based group membership or access should be reviewed where such controls are used.
+
+Location alone should not automatically determine whether a user is trusted. It should be treated as one factor in the overall identity and security model.
+
+---
+
+# 6. Leaver Process
 
 A **Leaver** is an employee who is leaving the organization.
 
 The primary objective of the Leaver process is to prevent unauthorized access while preserving information that may be required for legitimate business, legal, regulatory, audit, or investigative purposes.
 
-### 7.1 Leaver Process
+---
 
-The offboarding process may include the following actions:
+## 6.1 Leaver Workflow
 
-1. HR confirms the employee's departure.
-2. IT receives the departure notification.
-3. User sign-in is blocked.
-4. Active sessions are revoked.
-5. Access to organizational resources is reviewed and removed.
-6. Corporate devices are secured.
-7. Required data is preserved.
-8. Licenses are reclaimed.
-9. Retention requirements are reviewed.
-10. Account deletion is considered in accordance with applicable policies.
+```text
+HR Confirms Departure
+          │
+          ▼
+IT Receives Notification
+          │
+          ▼
+Sign-In Access Blocked
+          │
+          ▼
+Active Sessions Revoked
+          │
+          ▼
+Access and Resources Reviewed
+          │
+          ▼
+Required Data Preserved
+          │
+          ▼
+Retention Period Reviewed
+          │
+          ▼
+Deletion Considered Where Appropriate
+```
 
-### 7.2 Immediate Actions
+---
+
+## 6.2 Immediate Actions
 
 Depending on the circumstances of the employee's departure, IT may need to:
 
 * Block account sign-in.
 * Revoke active sessions.
-* Remove access to organizational resources.
 * Review authentication methods.
+* Remove access to organizational resources.
 * Secure corporate devices.
 * Remove or transfer ownership of business resources.
 * Preserve required business data.
 * Reclaim licenses.
 
-### 7.3 Account Retention
+The urgency of these actions may depend on the circumstances of the departure.
 
-User accounts should not necessarily be deleted immediately after an employee leaves the organization.
+For example, an employee leaving under normal circumstances may follow a planned offboarding process, while an immediate security concern may require access to be restricted immediately.
+
+---
+
+## 6.3 Account Retention
+
+A user account should not necessarily be deleted immediately after an employee leaves.
 
 The account or associated data may need to be retained for:
 
-* Business continuity
-* Legal requirements
-* Regulatory requirements
-* Internal investigations
-* Audit purposes
-* Data retention requirements
+* Business continuity.
+* Legal requirements.
+* Regulatory requirements.
+* Internal investigations.
+* Audit purposes.
+* Data retention requirements.
 
-> **Disable first. Delete later, subject to applicable retention and organizational policies.**
+The general approach is:
 
-During the retention period, access to the account should remain restricted. Authorized administrators may manage required data preservation and investigation activities in accordance with organizational policy.
+> **Disable first. Review retention requirements. Delete later where appropriate.**
+
+During the retention period:
+
+* The former employee should not be able to sign in.
+* Access should remain restricted.
+* Required data should be preserved according to policy.
+* Authorized personnel may investigate relevant activity using appropriate auditing, compliance, and investigation tools.
+
+Historical activity should be reviewed through appropriate audit and investigation mechanisms rather than by allowing access to the disabled account.
 
 ---
 
-## 8. Identity Lifecycle Summary
+# 7. Identity Lifecycle Summary
 
-| Lifecycle Stage | Primary Trigger                     | Key Actions                                                                                   |
-| --------------- | ----------------------------------- | --------------------------------------------------------------------------------------------- |
-| **Joiner**      | Employee joins the organization     | Create identity, assign attributes, groups, licenses, and approved access                     |
-| **Mover**       | Employee changes role or department | Update attributes, review access, remove unnecessary permissions, and assign new access       |
-| **Leaver**      | Employee leaves the organization    | Block access, revoke sessions, secure resources, preserve required data, and review retention |
+| Lifecycle Stage | Primary Trigger                                | Key Actions                                                                                   |
+| --------------- | ---------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| **Joiner**      | Employee joins the organization                | Create identity, configure attributes, assign groups, licenses, and approved access           |
+| **Mover**       | Employee changes role, department, or location | Update attributes, review access, remove unnecessary access, and assign new access            |
+| **Leaver**      | Employee leaves the organization               | Block access, revoke sessions, secure resources, preserve required data, and review retention |
 
 ---
 
-## 9. Identity Lifecycle Principles
+# 8. Identity Lifecycle Principles
 
-### 9.1 Least Privilege
+## 8.1 Least Privilege
 
 Users should receive only the access required to perform their approved responsibilities.
 
-### 9.2 Separation of Duties
+## 8.2 Access Should Reflect Current Responsibilities
+
+Access should be reviewed when an employee's role changes.
+
+A user should not retain unnecessary access simply because they previously held a different position.
+
+## 8.3 Separation of Duties
 
 Identity administration, access approval, and business ownership should be appropriately separated to reduce the risk of unauthorized access.
 
-### 9.3 Timely Access Changes
+## 8.4 Timely Access Changes
 
 Access should be reviewed and updated promptly when an employee's role or responsibilities change.
 
-### 9.4 Secure Offboarding
+## 8.5 Secure Offboarding
 
 Departing employees should lose access promptly while required organizational information is preserved according to applicable policies.
 
-### 9.5 Auditability
+## 8.6 Auditability
 
 Identity and access changes should be recorded and traceable.
 
-### 9.6 Automation
+## 8.7 Automation
 
-Where possible, repetitive identity lifecycle activities should be automated to reduce errors and improve efficiency.
+Where appropriate, repetitive identity lifecycle activities should be automated to reduce errors and improve efficiency.
+
+Automation should not remove the need for appropriate approvals and governance.
 
 ---
 
-## 10. Future Enhancements
+# 9. Future Enhancements
 
 Future versions of this identity lifecycle design may include:
 
-* Automated HR-to-IT provisioning workflows
-* Dynamic group membership
-* Automated license assignment
-* Access reviews
-* Privileged Identity Management
-* Identity Governance
-* Microsoft Entra lifecycle workflows
-* Integration with HR systems
-* Automated Joiner, Mover, and Leaver workflows
-* Periodic access certification
+* Automated HR-to-IT provisioning workflows.
+* Dynamic group membership.
+* Automated license assignment.
+* Access reviews.
+* Privileged Identity Management.
+* Microsoft Entra Identity Governance.
+* Microsoft Entra Lifecycle Workflows.
+* Integration with HR systems.
+* Automated Joiner, Mover, and Leaver workflows.
+* Periodic access certification.
 
 ---
 
-## 11. Conclusion
+# 10. Conclusion
 
-A well-designed identity lifecycle ensures that users receive appropriate access when they join the organization, that access is updated when their responsibilities change, and that access is securely removed when they leave.
+A well-designed identity lifecycle ensures that employees receive appropriate access when they join the organization, that access is reviewed when their responsibilities change, and that access is securely removed when they leave.
 
-The Joiner-Mover-Leaver model provides a structured foundation for managing identity and access across the employee lifecycle.
+The Joiner-Mover-Leaver model provides a structured foundation for managing identity and access throughout the employee lifecycle.
 
-For Tonie-Osegbo Technologies Limited, this model supports the broader objectives of:
+For Tonie-Osegbo Technologies Limited, the most important principle is that an employee's access should reflect their current relationship with the organization.
 
-* Secure identity management
-* Least-privilege access
-* Improved governance
-* Reduced security risk
-* Better auditability
-* Operational efficiency
+This means:
+
+* A new employee receives approved access for their role.
+* An employee who changes role or department undergoes an access review.
+* A promoted employee receives access appropriate to the new position without automatically accumulating unnecessary permissions.
+* A departing employee loses access promptly while required information is retained according to applicable policies.
+
+The lifecycle can therefore be summarized as:
+
+> **Join with the right access. Change access when responsibilities change. Remove access when the relationship ends.**
