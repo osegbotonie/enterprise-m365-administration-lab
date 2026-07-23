@@ -4,16 +4,16 @@
 
 The Administrative Role Matrix defines the administrative responsibilities and access boundaries for the Microsoft 365 environment of Tonie-Osegbo Technologies Limited.
 
-The purpose is to:
+The purpose of this matrix is to:
 
-* Apply least privilege.
+* Apply the principle of least privilege.
 * Separate administrative responsibilities.
 * Reduce excessive privileges.
 * Support accountability.
 * Improve security.
 * Establish clear ownership of Microsoft 365 services.
 
-Administrative access should be assigned based on job responsibilities and should not be granted simply because an individual is part of the IT department.
+Administrative access should be assigned based on job responsibilities and business need. Membership in the IT department alone should not automatically result in privileged access.
 
 ---
 
@@ -23,12 +23,13 @@ The following principles apply:
 
 1. Administrators should receive only the permissions required for their responsibilities.
 2. Global Administrator should not be used for routine administrative activities.
-3. Administrative responsibilities should be separated where possible.
+3. Administrative responsibilities should be separated where practical.
 4. Privileged access should be reviewed regularly.
 5. Strong authentication should be required for administrative accounts.
 6. Administrative actions should be logged and auditable.
 7. Temporary elevation should be preferred where appropriate.
 8. No single administrator should unnecessarily control every aspect of the environment.
+9. Administrative role assignments should be based on business need rather than seniority alone.
 
 ---
 
@@ -40,15 +41,15 @@ The following administrative roles are included in the design.
 
 **Primary Responsibility:**
 
-Tenant-wide administration and emergency configuration.
+Tenant-wide administration and exceptional or emergency configuration.
 
 **Typical Responsibilities:**
 
 * Manage tenant-wide settings.
-* Manage administrative roles.
+* Manage administrative role assignments.
 * Manage major Microsoft 365 configurations.
 * Respond to critical incidents.
-* Perform emergency administration.
+* Perform administrative tasks that cannot be completed through a more specific role.
 
 **Access Level:**
 
@@ -56,10 +57,10 @@ Highest level of administrative access.
 
 **Governance:**
 
-* Very limited membership.
-* Strong authentication required.
-* Regular access review.
-* Not used for routine administration.
+* Membership should be highly restricted.
+* Strong authentication is required.
+* Access should be reviewed regularly.
+* The role should not be used for routine administration where a more specific role is sufficient.
 
 ---
 
@@ -71,11 +72,11 @@ Identity and user account administration.
 
 **Typical Responsibilities:**
 
-* Create users.
+* Create and manage user accounts.
 * Update user attributes.
 * Disable user accounts.
-* Reset passwords where permitted.
 * Manage user lifecycle tasks.
+* Reset passwords where permitted by the assigned role.
 
 **Access Level:**
 
@@ -91,11 +92,11 @@ Group administration.
 
 **Typical Responsibilities:**
 
-* Create groups.
+* Create and manage groups.
 * Manage group properties.
 * Manage group membership where authorized.
 * Review group ownership.
-* Manage group lifecycle.
+* Support group lifecycle management.
 
 **Access Level:**
 
@@ -107,7 +108,7 @@ Group administration.
 
 **Primary Responsibility:**
 
-Device management.
+Device and endpoint management.
 
 **Typical Responsibilities:**
 
@@ -116,6 +117,7 @@ Device management.
 * Manage configuration profiles.
 * Deploy applications.
 * Manage device security policies.
+* Support endpoint management operations.
 
 **Access Level:**
 
@@ -127,7 +129,7 @@ Device and endpoint administration.
 
 **Primary Responsibility:**
 
-Security administration.
+Security administration and security operations support.
 
 **Typical Responsibilities:**
 
@@ -136,6 +138,7 @@ Security administration.
 * Review security recommendations.
 * Manage security policies where authorized.
 * Support security incident response.
+* Monitor security-related activities.
 
 **Access Level:**
 
@@ -205,14 +208,14 @@ Teams administration.
 
 **Primary Responsibility:**
 
-Compliance and data governance.
+Compliance and data governance administration.
 
 **Typical Responsibilities:**
 
-* Manage compliance settings.
-* Support retention policies.
-* Support data governance.
+* Manage compliance-related settings.
+* Support retention and data governance activities.
 * Manage compliance-related configurations where authorized.
+* Support compliance investigations and organizational governance.
 
 **Access Level:**
 
@@ -225,14 +228,16 @@ Compliance administration.
 | Administrative Role      | Users   | Groups  | Devices | Security | Exchange | SharePoint | Teams   | Compliance | Tenant |
 | ------------------------ | ------- | ------- | ------- | -------- | -------- | ---------- | ------- | ---------- | ------ |
 | Global Administrator     | Full    | Full    | Full    | Full     | Full     | Full       | Full    | Full       | Full   |
-| User Administrator       | Full    | Limited | No      | No       | Limited  | No         | No      | No         | No     |
+| User Administrator       | Full    | Limited | No      | No       | No       | No         | No      | No         | No     |
 | Groups Administrator     | Limited | Full    | No      | No       | No       | No         | Limited | No         | No     |
 | Intune Administrator     | No      | No      | Full    | Limited  | No       | No         | No      | No         | No     |
 | Security Administrator   | Limited | Limited | Limited | Full     | Limited  | Limited    | Limited | Limited    | No     |
-| Exchange Administrator   | Limited | Limited | No      | Limited  | Full     | No         | Limited | Limited    | No     |
+| Exchange Administrator   | Limited | Limited | No      | Limited  | Full     | No         | Limited | No         | No     |
 | SharePoint Administrator | Limited | Limited | No      | Limited  | No       | Full       | Limited | Limited    | No     |
 | Teams Administrator      | Limited | Limited | No      | Limited  | Limited  | Limited    | Full    | Limited    | No     |
-| Compliance Administrator | Limited | Limited | No      | Limited  | Limited  | Limited    | Limited | Full       | No     |
+| Compliance Administrator | Limited | Limited | No      | Limited  | No       | Limited    | Limited | Full       | No     |
+
+> **Note:** The exact permissions available to each administrative role depend on the Microsoft Entra and Microsoft 365 role definitions assigned in the tenant. This matrix represents the intended administrative boundary for the organization's design and should be validated against the actual permissions of each role during implementation.
 
 ---
 
@@ -248,7 +253,7 @@ A User Administrator should not automatically receive:
 * Security Administrator
 * Intune Administrator
 
-unless there is a documented business requirement.
+unless there is a documented business requirement and appropriate approval.
 
 The objective is to prevent unnecessary concentration of administrative power.
 
@@ -270,7 +275,7 @@ Compliance Administrator
 
 This combination provides significant control over the tenant, security configuration, and compliance systems.
 
-Administrative role combinations should therefore be reviewed carefully.
+Administrative role combinations should therefore be reviewed carefully and should only be assigned where there is a clear business requirement.
 
 ---
 
@@ -307,14 +312,14 @@ Automatic Expiration
 
 ## 8. Administrative Account Separation
 
-Where appropriate, administrators should maintain separate accounts for:
+Where appropriate, administrators should maintain separate accounts for different types of activity.
 
 ### Standard Account
 
 Used for:
 
 * Email
-* Teams
+* Microsoft Teams
 * OneDrive
 * Normal business activities
 
@@ -322,10 +327,10 @@ Used for:
 
 Used for:
 
-* Administrative tasks.
-* Privileged configuration.
-* Security administration.
-* Tenant management.
+* Administrative tasks
+* Privileged configuration
+* Security administration
+* Tenant management
 
 The administrative account should not be used for routine activities where avoidable.
 
@@ -358,6 +363,7 @@ The review should confirm:
 * The administrator still holds the relevant responsibility.
 * Excessive privileges are removed.
 * Unused administrative roles are removed.
+* Role assignments remain aligned with business need.
 
 ---
 
@@ -377,6 +383,10 @@ Important events include:
 * Conditional Access changes.
 * Device policy changes.
 * Compliance policy changes.
+
+The organization should be able to determine:
+
+> **Who performed an administrative action, what action was performed, when it occurred, and what resource was affected?**
 
 ---
 
@@ -413,7 +423,7 @@ Service Administration
         Global Administrator
 ```
 
-The Global Administrator should coordinate tenant-wide administration and handle situations that cannot be addressed by more specific administrative roles.
+The Global Administrator role should be reserved for tenant-wide administration, exceptional situations, and tasks that cannot be completed through more specific administrative roles.
 
 ---
 
@@ -449,3 +459,15 @@ Future improvements may include:
 * Automated administrative role reviews.
 * Security Operations Center integration.
 * Administrative activity alerting.
+
+---
+
+## Conclusion
+
+The Administrative Role Matrix provides a structured framework for assigning and governing administrative privileges across the Microsoft 365 environment.
+
+By separating responsibilities and limiting access according to business need, Tonie-Osegbo Technologies Limited can reduce unnecessary privilege, improve accountability, and limit the potential impact of compromised administrative accounts.
+
+The guiding principle is:
+
+> **Administrative access should be limited to the minimum level required, activated only when necessary where practical, and regularly reviewed to ensure that it remains appropriate.**
