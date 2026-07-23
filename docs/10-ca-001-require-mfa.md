@@ -14,17 +14,17 @@
 
 ## 2. Business Objective
 
-The objective of this policy is to reduce the risk of unauthorized access caused by compromised usernames and passwords.
+The objective of this policy is to reduce the risk of unauthorized access resulting from compromised usernames and passwords.
 
 A password alone should not be considered sufficient protection for access to organizational Microsoft 365 resources.
 
-The policy introduces an additional authentication requirement when users access protected cloud resources.
+This policy introduces an additional authentication requirement when users access protected cloud resources.
 
 ---
 
 ## 3. Security Problem
 
-A user account may be compromised through:
+User accounts may be compromised through:
 
 * Password reuse.
 * Phishing.
@@ -34,7 +34,7 @@ A user account may be compromised through:
 * Social engineering.
 * Data breaches.
 
-If an attacker obtains a user's password, MFA provides an additional security barrier.
+If an attacker obtains a user's password, Multifactor Authentication (MFA) provides an additional security barrier before access is granted.
 
 ### Risk Model
 
@@ -73,17 +73,17 @@ MFA Requirement
 The policy should include:
 
 * Standard employee accounts.
-* Appropriate cloud users.
+* Other appropriate cloud user accounts within the approved scope of the rollout.
 
 ### Users Excluded
 
 The following should be carefully considered before exclusion:
 
 * Emergency access accounts.
-* Approved service accounts where applicable.
-* Accounts with documented technical exceptions.
+* Approved service accounts, where technically necessary.
+* Accounts with documented and approved technical exceptions.
 
-Exclusions must be minimized and documented.
+Exclusions should be minimized, formally approved where appropriate, and documented.
 
 ---
 
@@ -91,9 +91,9 @@ Exclusions must be minimized and documented.
 
 The policy should protect access to organizational cloud resources.
 
-The exact application scope should be defined according to the organization's rollout strategy.
+The exact application scope should be defined according to the organization's implementation and rollout strategy.
 
-Possible targets include:
+Potential targets include:
 
 * Microsoft 365 services.
 * Exchange Online.
@@ -102,11 +102,13 @@ Possible targets include:
 * OneDrive.
 * Microsoft Entra administrative portals.
 
+The initial scope should be carefully defined to ensure that the policy provides meaningful security protection without causing unnecessary business disruption.
+
 ---
 
 ## 6. Conditions
 
-The policy may evaluate conditions such as:
+The policy may evaluate contextual conditions such as:
 
 * User identity.
 * Device platform.
@@ -114,9 +116,11 @@ The policy may evaluate conditions such as:
 * Client application.
 * Sign-in risk.
 
-The initial policy should avoid unnecessary complexity.
+The initial implementation should avoid unnecessary complexity.
 
-A simple policy is easier to test and troubleshoot.
+A simple and clearly defined policy is easier to test, troubleshoot, monitor, and maintain.
+
+Additional conditions may be introduced as the organization's Conditional Access architecture matures.
 
 ---
 
@@ -124,9 +128,11 @@ A simple policy is easier to test and troubleshoot.
 
 ### Primary Grant Control
 
-Require multifactor authentication.
+The primary grant control is:
 
-The user must successfully complete an approved MFA method before access is granted.
+**Require Multifactor Authentication**
+
+The user must successfully complete an approved MFA challenge before access is granted.
 
 ### Decision Model
 
@@ -150,6 +156,8 @@ MFA Challenge
       Access Denied
 ```
 
+The MFA requirement provides an additional layer of protection if the user's password has been compromised.
+
 ---
 
 ## 8. Policy Mode
@@ -169,7 +177,9 @@ Pilot Testing
 Production Enforcement
 ```
 
-The policy should not immediately be enabled for all users without testing.
+The policy should not immediately be enforced across all users without appropriate testing.
+
+Report-only mode should be used where appropriate to evaluate the potential impact of the policy before enforcement.
 
 ---
 
@@ -177,11 +187,9 @@ The policy should not immediately be enabled for all users without testing.
 
 Before production enforcement, the policy should be tested with a controlled pilot group.
 
-### Test Scenarios
+### Test 1 — Standard User
 
-#### Test 1 — Standard User
-
-Expected result:
+**Expected Result:**
 
 ```text
 User Sign-In
@@ -196,9 +204,9 @@ Successful MFA
 Access Granted
 ```
 
-#### Test 2 — MFA Failure
+### Test 2 — MFA Failure
 
-Expected result:
+**Expected Result:**
 
 ```text
 User Sign-In
@@ -213,9 +221,9 @@ MFA Failure
 Access Denied
 ```
 
-#### Test 3 — Excluded Emergency Account
+### Test 3 — Excluded Emergency Account
 
-Expected result:
+**Expected Result:**
 
 ```text
 Emergency Account
@@ -227,7 +235,7 @@ Policy Exclusion
 Access Remains Available
 ```
 
-This scenario should be carefully monitored and should not be used for normal daily administration.
+Emergency accounts should be carefully protected, monitored, and tested. They should not be used for normal daily administration.
 
 ---
 
@@ -236,52 +244,58 @@ This scenario should be carefully monitored and should not be used for normal da
 The policy should consider:
 
 * MFA registration.
-* Recovery methods.
 * Authentication method strength.
+* Account recovery methods.
 * Phishing-resistant authentication where available.
-* Emergency access.
+* Emergency access accounts.
 * Service account dependencies.
-* Legacy applications.
+* Legacy application dependencies.
 * User support requirements.
 
 MFA should not be treated as a complete security solution.
 
-It should be part of a broader identity security architecture.
+It should form part of a broader identity and access security architecture that includes appropriate authentication, device, risk, monitoring, and governance controls.
 
 ---
 
 ## 11. Monitoring
 
-After deployment, administrators should monitor:
+Following deployment, administrators should monitor:
 
 * Sign-in failures.
 * MFA failures.
 * Authentication method issues.
 * User lockouts.
-* Policy failures.
+* Conditional Access policy failures.
 * Unexpected access blocks.
+* Unusual authentication activity.
 
-Conditional Access reporting should be used to understand the effect of the policy.
+Conditional Access reporting should be used to understand the policy's impact and identify unexpected outcomes.
+
+Monitoring should continue after deployment because authentication issues and business requirements may change over time.
 
 ---
 
-## 12. Documentation
+## 12. Documentation Requirements
 
-The following information should be maintained:
+The following information should be maintained for the policy:
 
 * Policy name.
 * Business objective.
-* Included users.
-* Excluded users.
+* Included users and groups.
+* Excluded users and groups.
 * Target resources.
 * Conditions.
 * Grant controls.
-* Session controls.
+* Session controls, where applicable.
 * Policy mode.
-* Owner.
+* Policy owner.
 * Creation date.
 * Last review date.
 * Change history.
+* Approved exceptions.
+
+Maintaining this information improves accountability and supports future troubleshooting and audits.
 
 ---
 
@@ -289,15 +303,15 @@ The following information should be maintained:
 
 If the policy causes unexpected business disruption:
 
-1. Identify the affected users.
-2. Review Conditional Access sign-in results.
-3. Confirm the policy causing the issue.
-4. Temporarily disable or adjust the policy if necessary.
-5. Resolve the underlying issue.
-6. Test again.
-7. Re-enable enforcement.
+1. Identify the affected users or services.
+2. Review the Conditional Access sign-in results.
+3. Confirm the policy responsible for the issue.
+4. Temporarily disable or adjust the policy where necessary.
+5. Investigate and resolve the underlying issue.
+6. Test the revised configuration.
+7. Re-enable enforcement following successful validation.
 
-Emergency access procedures should be documented before broad enforcement.
+Emergency access procedures should be documented and tested before broad policy enforcement.
 
 ---
 
@@ -326,14 +340,17 @@ MFA Required
 
 ## 15. Final Principle
 
-> **MFA should protect user access while Conditional Access policies are deployed through a controlled, tested, and monitored process.**
+> **MFA should protect user access while Conditional Access policies are deployed through a controlled, tested, monitored, and recoverable process.**
 
-The organization should never treat a security policy as successful merely because it has been enabled.
+The organization should not consider a security policy successful merely because it has been enabled.
 
-A successful policy must be:
+A successful Conditional Access policy must be:
 
 * Correctly scoped.
-* Tested.
-* Monitored.
+* Properly tested.
+* Continuously monitored.
 * Understood by administrators.
-* Recoverable if problems occur.
+* Documented.
+* Recoverable if unexpected issues occur.
+
+The objective is to improve security without creating unnecessary business disruption or administrative lockout.
