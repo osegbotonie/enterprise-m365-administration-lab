@@ -4,7 +4,9 @@
 
 This document provides a consolidated view of the core Conditional Access policies designed for the Microsoft 365 environment of Tonie-Osegbo Technologies Limited.
 
-The purpose of the matrix is to show how individual policies work together to create a layered identity and access security architecture.
+The purpose of this matrix is to demonstrate how the individual policies operate together to establish a layered identity and access security architecture.
+
+Conditional Access policies should not be treated as isolated controls. Their effectiveness is achieved through the combined evaluation of user identity, privilege, authentication method, device security, and risk context.
 
 ---
 
@@ -14,7 +16,7 @@ The purpose of the matrix is to show how individual policies work together to cr
 | ------ | ----------------------------- | ------------------------------------------------ | --------------------------------------------- |
 | CA-001 | Require MFA                   | Protect user accounts from compromised passwords | Require MFA                                   |
 | CA-002 | Protect Administrative Access | Protect privileged accounts                      | Strong authentication and additional controls |
-| CA-003 | Block Legacy Authentication   | Reduce weak authentication attack surface        | Block legacy authentication                   |
+| CA-003 | Block Legacy Authentication   | Reduce exposure to weak authentication methods   | Block legacy authentication                   |
 | CA-004 | Require Compliant Devices     | Restrict access from insecure devices            | Require compliant device                      |
 | CA-005 | Risk-Based Access             | Respond to suspicious access attempts            | Additional verification or block              |
 
@@ -22,9 +24,17 @@ The purpose of the matrix is to show how individual policies work together to cr
 
 ## 3. Policy Relationship
 
-The policies should not be viewed as isolated controls.
+The policies should be viewed as interconnected layers within a broader security architecture.
 
-They form a layered security model:
+The access decision may consider multiple factors, including:
+
+* User identity.
+* Administrative privilege.
+* Authentication method.
+* Device compliance.
+* Sign-in risk.
+
+The relationship between the core policies is illustrated below:
 
 ```text id="6idqdy"
                  ┌──────────────────────┐
@@ -75,21 +85,21 @@ They form a layered security model:
 
 ## 4. Decision Matrix
 
-| Scenario                         | MFA            | Admin Controls | Legacy Auth | Compliant Device         | Risk Evaluation | Outcome             |
-| -------------------------------- | -------------- | -------------- | ----------- | ------------------------ | --------------- | ------------------- |
-| Standard user, trusted sign-in   | Required       | Not applicable | Modern      | Compliant                | Low             | Allow               |
-| Standard user, risky sign-in     | Required       | Not applicable | Modern      | Compliant                | Medium          | Additional controls |
-| Standard user, high-risk sign-in | Required       | Not applicable | Modern      | Compliant                | High            | Block or remediate  |
-| Administrator, trusted sign-in   | Required       | Required       | Modern      | Compliant where required | Low             | Allow               |
-| Administrator, high-risk sign-in | Required       | Required       | Modern      | Compliant where required | High            | Block or remediate  |
-| Legacy authentication attempt    | Not applicable | Not applicable | Blocked     | Not applicable           | Any             | Block               |
-| Non-compliant device             | Required       | May apply      | Modern      | Not compliant            | Any             | Block or remediate  |
+| Scenario                         | MFA      | Admin Controls | Authentication | Device Status            | Risk Evaluation | Outcome             |
+| -------------------------------- | -------- | -------------- | -------------- | ------------------------ | --------------- | ------------------- |
+| Standard user, trusted sign-in   | Required | Not applicable | Modern         | Compliant                | Low             | Allow               |
+| Standard user, risky sign-in     | Required | Not applicable | Modern         | Compliant                | Medium          | Additional controls |
+| Standard user, high-risk sign-in | Required | Not applicable | Modern         | Compliant                | High            | Block or remediate  |
+| Administrator, trusted sign-in   | Required | Required       | Modern         | Compliant where required | Low             | Allow               |
+| Administrator, high-risk sign-in | Required | Required       | Modern         | Compliant where required | High            | Block or remediate  |
+| Legacy authentication attempt    | N/A      | N/A            | Legacy         | N/A                      | Any             | Block               |
+| Non-compliant device             | Required | May apply      | Modern         | Non-compliant            | Any             | Block or remediate  |
 
 ---
 
 ## 5. Access Decision Framework
 
-The overall decision process is:
+The overall access decision process is:
 
 ```text id="tr5n9w"
 Access Request
@@ -98,7 +108,7 @@ Access Request
 Identify User
       │
       ▼
-Is MFA Required?
+Determine MFA Requirement
       │
       ▼
 Is the User an Administrator?
@@ -122,17 +132,19 @@ Conditional Access Decision
       └── Block
 ```
 
+The exact evaluation order may vary depending on the applicable policies and Microsoft Entra configuration. The key principle is that the final access decision should reflect the combined security requirements applicable to the request.
+
 ---
 
 ## 6. Layered Security Model
 
-The architecture applies multiple security layers:
+The Conditional Access architecture applies multiple security layers.
 
 ### Layer 1 — Identity
 
 **CA-001 — Require MFA**
 
-Protects against password compromise.
+Protects user accounts against unauthorized access resulting from compromised passwords.
 
 ---
 
@@ -140,7 +152,7 @@ Protects against password compromise.
 
 **CA-002 — Protect Administrative Access**
 
-Applies stronger controls to privileged users.
+Applies stronger authentication and security requirements to privileged users and administrative access.
 
 ---
 
@@ -148,7 +160,7 @@ Applies stronger controls to privileged users.
 
 **CA-003 — Block Legacy Authentication**
 
-Reduces exposure to weaker authentication methods.
+Reduces exposure to authentication methods that do not support modern identity security controls.
 
 ---
 
@@ -156,7 +168,7 @@ Reduces exposure to weaker authentication methods.
 
 **CA-004 — Require Compliant Devices**
 
-Ensures that device security is considered during access decisions.
+Ensures that the security condition of the device is considered as part of the access decision.
 
 ---
 
@@ -164,13 +176,13 @@ Ensures that device security is considered during access decisions.
 
 **CA-005 — Risk-Based Access**
 
-Responds to suspicious users and sign-in attempts.
+Responds to suspicious users, risky sign-ins, and other relevant risk signals.
 
 ---
 
 ## 7. Policy Deployment Model
 
-All policies should follow a controlled deployment process:
+All Conditional Access policies should follow a controlled deployment process:
 
 ```text id="z7f8ar"
 Business Requirement
@@ -197,11 +209,13 @@ Production Enforcement
 Periodic Review
 ```
 
+Policies should not be broadly enforced without appropriate testing and validation.
+
 ---
 
 ## 8. Policy Interaction
 
-Multiple policies may apply to a single access request.
+Multiple Conditional Access policies may apply to a single access request.
 
 For example:
 
@@ -224,7 +238,7 @@ Acceptable Risk
 Access Granted
 ```
 
-If any critical security requirement is not satisfied:
+If a critical security requirement is not satisfied:
 
 ```text id="q1ot2u"
 Security Requirement Not Satisfied
@@ -237,28 +251,32 @@ Security Requirement Not Satisfied
           Block
 ```
 
+Policy interactions should be tested collectively to identify unexpected conflicts, excessive authentication requirements, or unintended access blocks.
+
 ---
 
 ## 9. Policy Governance
 
-Every policy should have:
+Every Conditional Access policy should have:
 
 * A documented business objective.
 * A defined owner.
-* A clear scope.
+* A clearly defined scope.
 * Documented exclusions.
 * A testing plan.
 * A monitoring plan.
 * A rollback plan.
-* A review date.
+* A defined review date.
+* A documented change history.
 
 Policies should be reviewed when:
 
-* The organization changes its technology environment.
-* New applications are introduced.
+* The organization's technology environment changes.
+* New applications or services are introduced.
 * Security threats change.
 * Business requirements change.
 * The organization's risk appetite changes.
+* The policy no longer achieves its intended security objective.
 
 ---
 
@@ -273,7 +291,9 @@ Exceptions should be:
 * Reviewed periodically.
 * Removed when no longer required.
 
-A security exception should never become a permanent undocumented bypass.
+Each exception should include a defined business justification, risk assessment, compensating controls, and review or expiry date where appropriate.
+
+A security exception should never become a permanent, undocumented bypass of the organization's security controls.
 
 ---
 
@@ -284,16 +304,18 @@ The organization should monitor:
 * Conditional Access results.
 * Authentication failures.
 * MFA failures.
-* Risky sign-ins.
+* Risky users and sign-ins.
 * Non-compliant devices.
 * Legacy authentication attempts.
-* Administrative access.
-* Policy changes.
+* Administrative access activity.
+* Conditional Access policy changes.
 
-Monitoring should help identify both:
+Monitoring should help the organization identify both:
 
-* Security threats.
+* Potential security threats.
 * Unintended business disruption.
+
+The results of monitoring should support continuous improvement of the Conditional Access architecture.
 
 ---
 
@@ -338,16 +360,16 @@ Monitoring should help identify both:
                   └───────┬───────┘
                           │
                           ▼
-                  ┌───────────────┐
+                  ┌────────────────┐
                   │ ACCESS DECISION│
-                  └───────────────┘
+                  └────────────────┘
 ```
 
 ---
 
 ## 13. Final Principle
 
-Conditional Access should be designed as a coordinated security architecture rather than a collection of unrelated policies.
+Conditional Access should be designed as a coordinated security architecture rather than as a collection of unrelated policies.
 
 The organization should continuously evaluate:
 
@@ -363,6 +385,6 @@ The organization should continuously evaluate:
 
 > **What is the current risk?**
 
-The final access decision should be based on the total security context of the request.
+The final access decision should be based on the overall security context of the request.
 
 > **Trust should be continuously evaluated rather than permanently assumed.**
