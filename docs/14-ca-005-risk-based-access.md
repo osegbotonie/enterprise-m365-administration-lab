@@ -36,7 +36,7 @@ The objective of this policy is to evaluate relevant risk signals and apply an a
 
 ## 3. Risk-Based Access Model
 
-```text id="o7s4sm"
+```text
 Sign-In Attempt
       │
       ▼
@@ -95,7 +95,7 @@ These signals can be evaluated together to support more informed access decision
 
 ## 5. Security Decision Model
 
-```text id="bcd5gq"
+```text
 User
   │
   ▼
@@ -130,7 +130,7 @@ The security response should be proportional to the identified level of risk.
 
 Possible action:
 
-```text id="d86i2q"
+```text
 Low Risk
    │
    ▼
@@ -148,7 +148,7 @@ A low-risk authentication attempt may proceed through the organization's normal 
 
 Possible actions:
 
-```text id="f1utzu"
+```text
 Medium Risk
     │
     ▼
@@ -169,7 +169,7 @@ Additional controls may be required before access is granted.
 
 Possible actions:
 
-```text id="5x4j5t"
+```text
 High Risk
    │
    ▼
@@ -203,7 +203,7 @@ Privileged administrators may require stronger controls because compromise of an
 
 The policy should follow a controlled deployment process:
 
-```text id="7s5o6k"
+```text
 Risk Configuration
         │
         ▼
@@ -235,7 +235,7 @@ This process helps the organization understand the behaviour and accuracy of ris
 
 Expected result:
 
-```text id="q7fwqa"
+```text
 Low-Risk Sign-In
        │
        ▼
@@ -251,7 +251,7 @@ Access Granted
 
 Expected result:
 
-```text id="q35k08"
+```text
 Medium-Risk Sign-In
         │
         ▼
@@ -267,7 +267,7 @@ Access Granted After Successful Verification
 
 Expected result:
 
-```text id="o4n5wz"
+```text
 High-Risk Sign-In
         │
         ▼
@@ -283,7 +283,7 @@ The organization should validate that the response is appropriate to the level o
 
 Risk-based access should integrate with the organization's security incident response process.
 
-```text id="4ud4sn"
+```text
 Risk Detected
      │
      ▼
@@ -354,7 +354,7 @@ Exceptions should be minimized and reviewed regularly.
 
 Risk-based access should operate alongside the other Conditional Access controls:
 
-```text id="h9b9u5"
+```text
 CA-001 — Require MFA
         │
         +
@@ -383,7 +383,7 @@ Together, these policies create a layered access control model based on:
 
 ## 14. Overall Conditional Access Architecture
 
-```text id="uv4h85"
+```text
 User
  │
  ▼
@@ -429,7 +429,7 @@ Any temporary exception should be documented, approved where required, and revie
 
 ## 16. Final Policy Model
 
-```text id="t4v8dz"
+```text
 Access Request
       │
       ▼
