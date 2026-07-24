@@ -16,15 +16,15 @@
 
 The objective of this policy is to reduce the risk of unauthorized access resulting from compromised usernames and passwords.
 
-A password alone should not be considered sufficient protection for access to organizational Microsoft 365 resources.
+A password alone should not be considered sufficient protection for access to the organization's Microsoft 365 resources.
 
-This policy introduces an additional authentication requirement when users access protected cloud resources.
+This policy requires users to complete an additional authentication challenge before access is granted to protected cloud resources.
 
 ---
 
 ## 3. Security Problem
 
-User accounts may be compromised through:
+User accounts can be compromised through several methods, including:
 
 * Password reuse.
 * Phishing.
@@ -34,7 +34,7 @@ User accounts may be compromised through:
 * Social engineering.
 * Data breaches.
 
-If an attacker obtains a user's password, Multifactor Authentication (MFA) provides an additional security barrier before access is granted.
+If an attacker obtains a user's password, Multifactor Authentication (MFA) provides an additional layer of protection before access is granted.
 
 ### Risk Model
 
@@ -64,26 +64,32 @@ MFA Requirement
              Access Blocked
 ```
 
+MFA does not eliminate the risk of account compromise, but it significantly reduces the likelihood that a stolen password alone will be sufficient to access organizational resources.
+
 ---
 
 ## 4. Policy Scope
 
 ### Users Included
 
-The policy should include:
+The initial policy scope should include:
 
 * Standard employee accounts.
-* Other appropriate cloud user accounts within the approved scope of the rollout.
+* Other appropriate cloud user accounts included in the approved rollout.
+
+The exact scope should be confirmed during implementation to ensure that the policy is applied consistently to the intended user population.
 
 ### Users Excluded
 
-The following should be carefully considered before exclusion:
+The following should be carefully evaluated before exclusion:
 
 * Emergency access accounts.
 * Approved service accounts, where technically necessary.
 * Accounts with documented and approved technical exceptions.
 
 Exclusions should be minimized, formally approved where appropriate, and documented.
+
+Emergency access accounts should be excluded only where necessary to prevent administrative lockout and should be subject to separate security controls and monitoring.
 
 ---
 
@@ -102,7 +108,9 @@ Potential targets include:
 * OneDrive.
 * Microsoft Entra administrative portals.
 
-The initial scope should be carefully defined to ensure that the policy provides meaningful security protection without causing unnecessary business disruption.
+The initial scope should be carefully defined to provide meaningful security protection without causing unnecessary business disruption.
+
+The policy should be tested against the actual applications and services in scope before production enforcement.
 
 ---
 
@@ -156,7 +164,7 @@ MFA Challenge
       Access Denied
 ```
 
-The MFA requirement provides an additional layer of protection if the user's password has been compromised.
+This control provides an additional layer of protection when a user's password has been compromised.
 
 ---
 
@@ -177,9 +185,11 @@ Pilot Testing
 Production Enforcement
 ```
 
-The policy should not immediately be enforced across all users without appropriate testing.
+The policy should not be immediately enforced across all users without appropriate testing.
 
 Report-only mode should be used where appropriate to evaluate the potential impact of the policy before enforcement.
+
+The pilot should include representative users and applications so that the organization can identify authentication issues before the policy is broadly enforced.
 
 ---
 
@@ -237,6 +247,23 @@ Access Remains Available
 
 Emergency accounts should be carefully protected, monitored, and tested. They should not be used for normal daily administration.
 
+### Test 4 — Multiple Applicable Policies
+
+The organization should also verify how this policy behaves when other Conditional Access policies apply to the same sign-in.
+
+For example:
+
+```text
+CA-001: Require MFA
+        +
+CA-004: Require Compliant Device
+        │
+        ▼
+Combined Access Decision
+```
+
+This is important because the final access decision may be affected by the combined requirements of multiple policies.
+
 ---
 
 ## 10. Security Considerations
@@ -254,7 +281,7 @@ The policy should consider:
 
 MFA should not be treated as a complete security solution.
 
-It should form part of a broader identity and access security architecture that includes appropriate authentication, device, risk, monitoring, and governance controls.
+It should form part of a broader identity and access security architecture that includes appropriate authentication, device security, risk-based controls, monitoring, and governance.
 
 ---
 
@@ -272,7 +299,7 @@ Following deployment, administrators should monitor:
 
 Conditional Access reporting should be used to understand the policy's impact and identify unexpected outcomes.
 
-Monitoring should continue after deployment because authentication issues and business requirements may change over time.
+Monitoring should continue after deployment because authentication issues, application dependencies, and business requirements may change over time.
 
 ---
 
@@ -295,7 +322,7 @@ The following information should be maintained for the policy:
 * Change history.
 * Approved exceptions.
 
-Maintaining this information improves accountability and supports future troubleshooting and audits.
+Maintaining this information improves accountability and supports future troubleshooting, audits, and security reviews.
 
 ---
 
@@ -304,12 +331,14 @@ Maintaining this information improves accountability and supports future trouble
 If the policy causes unexpected business disruption:
 
 1. Identify the affected users or services.
-2. Review the Conditional Access sign-in results.
+2. Review the relevant Conditional Access sign-in results.
 3. Confirm the policy responsible for the issue.
 4. Temporarily disable or adjust the policy where necessary.
 5. Investigate and resolve the underlying issue.
 6. Test the revised configuration.
 7. Re-enable enforcement following successful validation.
+
+The rollback process should be documented and accessible to authorized administrators.
 
 Emergency access procedures should be documented and tested before broad policy enforcement.
 
@@ -350,7 +379,7 @@ A successful Conditional Access policy must be:
 * Properly tested.
 * Continuously monitored.
 * Understood by administrators.
-* Documented.
+* Properly documented.
 * Recoverable if unexpected issues occur.
 
 The objective is to improve security without creating unnecessary business disruption or administrative lockout.
