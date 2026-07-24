@@ -2,38 +2,39 @@
 
 ## 1. Overview
 
-Conditional Access is a policy-based access control capability that evaluates contextual signals before determining whether a user should be allowed to access organizational resources.
+Conditional Access is a policy-based access control capability that evaluates the context of an access request before determining whether access should be granted.
 
-Rather than relying solely on a username and password, Conditional Access enables the organization to make access decisions based on the circumstances surrounding each sign-in attempt.
+Rather than relying solely on a username and password, Conditional Access enables the organization to evaluate additional signals associated with a sign-in attempt and apply appropriate security controls.
 
-The Microsoft 365 environment of Tonie-Osegbo Technologies Limited should consider signals such as:
+For Tonie-Osegbo Technologies Limited, Conditional Access should consider signals such as:
 
-* User identity.
+* User identity and group membership.
 * User risk.
 * Sign-in risk.
-* Device status.
+* Device state and compliance.
 * Application being accessed.
-* Sign-in location.
-* Authentication method and strength.
-* Access requirements.
-* Other relevant security signals.
+* Sign-in location and network context.
+* Authentication method and authentication strength.
+* Session context.
+* Other relevant identity and security signals.
 
-The outcome of the evaluation may be to:
+Based on the conditions evaluated, the organization may:
 
 * Allow access.
-* Require additional authentication.
-* Require a compliant device.
+* Require multifactor authentication.
 * Require a specific authentication strength.
+* Require a compliant device.
+* Require additional remediation.
+* Apply session controls.
 * Block access.
-* Require the user to remediate a security risk.
 
-The objective is to ensure that access decisions are appropriate to the security context of each request.
+The objective is not to apply the same control to every access request. The objective is to apply controls that are appropriate to the security context and business sensitivity of each request.
 
 ---
 
 ## 2. Conditional Access Decision Model
 
-The general decision model is:
+The general access decision process is:
 
 ```text
 User
@@ -45,8 +46,9 @@ Authentication Attempt
   ├── What is the user's risk level?
   ├── What is the sign-in risk?
   ├── What device is being used?
+  ├── Is the device compliant?
   ├── What application is being accessed?
-  ├── Where is the sign-in occurring?
+  ├── Where is the sign-in coming from?
   └── What authentication method is being used?
           │
           ▼
@@ -55,46 +57,61 @@ Authentication Attempt
           ▼
       Access Decision
           │
-     ┌────┼────┬──────────┐
-     ▼    ▼    ▼          ▼
-   Allow  MFA  Compliant  Block
-             Device
+     ┌────┼────────┬────────┐
+     ▼    ▼        ▼        ▼
+   Allow  MFA   Compliant  Block
+                Device
 ```
 
-Conditional Access policies are evaluated based on the conditions and controls configured by the organization.
+A single sign-in may be affected by multiple Conditional Access policies.
 
-Multiple policies may apply to the same sign-in. The combined requirements of the applicable policies must therefore be considered when designing and testing the environment.
+For example:
+
+```text
+Policy 1: Require MFA
+        +
+Policy 2: Require Compliant Device
+        +
+Policy 3: Block High-Risk Sign-Ins
+        │
+        ▼
+Combined Access Requirements
+```
+
+Conditional Access policies must therefore be designed and tested as part of a complete architecture rather than as isolated rules.
 
 ---
 
-## 3. Core Conditional Access Principles
+## 3. Conditional Access Design Principles
 
-Conditional Access policies should follow the following principles:
+The Conditional Access architecture should follow these principles:
 
-1. Each policy should address a clearly defined business or security requirement.
+1. Every policy should address a clearly defined business or security requirement.
 2. Policies should apply the least restrictive control capable of achieving the required security objective.
-3. Access should be based on the principle of least privilege.
-4. Emergency access accounts should be protected from accidental tenant lockout.
-5. Policies should be tested before broad enforcement.
-6. Report-only mode should be used where appropriate during testing.
-7. Policy results should be monitored after deployment.
-8. Policies should be reviewed regularly.
-9. Policy exclusions should be documented and justified.
-10. The combined effect of multiple policies should be considered during testing.
+3. High-risk access should receive stronger controls than low-risk access.
+4. Privileged administrative access should receive stronger protection than ordinary user access.
+5. Emergency access accounts must be protected against accidental tenant lockout.
+6. Policies should be tested before broad enforcement.
+7. Report-only mode should be used during the initial testing phase where appropriate.
+8. Policy exclusions should be limited, documented, and regularly reviewed.
+9. The combined effect of multiple policies must be considered.
+10. Policy changes should be documented and governed.
+11. Conditional Access policies should be reviewed periodically.
+12. Security should be balanced with legitimate business requirements and user experience.
 
-Conditional Access should not be implemented as a collection of isolated policies. The policies should operate as part of a coherent access control architecture.
+Conditional Access should be treated as a coordinated access control architecture, not as a collection of unrelated security policies.
 
 ---
 
-# 4. Policy: Require Multifactor Authentication
+## 4. Policy: Require Multifactor Authentication
 
-## Objective
+### Objective
 
 The objective of this policy is to reduce the risk of unauthorized access resulting from compromised passwords.
 
 A password alone should not be considered sufficient protection for access to important organizational resources.
 
-### Policy Concept
+### General Model
 
 ```text
 User
@@ -115,26 +132,24 @@ Successful Authentication
 Access Granted
 ```
 
-### Recommended Scope
-
 The policy should be designed to protect:
 
 * Standard users.
 * Administrative users.
 * Sensitive applications.
-* High-value organizational resources.
+* Important organizational resources.
 
-Privileged administrators should receive stronger authentication requirements where supported and appropriate.
+The authentication requirement should be appropriate to the sensitivity of the resource and the risk associated with the sign-in.
 
-The exact authentication requirement should be based on the sensitivity of the resource and the level of risk associated with the sign-in.
+Privileged administrators should be subject to stronger authentication requirements where supported and appropriate.
 
 ---
 
-# 5. Policy: Protect Administrative Access
+## 5. Policy: Protect Administrative Access
 
-Administrative accounts have the ability to make changes that may affect the entire Microsoft 365 environment.
+Administrative accounts can make changes that affect the security and operation of the Microsoft 365 environment.
 
-They should therefore receive stronger protection than ordinary user accounts.
+They should therefore be protected more strongly than ordinary user accounts.
 
 ### Example
 
@@ -151,7 +166,7 @@ Conditional Access Evaluation
 Strong Authentication
         │
         ▼
-Additional Controls
+Additional Security Controls
         │
         ▼
 Access Granted
@@ -160,19 +175,23 @@ Access Granted
 Additional controls may include:
 
 * Multifactor authentication.
-* Strong authentication methods.
+* Strong authentication requirements.
 * Phishing-resistant authentication where available.
 * Compliant device requirements.
-* Restricted administrative access conditions.
 * Risk-based controls.
+* Restrictions on access from untrusted conditions.
 
-Administrative access should also be reviewed and monitored regularly.
+Administrative access should also be monitored and reviewed regularly.
+
+The principle is:
+
+> **Administrative access should be subject to a higher level of security assurance because of the potential impact of compromise.**
 
 ---
 
-# 6. Policy: Require Compliant Devices
+## 6. Policy: Require Compliant Devices
 
-Where device management has been implemented, access to selected corporate resources may require the device to meet defined compliance requirements.
+Where Microsoft Intune and device management have been implemented, access to selected organizational resources may require the device to meet defined compliance requirements.
 
 ### Decision Model
 
@@ -196,21 +215,23 @@ Possible compliance requirements may include:
 * Supported operating system.
 * Required security updates.
 * Screen lock requirements.
-* Minimum password or authentication requirements.
-* Security software requirements.
+* Minimum device security configuration.
+* Required security software.
 * Organizational configuration requirements.
 
-The requirement for a compliant device should be applied according to the sensitivity of the resource and the organization's business requirements.
+The requirement for a compliant device should be based on the sensitivity of the resource.
 
-Not every resource necessarily requires the same device controls.
+For example, access to a highly sensitive administrative or corporate resource may require a compliant managed device, while a less sensitive resource may have different requirements.
+
+Not every resource needs to have identical device requirements.
 
 ---
 
-# 7. Policy: Block Legacy Authentication
+## 7. Policy: Block Legacy Authentication
 
 Legacy authentication methods may not support modern security controls such as multifactor authentication and modern authentication policies.
 
-The organization should therefore evaluate blocking legacy authentication methods where technically and operationally appropriate.
+The organization should therefore block legacy authentication methods where technically and operationally appropriate.
 
 ### Model
 
@@ -224,17 +245,32 @@ Conditional Access Evaluation
           Block
 ```
 
-Blocking legacy authentication can reduce exposure to authentication methods that do not support modern security protections.
+Blocking legacy authentication reduces exposure to authentication methods that cannot adequately support modern security controls.
 
-Before enforcement, the organization should identify any legitimate business applications or services that may still depend on legacy authentication.
+Before enforcement, the organization should identify:
 
-Any exceptions should be documented, reviewed, and minimized.
+* Legacy applications.
+* Devices.
+* Services.
+* Business processes.
+
+that may still depend on legacy authentication.
+
+Any required exception should be:
+
+* Documented.
+* Business-justified.
+* Limited in scope.
+* Regularly reviewed.
+* Removed when no longer required.
+
+The preferred approach should be to modernize the dependency rather than maintain a permanent exception.
 
 ---
 
-# 8. Policy: Risk-Based Access
+## 8. Policy: Risk-Based Access
 
-The organization should use available identity and sign-in risk signals to make more informed access decisions.
+Where the appropriate Microsoft Entra capabilities and licensing are available, the organization should use identity and sign-in risk signals to make more informed access decisions.
 
 ### Example
 
@@ -254,39 +290,40 @@ Risk Evaluation
 Risk-based controls may require the user to:
 
 * Complete additional authentication.
-* Change a compromised credential.
+* Remediate a compromised account.
+* Change a compromised credential where applicable.
 * Complete a security remediation process.
 * Wait for an investigation.
 * Be blocked from accessing the resource.
 
-Risk-based policies should be implemented carefully and monitored to reduce false positives and unnecessary disruption to legitimate users.
+Risk-based policies should be implemented carefully and monitored after deployment.
+
+The organization should review false positives and legitimate business impact to ensure that the policy provides effective protection without creating unnecessary disruption.
 
 ---
 
-# 9. Emergency Access Considerations
+## 9. Emergency Access Account Considerations
 
 Emergency access accounts require special consideration when designing Conditional Access policies.
 
-A poorly designed policy could unintentionally block all administrators from accessing the tenant.
+A poorly designed policy could unintentionally block all normal administrative access and create a tenant lockout situation.
 
-This could create a tenant lockout situation.
+Emergency access accounts should therefore:
 
-Therefore:
+* Be protected using appropriate security controls.
+* Be excluded from specific policies where necessary to preserve emergency access.
+* Be limited to emergency use.
+* Be monitored closely.
+* Be tested periodically.
+* Be subject to strict governance.
 
-* Emergency access accounts should be protected.
-* Emergency access accounts should be monitored.
-* Emergency access accounts should be excluded from policies where necessary to prevent administrative lockout.
-* Exclusions should be limited and documented.
-* Emergency access procedures should be documented.
-* Emergency access should be tested periodically.
+Any exclusion should be carefully documented.
 
-Emergency accounts should not be treated as normal user accounts.
-
-Their use should generate appropriate monitoring and review.
+Emergency access accounts should not be treated as normal user accounts, and their use should trigger appropriate monitoring and investigation.
 
 ---
 
-# 10. Policy Deployment Lifecycle
+## 10. Policy Deployment Lifecycle
 
 Conditional Access policies should follow a controlled deployment process.
 
@@ -297,7 +334,7 @@ Business Requirement
 Policy Design
         │
         ▼
-Identify Users and Exclusions
+Identify Scope and Exclusions
         │
         ▼
 Report-Only Testing
@@ -321,20 +358,22 @@ Periodic Review
 Before a policy is enforced broadly, the organization should consider:
 
 * Who will be affected?
-* Who should be excluded?
-* What applications are affected?
+* Which applications are affected?
+* Which users or groups should be excluded?
 * What user experience will result?
 * Could the policy create administrative lockout?
-* Could the policy disrupt business operations?
-* What is the rollback or recovery procedure?
+* Could the policy disrupt a critical business process?
+* What is the recovery or rollback process?
+
+The organization should maintain a clear record of policy changes and their expected impact.
 
 ---
 
-# 11. Policy Naming Convention
+## 11. Conditional Access Policy Naming Convention
 
 Conditional Access policies should use a consistent naming convention.
 
-The following format is recommended:
+The recommended format is:
 
 ```text
 CA-[NUMBER]-[PURPOSE]
@@ -350,21 +389,29 @@ CA-004-Require-Compliant-Device
 CA-005-Risk-Based-Access
 ```
 
-A consistent naming convention makes it easier for administrators to identify the purpose of a policy during administration, troubleshooting, and security investigations.
+The naming convention should make the purpose of the policy clear to an administrator reviewing the environment.
+
+A consistent naming convention also improves:
+
+* Troubleshooting.
+* Change management.
+* Security investigations.
+* Documentation.
+* Policy reviews.
 
 ---
 
-# 12. Policy Documentation Requirements
+## 12. Conditional Access Policy Documentation
 
-Each Conditional Access policy should be documented.
+Each policy should be documented sufficiently for another administrator to understand its purpose and operation.
 
-The documentation should include:
+Documentation should include:
 
 * Policy name.
-* Business objective.
+* Business and security objective.
 * Users and groups included.
 * Users and groups excluded.
-* Cloud applications covered.
+* Target cloud applications.
 * Conditions.
 * Grant controls.
 * Session controls.
@@ -376,15 +423,17 @@ The documentation should include:
 * Review date.
 * Documented exceptions.
 
-A policy should be understandable to another administrator who was not involved in its original creation.
+Policy documentation should also explain the reason for any significant exclusion.
+
+A policy should be understandable to an administrator who was not involved in its original design.
 
 ---
 
-# 13. Policy Conflict Considerations
+## 13. Policy Interaction and Conflict Management
 
 Multiple Conditional Access policies may apply to the same sign-in.
 
-The final access decision may therefore be affected by the combined requirements of several policies.
+The final access result may therefore be affected by the combined requirements of several policies.
 
 For example:
 
@@ -399,66 +448,61 @@ Policy 3: Block High-Risk Sign-In
 Combined Access Decision
 ```
 
-Policies should therefore be designed and tested as part of the wider Conditional Access architecture.
+Policies should therefore be tested together where their scopes overlap.
 
-Testing policies individually is not always sufficient.
-
-The organization should avoid:
+The organization should specifically look for:
 
 * Unexpected access blocks.
 * Conflicting requirements.
 * Excessive authentication prompts.
 * Administrative lockout.
 * Unnecessary user friction.
-* Unintended gaps in protection.
+* Unintended protection gaps.
+
+A policy that appears correct in isolation may still create an undesirable result when combined with other policies.
 
 ---
 
-# 14. Recommended Initial Policy Set
+## 14. Recommended Initial Conditional Access Policy Set
 
-The initial Conditional Access architecture should consider the following policies.
+The initial Conditional Access architecture should include the following policy areas.
 
-## CA-001 — Require MFA
+### CA-001 — Require MFA
 
 **Objective:**
-
 Protect user accounts from the impact of compromised passwords.
 
 ---
 
-## CA-002 — Protect Administrative Access
+### CA-002 — Protect Administrative Access
 
 **Objective:**
-
 Apply stronger authentication and access requirements to administrative accounts.
 
 ---
 
-## CA-003 — Block Legacy Authentication
+### CA-003 — Block Legacy Authentication
 
 **Objective:**
-
 Reduce exposure to authentication methods that do not support modern security controls.
 
 ---
 
-## CA-004 — Require Compliant Devices
+### CA-004 — Require Compliant Devices
 
 **Objective:**
-
 Restrict access to selected organizational resources from devices that do not meet defined compliance requirements.
 
 ---
 
-## CA-005 — Risk-Based Access
+### CA-005 — Risk-Based Access
 
 **Objective:**
-
 Respond appropriately to risky users and sign-in attempts.
 
 ---
 
-## 15. Governance
+## 15. Policy Governance
 
 Conditional Access policies should be:
 
@@ -475,9 +519,53 @@ Changes to high-impact policies should be appropriately documented and, where re
 
 Policy exclusions should receive particular attention because an exclusion can create an unintended security gap.
 
+The organization should also maintain a clear process for:
+
+* Policy change requests.
+* Testing.
+* Approval.
+* Deployment.
+* Monitoring.
+* Rollback.
+* Periodic review.
+
 ---
 
-## 16. Final Principle
+## 16. Conditional Access Architecture
+
+The overall architecture can be represented as:
+
+```text
+Access Request
+      │
+      ▼
+User Identity
+      │
+      ├── User Risk
+      ├── Sign-In Risk
+      ├── Device State
+      ├── Application
+      ├── Location
+      ├── Authentication Strength
+      └── Other Security Signals
+              │
+              ▼
+      Conditional Access Policies
+              │
+              ▼
+        Access Decision
+              │
+      ┌───────┼────────┬────────┐
+      ▼       ▼        ▼        ▼
+    Allow     MFA    Compliant  Block
+                      Device
+```
+
+This model supports a Zero Trust approach by requiring access decisions to be based on the context of the request rather than simply trusting a user because valid credentials were presented.
+
+---
+
+## 17. Final Principle
 
 Conditional Access should not be viewed as a collection of unrelated security policies.
 
@@ -498,4 +586,4 @@ The central principle is:
 
 The objective is not simply to block access.
 
-The objective is to provide the appropriate level of access based on the security context of each request while maintaining a balance between security, usability, and business requirements.
+The objective is to provide the appropriate level of access based on the security context of each request while maintaining a reasonable balance between security, usability, and business requirements.
