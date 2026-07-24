@@ -2,49 +2,53 @@
 
 ## 1. Overview
 
-Attribute-to-Group Mapping defines how employee identity attributes are used to determine group membership within the Microsoft 365 environment of Tonie-Osegbo Technologies Limited.
+Attribute-to-Group Mapping defines how employee identity information can be used to organize users into appropriate Microsoft Entra ID groups within the Tonie-Osegbo Technologies Limited enterprise environment.
 
-The objective is to create a consistent relationship between employee information, group membership, and access management.
+The purpose of this design is to create a consistent relationship between employee information, group membership, and access management.
 
 The model is:
 
 ```text
-HR Data
-   │
-   ▼
+HR / Employee Data
+        │
+        ▼
 Identity Attributes
-   │
-   ▼
+        │
+        ▼
 Group Membership
-   │
-   ▼
+        │
+        ▼
 Access Assignment
-   │
-   ▼
+        │
+        ▼
 Resource Access
 ```
 
-The primary identity attributes used in this model are:
+The primary attributes considered in this design are:
 
-* Department.
-* Job Title.
-* Organizational Level.
-* Office Location.
-* Employment Status.
+* Department
+* Job title or standardized role
+* Organizational level
+* Office location
+* Employment status
 
-The design is intended to reduce unnecessary manual administration while ensuring that access reflects the employee's current business responsibilities.
+The objective is to reduce unnecessary manual administration while ensuring that group membership and access remain aligned with the employee's current business responsibilities.
+
+A key design principle is:
+
+> **Identity attributes describe the employee. Groups organize the employee. Access groups grant access to resources.**
+
+These functions should be kept separate wherever practical.
 
 ---
 
-# 2. Identity Attribute Model
+## 2. Identity Attribute Model
 
-Each employee is represented by a set of identity attributes.
+Each employee is represented by a collection of identity attributes.
 
-### Example
+For example:
 
-**Employee:** John Doe
-
-| Attribute            | Value              |
+| Attribute            | Example Value      |
 | -------------------- | ------------------ |
 | Employee ID          | TOT-0003           |
 | Department           | Network Operations |
@@ -53,21 +57,30 @@ Each employee is represented by a set of identity attributes.
 | Office Location      | Abuja              |
 | Employment Status    | Active             |
 
-These attributes help describe the employee and may be used to determine appropriate group membership.
+These attributes can be used to support:
 
-The quality of the resulting group membership depends on the accuracy of the underlying identity attributes.
+* Group membership.
+* Access assignment.
+* Reporting.
+* Automation.
+* Governance.
+* Identity lifecycle management.
+
+The quality of any automated group membership or access decision depends on the accuracy and consistency of the underlying identity data.
+
+For this reason, attributes used for access-related decisions should be maintained through an agreed process and should have a clear source of authority.
 
 ---
 
 # 3. Attribute-to-Group Relationship
 
-The relationship between employee attributes and groups is:
+The relationship between employee attributes and access can be represented as:
 
 ```text
 Employee Attribute
         │
         ▼
-Attribute Group Membership
+Attribute-Based Group Membership
         │
         ▼
 Access Assignment Logic
@@ -76,89 +89,125 @@ Access Assignment Logic
 Access Group
         │
         ▼
-Resource Access
+Resource
 ```
 
-### Example
-
-**Department:**
-
-```text
-Network Operations
-        ↓
-GRP-DEPT-NetworkOperations
-```
-
-**Job Title:**
-
-```text
-Network Engineer
-        ↓
-GRP-ROLE-NetworkEngineer
-```
-
-**Organizational Level:**
-
-```text
-Senior Staff
-        ↓
-GRP-LEVEL-SeniorStaff
-```
-
-**Office Location:**
-
-```text
-Abuja
-        ↓
-GRP-LOC-Abuja
-```
-
-These groups describe the employee.
-
-They should not automatically be treated as direct permission groups for every resource.
-
----
-
-# 4. Department-Based Membership
-
-Department membership should be based on the employee's department attribute.
-
-### Example Rule
+For example:
 
 ```text
 Department = Network Operations
-        ↓
+        │
+        ▼
 GRP-DEPT-NetworkOperations
 ```
 
-### Potential Members
+```text
+Job Title = Network Engineer
+        │
+        ▼
+GRP-ROLE-NetworkEngineer
+```
 
-* Network Manager.
-* Network Engineer.
-* Senior Network Engineer.
-* Network Operations Analyst.
+```text
+Organizational Level = Senior Staff
+        │
+        ▼
+GRP-LEVEL-SeniorStaff
+```
 
-Department groups may support:
+```text
+Office Location = Abuja
+        │
+        ▼
+GRP-LOC-Abuja
+```
 
-* Department collaboration spaces.
-* Department SharePoint sites.
-* Department communications.
-* Reporting.
-* Access assignment logic.
+These groups describe different aspects of the employee's organizational identity.
 
-Department membership alone should not automatically provide unrestricted access to every resource belonging to the department.
+They should not automatically be treated as direct permission groups for every resource.
+
+Where access is required, the identity information should be used as an input into the access assignment process.
+
+For example:
+
+```text
+Identity Attributes
+        │
+        ▼
+Attribute Groups
+        │
+        ▼
+Access Decision
+        │
+        ▼
+Access Group
+        │
+        ▼
+Resource
+```
+
+This separation makes it easier to understand both:
+
+> **Who the user is**
+
+and:
+
+> **Why the user has access to a particular resource.**
 
 ---
 
-# 5. Role-Based Membership
+# 4. Department-Based Group Membership
 
-Role membership should be based on the employee's current job title or standardized role attribute.
+Department-based membership should reflect the employee's current organizational department.
+
+### Example
+
+```text
+Department = Network Operations
+        │
+        ▼
+GRP-DEPT-NetworkOperations
+```
+
+Potential members may include:
+
+* Network Engineers.
+* Senior Network Engineers.
+* Network Managers.
+* Network Operations Analysts.
+
+Department groups may support:
+
+* Department collaboration.
+* Department communication.
+* SharePoint site membership.
+* Reporting.
+* Automation.
+* Access assignment logic.
+
+However, department membership alone should not automatically provide unrestricted access to all resources belonging to that department.
+
+For example, an employee in the Technology department may still not require access to:
+
+* Privileged administrative tools.
+* Confidential management information.
+* Security systems.
+* Sensitive production infrastructure.
+
+The employee's actual responsibilities and approved access requirements should determine access to those resources.
+
+---
+
+# 5. Role-Based Group Membership
+
+Role-based group membership should represent the employee's current job role or a standardized role classification.
 
 ### Example
 
 ```text
 Job Title = Network Engineer
-        ↓
+        │
+        ▼
 GRP-ROLE-NetworkEngineer
 ```
 
@@ -166,136 +215,146 @@ Another example:
 
 ```text
 Job Title = Network Manager
-        ↓
+        │
+        ▼
 GRP-ROLE-NetworkManager
 ```
 
-Role-based membership should reflect the employee's current position.
+Role-based groups should reflect the employee's current responsibilities.
 
-Historical roles should not automatically continue to determine current membership.
+Where job titles are inconsistent, a standardized role attribute may be more reliable than using free-text job titles directly.
 
-Where job titles are inconsistent, a standardized role attribute may be preferable to relying on free-text job titles.
-
-For example, the following titles may all represent the same standardized role:
+For example, the following titles may represent similar responsibilities:
 
 ```text
 Network Engineer
-Senior Network Engineer
 Network Operations Engineer
+Senior Network Engineer
 ```
 
-Whether these should map to the same role group depends on the organization's access model and the actual responsibilities of each position.
+Whether these roles should be mapped to the same group should depend on the organization's access model and the actual responsibilities of the positions.
+
+The mapping should not be based on the title alone.
+
+A role group should therefore be treated as an input to access decisions rather than an automatic grant of every permission associated with the role.
 
 ---
 
-# 6. Organizational Level Membership
+# 6. Organizational Level Group Membership
 
-Organizational level membership should reflect the employee's current position within the organizational hierarchy.
+Organizational level groups represent an employee's position within the organization's hierarchy.
 
-### Example
+Examples include:
 
 ```text
-Organizational Level = Management
-        ↓
+GRP-LEVEL-Executive
+GRP-LEVEL-SeniorManagement
 GRP-LEVEL-Management
-```
-
-Another example:
-
-```text
-Organizational Level = Senior Staff
-        ↓
 GRP-LEVEL-SeniorStaff
+GRP-LEVEL-Staff
 ```
 
 These groups may support:
 
 * Organizational communications.
 * Reporting.
-* Access assignment logic.
 * Governance.
+* Access assignment logic.
 
 Organizational seniority alone should not automatically grant access to sensitive systems.
 
 For example:
 
-> A user being classified as Management does not automatically mean the user should receive administrative access to IT systems.
+> A user being a member of management does not automatically mean that the user should receive administrative access to IT systems.
 
-Access should continue to be based on business need.
+Access should continue to be based on business need and appropriate authorization.
 
 ---
 
-# 7. Location-Based Membership
+# 7. Location-Based Group Membership
 
-Location membership should be based on the employee's primary office location.
+Location groups represent the employee's primary office location.
 
-### Example
+Examples include:
 
 ```text
-Office Location = Abuja
-        ↓
 GRP-LOC-Abuja
-```
-
-Another example:
-
-```text
-Office Location = Lagos
-        ↓
 GRP-LOC-Lagos
+GRP-LOC-Enugu
+GRP-LOC-PortHarcourt
 ```
 
 Location groups may support:
 
 * Office communications.
-* Location-specific resources.
 * Regional collaboration.
+* Location-specific resources.
 * Reporting.
-* Location-based administration.
+* Office administration.
 
-Location should not automatically determine whether a user is trusted.
+However, location should not automatically determine whether a user is trusted.
 
-It should be treated as one attribute within the wider identity and security model.
+A user's location is only one factor that may be considered within the broader identity and security model.
+
+Location-based group membership should therefore not be used as a substitute for security controls such as:
+
+* Multifactor authentication.
+* Conditional Access.
+* Device compliance.
+* Risk-based access controls.
 
 ---
 
 # 8. Employment Status
 
-Employment status is a critical identity attribute.
+Employment status is an important identity lifecycle attribute.
 
-## Active Employee
-
-```text
-Employment Status = Active
-```
-
-The employee may receive access appropriate to their role and responsibilities.
-
-## Departed Employee
+Example values may include:
 
 ```text
-Employment Status = Inactive / Terminated
+Active
+Leave of Absence
+Suspended
+Terminated
 ```
 
-The employee should not retain active access to organizational resources.
+An active employee may receive access appropriate to their approved role and responsibilities.
 
-The change in employment status should trigger the appropriate offboarding process, which may include:
+When an employee leaves the organization, the change in employment status should initiate the appropriate offboarding process.
+
+Depending on the organization's implementation, this may involve:
 
 * Blocking sign-in.
 * Revoking active sessions.
-* Removing access.
+* Removing group-based access.
 * Securing corporate devices.
-* Preserving required data.
+* Preserving required business information.
 * Reclaiming licenses.
 * Reviewing account retention.
 
-Employment status should therefore be treated as a key control in the identity lifecycle.
+The important distinction is that changing an attribute such as `Employment Status = Terminated` does not, by itself, automatically disable a user unless an automated workflow or administrative process is connected to that attribute.
+
+Therefore:
+
+```text
+Employment Status Change
+        │
+        ▼
+Offboarding Process
+        │
+        ▼
+Access Restriction
+```
+
+The attribute should be treated as an important trigger or input into the lifecycle process.
 
 ---
 
 # 9. Example Employee Mapping
 
-### John Doe
+### Employee
+
+**Name:** John Doe
 
 | Attribute            | Value              |
 | -------------------- | ------------------ |
@@ -314,7 +373,7 @@ GRP-LEVEL-SeniorStaff
 GRP-LOC-Abuja
 ```
 
-The resulting access should then be determined by the organization's access assignment model.
+The resulting access should then be determined by the organization's access model.
 
 For example:
 
@@ -334,13 +393,13 @@ GRP-ACCESS-NetworkOperations-Tools
 Network Operations Tools
 ```
 
-This provides a clearer separation between describing the employee and granting resource access.
+This structure provides a clear separation between the employee's identity information and the permissions assigned to resources.
 
 ---
 
 # 10. Promotion Scenario
 
-Assume John Doe is promoted from:
+Assume an employee is promoted from:
 
 ```text
 Network Engineer
@@ -351,53 +410,47 @@ Network Manager
 
 ## Before Promotion
 
-**Job Title:**
-
 ```text
+Job Title:
 Network Engineer
 ```
 
-**Role Group:**
-
 ```text
+Role Group:
 GRP-ROLE-NetworkEngineer
 ```
 
 ## After Promotion
 
-**Job Title:**
-
 ```text
+Job Title:
 Network Manager
 ```
 
-**Role Group:**
-
 ```text
+Role Group:
 GRP-ROLE-NetworkManager
 ```
 
-## Required Change
+The employee's identity attributes should be updated as part of the promotion process.
 
-The employee's identity attributes should be updated.
+The previous role-based membership should normally be reviewed and removed if it no longer represents the employee's current role.
 
-The previous role-based membership should normally be removed if it no longer represents the employee's current role.
-
-### Remove
+### Previous Membership
 
 ```text
 GRP-ROLE-NetworkEngineer
 ```
 
-### Add
+### New Membership
 
 ```text
 GRP-ROLE-NetworkManager
 ```
 
-The employee's access should then be reviewed.
+The employee's access should then be reviewed against the new responsibilities.
 
-For example, the employee may become eligible for:
+The employee may become eligible for access such as:
 
 ```text
 GRP-ACCESS-NetworkManagement
@@ -422,13 +475,13 @@ Finance
 Technology
 ```
 
-## Previous Membership
+### Previous Department Group
 
 ```text
 GRP-DEPT-Finance
 ```
 
-## New Membership
+### New Department Group
 
 ```text
 GRP-DEPT-Technology
@@ -440,7 +493,28 @@ The previous department membership should be reviewed and removed where it no lo
 
 Access associated with the previous department should also be reviewed.
 
-The employee should then receive access appropriate to the new department and role.
+The employee should then receive access appropriate to the new department and current role.
+
+The process should therefore be:
+
+```text
+Department Change
+        │
+        ▼
+Update Identity Attribute
+        │
+        ▼
+Review Existing Membership
+        │
+        ▼
+Remove Unnecessary Membership
+        │
+        ▼
+Assign New Membership
+        │
+        ▼
+Review Access
+```
 
 ---
 
@@ -455,13 +529,13 @@ Lagos
 Abuja
 ```
 
-## Previous Membership
+### Previous Location Group
 
 ```text
 GRP-LOC-Lagos
 ```
 
-## New Membership
+### New Location Group
 
 ```text
 GRP-LOC-Abuja
@@ -471,45 +545,49 @@ The employee's location attribute should be updated.
 
 The previous location membership should be reviewed and removed where appropriate.
 
-Location-specific access should also be reviewed.
+Any location-specific access should also be reviewed.
 
-The employee's physical location should not automatically be used as the sole basis for making security decisions.
+The employee's physical location should not be used as the sole basis for making security decisions.
 
 ---
 
 # 13. Group Membership Lifecycle
 
-Group membership should follow the employee's current attributes.
+Group membership should reflect the employee's current attributes and organizational relationship.
 
 ## Joiner
 
 When an employee joins:
 
-* Identity attributes are created.
-* Appropriate attribute groups are assigned.
-* Access eligibility is evaluated.
-* Approved access is provided.
+1. The employee's identity is created.
+2. Required identity attributes are populated.
+3. Appropriate attribute-based groups are assigned.
+4. Access requirements are evaluated.
+5. Approved access is provided.
 
 ## Mover
 
-When an employee changes:
+When an employee changes role, department, or location:
 
-* Identity attributes are updated.
-* Previous group membership is reviewed.
-* Unnecessary membership is removed.
-* New group membership is applied.
-* Access is reviewed and updated.
+1. Identity attributes are updated.
+2. Existing group membership is reviewed.
+3. Membership that is no longer required is removed.
+4. New group membership is assigned.
+5. Access is reviewed and updated.
 
 ## Leaver
 
 When an employee leaves:
 
-* Employment status is updated.
-* Sign-in is blocked.
-* Active sessions are revoked where appropriate.
-* Access is removed.
-* Group memberships are reviewed.
-* Required data is preserved according to applicable policies.
+1. Employment status is updated.
+2. The offboarding process is initiated.
+3. Sign-in is blocked.
+4. Active sessions are revoked where appropriate.
+5. Access and group membership are reviewed.
+6. Required information is preserved according to applicable policies.
+7. Licenses and resources are reviewed.
+
+The exact sequence may vary depending on the circumstances of the departure.
 
 ---
 
@@ -520,14 +598,14 @@ Attribute-based group membership must be governed carefully.
 The organization should ensure that:
 
 * Employee attributes are accurate.
-* HR remains the authoritative source for employee lifecycle changes.
+* HR remains the authoritative source for employee lifecycle events.
 * Attribute changes are traceable.
-* Group membership is periodically reviewed.
-* Access is not granted based on inaccurate information.
 * Attribute values are standardized.
+* Group membership is periodically reviewed.
 * Important groups have appropriate owners.
+* Access is not granted solely because an inaccurate attribute exists.
 
-Incorrect identity attributes can result in incorrect group membership and, potentially, inappropriate access.
+Incorrect identity data can result in incorrect group membership and potentially inappropriate access.
 
 The principle is:
 
@@ -539,7 +617,7 @@ The principle is:
 
 Automated group membership depends on consistent attribute values.
 
-For example, the following values should not be treated as separate departments if they represent the same organizational unit:
+For example, the following values could create problems if they are intended to represent the same department:
 
 ```text
 Network Operations
@@ -547,67 +625,153 @@ Network Ops
 Network Operations Department
 ```
 
-The organization should define standard values for important attributes such as:
+The organization should define standardized values for important attributes, including:
 
 * Department.
 * Office Location.
 * Organizational Level.
 * Employment Status.
+* Standardized Role.
 
-This improves:
+For example:
+
+```text
+Department:
+Network Operations
+```
+
+should be preferred over allowing multiple uncontrolled variations of the same value.
+
+Standardization improves:
 
 * Dynamic group accuracy.
 * Reporting.
 * Automation.
 * Access consistency.
+* Troubleshooting.
 
 ---
 
-# 16. Summary
+# 16. Exception Handling
+
+Not every employee will fit perfectly into a standard attribute-to-group mapping.
+
+Examples may include:
+
+* Temporary project assignments.
+* Employees with responsibilities across multiple departments.
+* Contractors.
+* Employees performing temporary duties.
+* Special access requirements.
+
+These cases should be handled through a controlled exception process.
+
+An exception should have:
+
+* A documented business reason.
+* An identified approver.
+* A clear scope of access.
+* A defined review date where appropriate.
+
+Exceptions should not be used as a replacement for proper role and group design.
+
+---
+
+# 17. Mapping Example
+
+The following example shows how employee attributes can support access assignment.
+
+```text
+Department:
+Network Operations
+
+Job Title:
+Network Engineer
+
+Organizational Level:
+Senior Staff
+
+Office Location:
+Abuja
+
+Employment Status:
+Active
+        │
+        ▼
+Attribute Groups
+        │
+        ├── GRP-DEPT-NetworkOperations
+        ├── GRP-ROLE-NetworkEngineer
+        ├── GRP-LEVEL-SeniorStaff
+        └── GRP-LOC-Abuja
+        │
+        ▼
+Access Assignment
+        │
+        ▼
+GRP-ACCESS-NetworkOperations-Tools
+        │
+        ▼
+Network Operations Tools
+```
+
+This model makes the access decision easier to understand and audit.
+
+The organization can answer:
+
+> **Which identity attributes contributed to this user's group membership?**
+
+and:
+
+> **Why was this access group assigned?**
+
+---
+
+# 18. Summary
 
 The attribute-to-group model creates a structured relationship between employee information and group membership.
 
 The model is:
 
 ```text
-HR Data
-   ↓
+HR / Employee Data
+        ↓
 Identity Attributes
-   ↓
-Attribute Groups
-   ↓
+        ↓
+Attribute-Based Groups
+        ↓
 Access Assignment
-   ↓
+        ↓
 Access Groups
-   ↓
+        ↓
 Resource Access
 ```
 
 The primary attributes are:
 
 * Department.
-* Job Title.
+* Job Title or Standardized Role.
 * Organizational Level.
 * Office Location.
 * Employment Status.
 
-This model supports:
+The model supports:
 
 * Scalable administration.
 * Reduced manual work.
 * Consistent group membership.
 * Faster onboarding.
 * Better role-change management.
-* Improved offboarding.
-* Least-privilege access.
+* More structured offboarding.
+* Improved access governance.
 
-The most important design principle is:
+The key design principle is:
 
-> **Identity attributes describe the employee. Group membership organizes the employee. Access groups grant resource permissions.**
+> **Identity attributes describe the employee. Groups organize the employee. Access groups grant resource permissions.**
 
 ---
 
-# 17. Future Enhancements
+# 19. Future Enhancements
 
 Future improvements may include:
 
@@ -615,7 +779,7 @@ Future improvements may include:
 * Automated HR integration.
 * Automated Joiner, Mover, and Leaver workflows.
 * Access Packages.
-* Entitlement Management.
+* Microsoft Entra Entitlement Management.
 * Periodic Access Reviews.
 * Automated attribute validation.
 * Identity Governance workflows.
@@ -626,19 +790,19 @@ Future improvements may include:
 
 ## Conclusion
 
-Attribute-to-group mapping provides the connection between employee information and the technical identity structure used by Microsoft 365.
+Attribute-to-group mapping provides the connection between employee information and the technical identity structure used by Microsoft 365 and Microsoft Entra ID.
 
 A well-designed model ensures that:
 
 * New employees can be grouped consistently.
-* Department changes can trigger membership changes.
+* Department changes can trigger appropriate membership changes.
 * Promotions can update role membership.
 * Location changes can update location membership.
-* Departures can trigger access restriction.
+* Departures can initiate access restriction and offboarding.
 * Access can be managed at scale.
 
 The final model is:
 
-> **HR Data → Identity Attributes → Group Membership → Access Assignment → Resource Access**
+> **HR / Employee Data → Identity Attributes → Group Membership → Access Assignment → Resource Access**
 
 This creates a structured foundation for automation while ensuring that access remains aligned with the employee's current business responsibilities.
