@@ -16,27 +16,41 @@
 
 Administrative accounts have elevated permissions that can affect users, devices, security policies, applications, data, and the Microsoft 365 tenant.
 
-A compromised administrative account could therefore result in significant organizational impact.
+A compromised administrative account could therefore have a significant impact on the organization.
 
 The purpose of this policy is to apply stronger access controls to privileged administrative accounts and ensure that administrative access is subject to enhanced authentication and security requirements.
+
+This policy forms part of the organization's broader **Privileged Access Management** and **Zero Trust** security model.
+
+The objective is to ensure that administrative access is:
+
+* Strongly authenticated.
+* Appropriately scoped.
+* Accessed from an appropriate environment where required.
+* Evaluated against relevant security signals.
+* Monitored and reviewed.
 
 ---
 
 ## 3. Security Problem
 
-An attacker who compromises a highly privileged administrative account may be able to:
+A compromised administrative account can provide an attacker with the ability to make changes that affect the wider Microsoft 365 environment.
 
-* Create or delete users.
+Depending on the role assigned, an attacker may be able to:
+
+* Create, modify, or delete user accounts.
 * Modify security policies.
 * Change Conditional Access policies.
 * Assign administrative roles.
-* Access sensitive information.
+* Access sensitive organizational information.
 * Modify Microsoft 365 configurations.
-* Disable security controls.
+* Disable or weaken security controls.
+
+The potential impact of a compromised privileged account is therefore significantly greater than that of a standard user account.
 
 ### Risk Model
 
-```text id="6t7b3c"
+```text
 Compromised Administrator Account
             │
             ▼
@@ -49,15 +63,13 @@ Unauthorized Administrative Activity
 Potential Tenant-Wide Impact
 ```
 
-The organization must therefore protect administrative accounts more strictly than standard user accounts.
+Administrative accounts must therefore receive stronger protection than ordinary user accounts.
 
 ---
 
 ## 4. Policy Scope
 
-### Users Included
-
-The policy should target users assigned privileged administrative roles.
+This policy should apply to users assigned privileged administrative roles within the Microsoft 365 environment.
 
 Examples include:
 
@@ -68,52 +80,59 @@ Examples include:
 * Intune Administrator.
 * Exchange Administrator.
 * SharePoint Administrator.
-* Other privileged administrative roles as determined by the organization's risk assessment.
+* Teams Administrator.
+* Other privileged roles identified through the organization's administrative role model.
 
-The exact scope should be reviewed regularly to ensure that all relevant privileged accounts are appropriately protected.
+The scope should be reviewed periodically to ensure that newly introduced administrative roles and privileged accounts are not unintentionally excluded.
+
+Administrative access should be based on the actual privileges assigned to an account rather than the user's department or job title.
+
+For example, membership in the IT department alone should not automatically place a user within the scope of privileged administrative controls.
 
 ---
 
-## 5. Emergency Access Exclusions
+## 5. Emergency Access Accounts
 
-Emergency access accounts should be carefully considered when designing this policy.
+Emergency access accounts require special consideration when designing this policy.
 
-They may need to be excluded from specific Conditional Access policies to prevent a situation in which all administrative access is accidentally blocked.
+A Conditional Access policy that unintentionally blocks every administrative account could result in tenant lockout. Emergency access accounts should therefore be designed to provide a controlled recovery path where normal administrative access is unavailable.
 
-However, exclusions must not become a means of bypassing security controls.
+Where an emergency access account is excluded from this policy, the exclusion must be:
 
-Emergency access accounts should be:
+* Limited to the specific emergency account.
+* Documented.
+* Closely monitored.
+* Periodically tested.
+* Protected by appropriate organizational controls.
 
-* Strongly protected.
-* Monitored.
-* Tested periodically.
-* Used only when necessary.
-* Documented and governed.
+Emergency access accounts must not be used for routine administration.
 
-Any use of an emergency access account should trigger appropriate investigation and review.
+Any use of an emergency access account should generate appropriate monitoring, investigation, and review.
 
 ---
 
 ## 6. Authentication Requirements
 
-Administrative access should require strong authentication.
+Administrative access should require stronger authentication than standard user access.
 
 The policy should consider requiring:
 
 * Multifactor Authentication.
 * Strong authentication methods.
-* Phishing-resistant authentication where available.
-* Additional authentication requirements for sensitive administrative operations.
+* Phishing-resistant authentication where available and appropriate.
+* Additional authentication requirements for high-risk administrative access.
 
 The required authentication strength should reflect the level of privilege being protected.
 
-Higher-risk administrative roles should receive stronger authentication controls where technically and operationally appropriate.
+For example, highly privileged roles such as Global Administrator should receive stronger protection than lower-risk administrative roles where the organization's security capabilities support this distinction.
+
+The objective is to ensure that possession of an administrator's password alone is not sufficient to access privileged administrative interfaces.
 
 ---
 
 ## 7. Administrative Access Decision Model
 
-```text id="3kjg9w"
+```text
 Administrator
       │
       ▼
@@ -122,69 +141,83 @@ Attempts Administrative Access
       ▼
 Conditional Access Evaluation
       │
-      ├── Required Authentication Satisfied
+      ├── Requirements Satisfied
       │        │
       │        ▼
       │     Access Granted
       │
-      └── Authentication Requirement Not Met
+      └── Requirements Not Satisfied
                │
                ▼
        Additional Authentication
                │
                ▼
-          Access Denied
+      Requirements Satisfied?
+               │
+          ┌────┴────┐
+          ▼         ▼
+        Yes         No
+          │         │
+          ▼         ▼
+       Allow      Block
 ```
 
-The final outcome should depend on whether the required security controls are satisfied.
+Access should only be granted when the requirements defined by the applicable Conditional Access policies have been satisfied.
 
 ---
 
 ## 8. Device Considerations
 
-Administrative access should ideally be performed from trusted and appropriately secured devices.
+Administrative access should, where practical, be performed from appropriately secured and trusted devices.
 
-Where the organization's device-management capabilities support it, administrative access may require:
+Depending on the organization's device-management capabilities, administrative access may require:
 
 * A compliant device.
 * A managed device.
 * An appropriately secured administrative workstation.
-* Required device security controls.
+* Required security configuration.
+* Supported operating system and security updates.
 
 This reduces the risk of privileged credentials being used from unmanaged, insecure, or compromised devices.
 
-Device requirements should be implemented according to the organization's administrative access model and operational requirements.
+Device requirements should be introduced according to the organization's administrative access model and operational requirements.
+
+The objective is to balance security with the practical requirements of administering the environment.
 
 ---
 
-## 9. Location Considerations
+## 9. Location and Network Considerations
 
-The organization may evaluate administrative sign-ins based on location and network context.
+The organization may evaluate administrative sign-ins using location and network context.
 
-Examples include:
+Examples may include:
 
-* Trusted corporate locations.
+* Approved corporate locations.
 * Approved remote-access locations.
 * Unusual geographic locations.
 * High-risk sign-in locations.
+* Unexpected network locations.
 
-Location should not be treated as the sole security control because location can be spoofed, bypassed, or affected by legitimate travel and remote work.
+Location should not be treated as a standalone trust mechanism.
 
-It should be evaluated alongside:
+A legitimate administrator may travel or work remotely, while an attacker may attempt to bypass location-based controls.
+
+Location and network context should therefore be evaluated alongside other signals, including:
 
 * User identity.
 * Device status.
 * Authentication strength.
 * Sign-in risk.
-* Other relevant contextual signals.
+* User risk.
+* Application being accessed.
 
 ---
 
 ## 10. Policy Deployment Lifecycle
 
-The policy should follow a controlled deployment process:
+The policy should follow a controlled deployment process.
 
-```text id="6s6j6c"
+```text
 Policy Design
       │
       ▼
@@ -206,21 +239,33 @@ Pilot Enforcement
 Full Enforcement
 ```
 
-The policy should not be broadly enforced until its impact has been appropriately tested and reviewed.
+The policy should not be broadly enforced until its potential impact has been tested and reviewed.
+
+Before enforcement, administrators should confirm:
+
+* The correct administrative accounts are included.
+* Emergency access accounts remain available where required.
+* Legitimate administrative workflows continue to function.
+* Authentication requirements can be completed successfully.
+* Other Conditional Access policies do not create unintended conflicts.
 
 ---
 
 ## 11. Testing Plan
 
-### Test 1 — Administrator with Strong Authentication
+### Test 1 — Administrator Meets Authentication Requirements
+
+**Scenario:**
+
+An administrator attempts to access an administrative portal and successfully completes the required authentication controls.
 
 **Expected Result:**
 
-```text id="7m4x1v"
+```text
 Administrative Sign-In
         │
         ▼
-Strong Authentication
+Required Authentication
         │
         ▼
 Conditional Access Requirements Satisfied
@@ -231,11 +276,15 @@ Access Granted
 
 ---
 
-### Test 2 — Administrator Without Required Authentication
+### Test 2 — Administrator Does Not Meet Authentication Requirements
+
+**Scenario:**
+
+An administrator attempts to access an administrative portal without completing the required authentication requirements.
 
 **Expected Result:**
 
-```text id="2g6w8d"
+```text
 Administrative Sign-In
         │
         ▼
@@ -244,21 +293,37 @@ Required Authentication Not Completed
         ▼
 Additional Authentication Required
         │
-        ▼
-Access Granted Only After Requirements Are Satisfied
+        ├── Requirements Satisfied
+        │          │
+        │          ▼
+        │      Access Granted
+        │
+        └── Requirements Not Satisfied
+                   │
+                   ▼
+               Access Denied
 ```
-
-If the required authentication cannot be completed, access should be denied.
 
 ---
 
 ### Test 3 — Emergency Access Account
 
+**Scenario:**
+
+Normal administrative access is unavailable and the documented emergency access process is required.
+
 **Expected Result:**
 
-The documented emergency access process should remain available in accordance with the organization's emergency access design.
+The emergency access process remains available in accordance with the organization's emergency access design.
 
-This scenario must be tested carefully and should not be used for routine administration.
+The use of the emergency account must be:
+
+* Monitored.
+* Investigated.
+* Documented.
+* Reviewed after the event.
+
+Emergency access must not be used for routine administration.
 
 ---
 
@@ -271,21 +336,25 @@ After deployment, administrators should monitor:
 * Conditional Access failures.
 * Unusual sign-in locations.
 * Risky sign-ins.
-* Administrative activity.
-* Conditional Access policy changes.
 * Unexpected access blocks.
+* Conditional Access policy changes.
+* Administrative activity following successful sign-in.
 
-Administrative sign-ins should receive particular attention because of the potential impact of a compromised privileged account.
+Particular attention should be given to unexpected administrative sign-ins because of the potential impact of a compromised privileged account.
+
+The organization should be able to determine:
+
+> **Who attempted administrative access, whether access was granted or blocked, what conditions were evaluated, and whether any administrative activity followed the sign-in.**
 
 ---
 
 ## 13. Relationship with Privileged Access Management
 
-Conditional Access should work together with Privileged Identity Management and the organization's broader Privileged Access Management model.
+Conditional Access should operate together with the organization's broader Privileged Access Management model.
 
-The preferred security model is:
+The preferred model is:
 
-```text id="x0h1t5"
+```text
 Administrator
       │
       ▼
@@ -310,7 +379,7 @@ Administrative Task
 Role Expires
 ```
 
-This combines:
+This model combines:
 
 * Least privilege.
 * Just-in-time access.
@@ -318,13 +387,13 @@ This combines:
 * Conditional Access.
 * Administrative monitoring.
 
-The objective is to ensure that privileged access is not continuously available when it is not required.
+The objective is to reduce unnecessary standing privilege and ensure that elevated access is only available when it is required.
 
 ---
 
 ## 14. Administrative Account Separation
 
-Where appropriate, administrators should separate their standard business activities from privileged administrative activities.
+Where appropriate, administrators should separate normal business activities from privileged administrative activities.
 
 ### Standard Account
 
@@ -344,13 +413,15 @@ Used for:
 * Security administration.
 * Privileged administrative tasks.
 
-Separating these activities can reduce the risk of privileged credentials being exposed during routine business activities.
+Separating these activities reduces the exposure of privileged credentials during routine business activities.
+
+It also makes it easier to distinguish normal user activity from administrative activity during monitoring and investigations.
 
 ---
 
 ## 15. Policy Documentation Requirements
 
-The following information should be documented:
+The following information should be documented for this policy:
 
 * Policy name.
 * Business objective.
@@ -358,7 +429,7 @@ The following information should be documented:
 * Emergency access exclusions.
 * Authentication requirements.
 * Device conditions.
-* Location conditions.
+* Location and network conditions.
 * Grant controls.
 * Session controls, where applicable.
 * Policy mode.
@@ -368,7 +439,7 @@ The following information should be documented:
 * Change history.
 * Approved exceptions.
 
-Proper documentation supports accountability, troubleshooting, governance, and future policy reviews.
+The documentation should be maintained alongside the Conditional Access policy inventory and updated whenever the policy is significantly changed.
 
 ---
 
@@ -382,17 +453,20 @@ For example:
 CA-001 — Require MFA
         +
 CA-002 — Protect Administrative Access
+        │
+        ▼
+Combined Access Requirements
 ```
 
-An administrator may be subject to both policies.
+An administrator may therefore be subject to multiple policies during the same sign-in.
 
 The combined requirements should be reviewed to ensure that:
 
-* Access is not unintentionally blocked.
-* Administrators are not subjected to unnecessary authentication friction.
+* Administrative access is not unintentionally blocked.
+* Authentication requirements are not unnecessarily duplicated.
 * Emergency access remains available.
 * Security requirements are appropriately enforced.
-* Policy interactions produce the intended security outcome.
+* The combined policy outcome matches the intended security design.
 
 Conditional Access policies should therefore be tested together where multiple policies apply to the same users and resources.
 
@@ -400,7 +474,7 @@ Conditional Access policies should therefore be tested together where multiple p
 
 ## 17. Final Policy Model
 
-```text id="7jjw4z"
+```text
 Privileged Administrator
         │
         ▼
@@ -423,7 +497,7 @@ Conditional Access Evaluation
 
 If the required security controls are not satisfied:
 
-```text id="m6v0zt"
+```text
 Security Requirement Not Met
         │
         ▼
@@ -450,10 +524,33 @@ The objective is to ensure that privileged access is:
 
 * Strongly authenticated.
 * Appropriately scoped.
-* Performed from an appropriate environment.
-* Evaluated based on relevant risk signals.
+* Accessed from an appropriate environment where required.
+* Evaluated using relevant security signals.
 * Monitored.
 * Regularly reviewed.
 * Limited to the period and purpose required.
 
 Protecting administrative access is a foundational component of the organization's Zero Trust security architecture.
+
+The policy should therefore be implemented as part of a wider security model that includes:
+
+```text
+Least Privilege
+      │
+      ▼
+Privileged Access Management
+      │
+      ▼
+Conditional Access
+      │
+      ▼
+Strong Authentication
+      │
+      ▼
+Secure Devices
+      │
+      ▼
+Monitoring and Review
+```
+
+This layered approach reduces the likelihood and potential impact of compromised administrative credentials while maintaining a practical and manageable administration model for the Microsoft 365 environment.
