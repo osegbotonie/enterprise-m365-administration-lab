@@ -507,3 +507,310 @@ This means:
 The lifecycle can therefore be summarized as:
 
 > **Join with the right access. Change access when responsibilities change. Remove access when the relationship ends.**
+>
+> # 11. Practical Lab Validation
+
+The identity lifecycle model was validated against an existing Microsoft Entra ID environment configured for the Tonie-Osegbo Technologies Limited enterprise lab.
+
+The practical validation focused on:
+
+* User identities.
+* User attributes.
+* Group memberships.
+* Group ownership.
+* License assignment.
+* Administrative role assignment.
+
+The environment was treated as a simulated enterprise environment supporting a 250-employee organization with the potential to scale to approximately 1,000 employees.
+
+---
+
+## 11.1 User Identity Validation
+
+The environment contains multiple test identities used to simulate employees within the organization.
+
+Examples include:
+
+| Test Identity      | User Type | Group Memberships | Assigned Licenses |
+| ------------------ | --------- | ----------------: | ----------------: |
+| Tonie-Test Support | Member    |                 0 |                 0 |
+| Tonie Two          | Member    |                 4 |                 0 |
+| Tonie Three        | Member    |                 3 |                 1 |
+| Tonie Four         | Member    |                 4 |                 1 |
+
+These test identities provide a practical basis for validating identity lifecycle, group-based access, and license assignment scenarios.
+
+The identities can be used to simulate:
+
+* New employee onboarding.
+* Department membership.
+* Role changes.
+* Access changes.
+* License assignment.
+* Access removal during offboarding.
+
+---
+
+## 11.2 Joiner Validation
+
+The existing test users provide a practical example of the Joiner process.
+
+A new user identity can be created and then progressively configured with:
+
+```text
+User Created
+     │
+     ▼
+User Attributes Configured
+     │
+     ▼
+Department or Role Identified
+     │
+     ▼
+Group Membership Assigned
+     │
+     ▼
+License Assigned Where Required
+     │
+     ▼
+Security Controls Applied
+```
+
+For example, a new employee may initially be created with no group memberships or licenses.
+
+Additional access can then be assigned according to the employee's approved role and business requirements.
+
+This reflects the principle of providing access based on business need rather than granting broad access by default.
+
+---
+
+## 11.3 Group-Based Access Validation
+
+Several groups were identified in the environment that can be used to represent organizational departments, teams, and projects.
+
+Examples include:
+
+* Tonie Finance Team.
+* TonieTeknikal.
+* TonieGruppo.
+* Tonie_Test Project Team.
+
+These groups provide practical examples of how users can be associated with business functions and work activities.
+
+For example:
+
+```text
+User
+ │
+ ├── Finance Department
+ │       │
+ │       ▼
+ │   Tonie Finance Team
+ │
+ ├── Technology Department
+ │       │
+ │       ▼
+ │   TonieTeknikal
+ │
+ └── Revenue Assurance
+         │
+         ▼
+     TonieGruppo
+```
+
+Group-based access provides a more scalable approach than assigning access individually to every user.
+
+This becomes increasingly important as the organization grows from approximately 250 employees toward a potential 1,000-employee environment.
+
+---
+
+## 11.4 Group Ownership Validation
+
+The practical environment also demonstrates the importance of group ownership.
+
+For example, the following groups have documented ownership and membership structures:
+
+* **TonieGruppo** — Finance Department: Revenue Assurance.
+* **TonieTeknikal** — Technical Department: Technology and Innovation.
+* **Tonie Finance Team** — Finance Department.
+* **Tonie_Test Project Team** — Test project team.
+
+Group owners are responsible for the business context and ongoing management of the group.
+
+This supports the governance principle that access should have an identifiable business owner.
+
+The ownership model can be represented as:
+
+```text
+Business Requirement
+        │
+        ▼
+Business Owner
+        │
+        ▼
+Group Membership
+        │
+        ▼
+Access to Approved Resources
+```
+
+---
+
+## 11.5 Mover Scenario Validation
+
+The test environment can also be used to simulate an employee changing roles or departments.
+
+For example:
+
+```text
+User
+ │
+ ▼
+Current Department
+ │
+ ▼
+Group Membership
+ │
+ ▼
+Role or Department Change
+ │
+ ▼
+Access Review
+ │
+ ├── Remove Access No Longer Required
+ │
+ └── Assign New Approved Access
+```
+
+A user can therefore be moved between groups to simulate:
+
+* Department transfer.
+* Promotion.
+* Project reassignment.
+* Change in business responsibilities.
+
+The important control is that new access should not simply be added without reviewing the user's existing access.
+
+---
+
+## 11.6 Leaver Scenario Validation
+
+The leaver process can be simulated using a test identity.
+
+A typical process would be:
+
+```text
+Employee Departure
+        │
+        ▼
+Account Sign-In Blocked
+        │
+        ▼
+Active Sessions Revoked
+        │
+        ▼
+Group Access Reviewed
+        │
+        ▼
+Licenses Reviewed
+        │
+        ▼
+Business Data Preserved Where Required
+```
+
+The user identity should not be immediately deleted where information or audit history may need to be preserved.
+
+This provides a practical way to validate the difference between:
+
+* Disabling access.
+* Removing group membership.
+* Reclaiming licenses.
+* Preserving business information.
+* Deleting an identity after retention requirements have been considered.
+
+---
+
+## 11.7 Practical Findings
+
+The practical validation identified the following observations:
+
+### Finding 1 — Test Identities Are Available
+
+Multiple test identities are available for simulating employee lifecycle events.
+
+### Finding 2 — Group-Based Access Is Already Demonstrated
+
+Users are assigned to multiple groups representing departments, teams, and projects.
+
+### Finding 3 — Group Ownership Is Present
+
+The environment contains groups with identifiable owners, supporting accountability for group management.
+
+### Finding 4 — License Assignment Can Be Tested
+
+Some test users have Microsoft 365 licenses assigned while others do not.
+
+This provides a basis for testing role-based license assignment and license removal during lifecycle events.
+
+### Finding 5 — Lifecycle Scenarios Can Be Simulated
+
+The existing environment can support practical testing of:
+
+* Joiner processes.
+* Mover processes.
+* Leaver processes.
+* Group membership changes.
+* License assignment.
+* Access review scenarios.
+
+---
+
+## 11.8 Evidence to Capture
+
+The following evidence should be captured as part of the lab documentation:
+
+* User profile showing user type and account information.
+* Group membership for selected test users.
+* Group ownership information.
+* Group membership lists.
+* License assignment for selected users.
+* Account sign-in status.
+* Administrative role assignment where relevant.
+
+Screenshots should be captured with unnecessary personal or tenant information minimized where possible.
+
+The evidence should demonstrate the configuration and outcome of the process rather than simply showing that a page exists.
+
+---
+
+## 11.9 Validation Summary
+
+The practical validation demonstrates that the identity lifecycle design can be applied to a real Microsoft Entra ID environment.
+
+The environment provides:
+
+```text
+Test Users
+    │
+    ▼
+Group-Based Access
+    │
+    ▼
+Department and Team Structures
+    │
+    ▼
+License Assignment
+    │
+    ▼
+Administrative Controls
+    │
+    ▼
+Lifecycle Testing
+```
+
+The current environment therefore provides a practical foundation for continuing the identity and access management lab.
+
+The next phase is to capture structured evidence and validate the Joiner, Mover, and Leaver processes through controlled configuration changes.
+
+> **The design defines how identity lifecycle management should work. The practical lab validates how those principles can be implemented and tested in Microsoft Entra ID.**
+
