@@ -36,7 +36,7 @@ The access decision may consider multiple factors, including:
 
 The relationship between the core policies is illustrated below:
 
-```text id="6idqdy"
+```text
                  ┌──────────────────────┐
                  │       USER           │
                  └──────────┬───────────┘
@@ -101,7 +101,7 @@ The relationship between the core policies is illustrated below:
 
 The overall access decision process is:
 
-```text id="tr5n9w"
+```text
 Access Request
       │
       ▼
@@ -184,7 +184,7 @@ Responds to suspicious users, risky sign-ins, and other relevant risk signals.
 
 All Conditional Access policies should follow a controlled deployment process:
 
-```text id="z7f8ar"
+```text
 Business Requirement
         │
         ▼
@@ -219,7 +219,7 @@ Multiple Conditional Access policies may apply to a single access request.
 
 For example:
 
-```text id="dj5c4o"
+```text
 Administrator
      │
      ▼
@@ -240,7 +240,7 @@ Access Granted
 
 If a critical security requirement is not satisfied:
 
-```text id="q1ot2u"
+```text
 Security Requirement Not Satisfied
              │
              ▼
@@ -321,7 +321,7 @@ The results of monitoring should support continuous improvement of the Condition
 
 ## 12. Final Architecture
 
-```text id="i2oq0w"
+```text
                     ACCESS REQUEST
                           │
                           ▼
