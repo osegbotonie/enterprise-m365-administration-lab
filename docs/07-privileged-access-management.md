@@ -2,7 +2,7 @@
 
 ## 1. Overview
 
-Privileged Access Management defines how administrative access to the Microsoft 365 environment of Tonie-Osegbo Technologies Limited is controlled, protected, monitored, and reviewed.
+Privileged Access Management (PAM) defines how administrative access to the Microsoft 365 environment of Tonie-Osegbo Technologies Limited is controlled, protected, monitored, and reviewed.
 
 Privileged accounts can make significant changes to the organization's:
 
@@ -14,11 +14,11 @@ Privileged accounts can make significant changes to the organization's:
 * Collaboration services.
 * Microsoft 365 tenant configuration.
 
-Because privileged access can have a significant impact on the environment, administrative permissions must be carefully controlled.
+Because of the potential impact of privileged access, administrative permissions must be carefully controlled.
 
 The primary objective is to ensure that:
 
-> **Administrative access is granted only to authorized personnel, for an appropriate purpose, and for no longer than necessary.**
+> **Administrative access is granted only to authorized personnel, for a legitimate purpose, and for no longer than necessary.**
 
 ---
 
@@ -26,34 +26,34 @@ The primary objective is to ensure that:
 
 A permanently active privileged account creates a significant security risk.
 
-### Example
+For example, an administrator with an active **Global Administrator** role has extensive control over the Microsoft 365 tenant.
 
-An administrator has an active:
+If that administrator's credentials are compromised, an attacker could potentially make widespread changes to:
 
-```text id="r8v4xa"
-Global Administrator
-```
+* User accounts.
+* Authentication settings.
+* Security policies.
+* Administrative roles.
+* Applications.
+* Data.
+* Tenant configuration.
 
-role.
+The risk can be represented as:
 
-If the administrator's credentials are compromised, an attacker may gain extensive control over the Microsoft 365 tenant.
-
-### Risk Model
-
-```text id="k93d6n"
+```text
 Compromised Administrator Account
               │
               ▼
-Active Privileged Role
+      Active Privileged Role
               │
               ▼
-Unauthorized Administrative Activity
+  Unauthorized Administrative Activity
               │
               ▼
-Potential Tenant-Wide Impact
+     Potential Tenant-Wide Impact
 ```
 
-The organization should therefore minimize the number of permanently active privileged roles.
+The organization should therefore minimize the number of permanently active highly privileged roles.
 
 ---
 
@@ -61,7 +61,7 @@ The organization should therefore minimize the number of permanently active priv
 
 Administrators should receive only the permissions required to perform their responsibilities.
 
-### Examples
+Examples include:
 
 | Administrative Responsibility | Appropriate Role         |
 | ----------------------------- | ------------------------ |
@@ -73,7 +73,7 @@ Administrators should receive only the permissions required to perform their res
 | Manage SharePoint             | SharePoint Administrator |
 | Manage the entire tenant      | Global Administrator     |
 
-The Global Administrator role should not be used for routine administrative activities when a more specific role is sufficient.
+The **Global Administrator** role should not be used for routine administrative activities when a more specific role is sufficient.
 
 The principle is:
 
@@ -85,27 +85,23 @@ The principle is:
 
 Administrative responsibilities should be separated where practical.
 
-### Identity Administration
+For example:
 
-```text id="f8d6ad"
+```text
 Identity Administration
         │
         ▼
 User Administrator
 ```
 
-### Device Administration
-
-```text id="m0y9ij"
+```text
 Device Administration
         │
         ▼
 Intune Administrator
 ```
 
-### Security Administration
-
-```text id="9p1xjs"
+```text
 Security Administration
         │
         ▼
@@ -116,9 +112,11 @@ Role separation reduces the number of individuals with unrestricted administrati
 
 It also supports separation of duties and reduces the potential impact of a compromised administrator account.
 
+A user responsible for identity administration does not necessarily need permission to manage devices, Exchange Online, SharePoint, or the entire Microsoft 365 tenant.
+
 ---
 
-# 5. Normal User Account and Administrative Account
+# 5. Separation of Normal and Administrative Activities
 
 Where appropriate, administrative personnel should separate normal business activities from privileged administration.
 
@@ -142,7 +140,7 @@ Used for:
 
 Administrative accounts should not be used for routine activities where avoidable.
 
-Separating normal and administrative activities can reduce the exposure of privileged credentials.
+Separating normal and administrative activities reduces the exposure of privileged credentials and makes administrative activity easier to identify during investigation and auditing.
 
 ---
 
@@ -150,27 +148,41 @@ Separating normal and administrative activities can reduce the exposure of privi
 
 Privileged roles may exist in different assignment states.
 
-## Permanent Active Assignment
+## 6.1 Permanent Active Assignment
 
 The administrator has the role continuously active.
 
-This should be minimized for highly privileged roles.
+Permanent assignment should be minimized for highly privileged roles.
 
-## Eligible Assignment
+This is particularly important for roles such as:
+
+* Global Administrator.
+* Privileged Role Administrator.
+* Security Administrator.
+
+Permanent assignment may still be appropriate in specific circumstances, but it should be justified and regularly reviewed.
+
+---
+
+## 6.2 Eligible Assignment
 
 The administrator is authorized to activate the role when required but does not have the role continuously active.
 
-This is the preferred model for many privileged roles where supported and appropriate.
+This is the preferred model for many privileged roles where the organization's licensing and configuration support it.
 
-## Active Assignment
+An eligible assignment reduces standing privilege while still allowing an authorized administrator to perform required administrative tasks.
 
-The administrator has temporarily activated the role to perform an administrative task.
+---
 
-The role remains active only for the configured duration.
+## 6.3 Temporary Active Assignment
 
-### Model
+The administrator activates the role for a defined period to perform an administrative task.
 
-```text id="t0t2op"
+The role remains active only for the configured duration and should automatically expire where possible.
+
+The general model is:
+
+```text
 Eligible Administrator
         │
         ▼
@@ -192,9 +204,9 @@ Role Deactivation or Expiration
 
 Privileged access should be activated only when required.
 
-### Recommended Model
+The recommended model is:
 
-```text id="4j7a9e"
+```text
 Eligible Administrator
         │
         ▼
@@ -216,17 +228,18 @@ Administrative Task
 Automatic Expiration
 ```
 
-The specific activation requirements should depend on the sensitivity of the role.
+The activation requirements should depend on the sensitivity of the role.
 
 Possible controls include:
 
 * Multi-factor authentication.
+* Phishing-resistant authentication where available.
 * Approval.
 * Justification.
 * Activation duration limits.
 * Conditional Access requirements.
 
-The objective is to prevent unnecessary standing privilege.
+The objective is to reduce unnecessary standing privilege.
 
 ---
 
@@ -234,7 +247,7 @@ The objective is to prevent unnecessary standing privilege.
 
 ## Normal State
 
-```text id="9p8jjk"
+```text
 Administrator
       │
       ▼
@@ -245,7 +258,7 @@ The role is not permanently active.
 
 ## During an Approved Task
 
-```text id="4f13ve"
+```text
 Administrator
       │
       ▼
@@ -266,7 +279,7 @@ Administrative Task
 
 ## After the Task
 
-```text id="j8j1sl"
+```text
 Administrative Task Completed
       │
       ▼
@@ -302,7 +315,14 @@ Break-glass accounts should be:
 
 Break-glass accounts should not be used for routine administration.
 
-Their credentials should be protected using appropriate organizational controls, and their use should generate immediate investigation and review.
+Their credentials should be protected using appropriate organizational controls, and any use should generate an immediate review.
+
+The organization should be able to determine:
+
+* Who used the account.
+* When it was used.
+* Why it was used.
+* What administrative actions were performed.
 
 ---
 
@@ -321,15 +341,13 @@ These controls may include:
 * Regular access reviews.
 * Device security requirements.
 
-Privileged access should be subject to a higher level of security assurance because of the potential impact of compromise.
+Privileged access should be subject to a higher level of security assurance because of the potential impact of account compromise.
 
 ---
 
 # 11. Administrative Role Assignment
 
 Administrative roles should be assigned according to actual responsibility.
-
-### Example
 
 | Responsibility             | Role                     |
 | -------------------------- | ------------------------ |
@@ -345,7 +363,9 @@ Administrative role assignment should be based on business need rather than job 
 
 For example:
 
-> A senior employee should not automatically receive Global Administrator access simply because they hold a senior organizational position.
+> **A senior employee should not automatically receive Global Administrator access simply because they hold a senior organizational position.**
+
+The required permission should be determined by the actual administrative responsibilities of the individual.
 
 ---
 
@@ -359,9 +379,9 @@ The review should verify:
 * Which role they have.
 * Whether the role is still required.
 * Whether the role is permanent or eligible.
-* When the role was last used.
 * Whether the administrator still holds the relevant responsibility.
 * Whether the assigned permissions remain appropriate.
+* Whether privileged access is still being used appropriately.
 
 Unused or unnecessary administrative access should be removed.
 
@@ -373,6 +393,13 @@ The review should give particular attention to:
 * Exchange Administrator.
 * SharePoint Administrator.
 * Intune Administrator.
+
+Privileged role assignments should also be reviewed when an administrator:
+
+* Changes role.
+* Changes department.
+* Leaves the organization.
+* No longer performs the administrative function.
 
 ---
 
@@ -405,13 +432,15 @@ Where possible, administrative actions should be traceable to:
 * The time of the action.
 * The affected resource.
 
+This supports investigation, accountability, and incident response.
+
 ---
 
 # 14. Administrative Access Model
 
 The recommended model is:
 
-```text id="j6i9hb"
+```text
 Administrator
       │
       ▼
@@ -439,13 +468,15 @@ Automatic Expiration
 Normal Access
 ```
 
+This model reduces the amount of time that highly privileged permissions remain active.
+
 ---
 
-# 15. Example Scenario
+# 15. Example Administrative Scenario
 
 ## Scenario
 
-The Identity Administrator needs to create 20 new user accounts.
+An Identity Administrator needs to create 20 new user accounts.
 
 ## Recommended Process
 
@@ -454,8 +485,8 @@ The Identity Administrator needs to create 20 new user accounts.
 3. Additional authentication requirements are completed.
 4. Approval is completed if required by policy.
 5. The administrator creates the user accounts.
-6. The privileged role expires or is deactivated.
-7. The activity remains available for auditing.
+6. The privileged role is deactivated or expires.
+7. The administrative activity remains available for auditing.
 
 The administrator does not need permanent Global Administrator access to perform this task.
 
@@ -465,11 +496,11 @@ The administrator does not need permanent Global Administrator access to perform
 
 ## Scenario
 
-Normal administrative access is unavailable due to an authentication or configuration problem.
+Normal administrative access is unavailable because of an authentication or configuration problem.
 
 ## Recommended Process
 
-1. An authorized administrator uses the emergency access process.
+1. An authorized administrator follows the emergency access process.
 2. The break-glass account is used only when necessary.
 3. The emergency activity is monitored.
 4. The underlying issue is investigated.
@@ -499,24 +530,141 @@ Privileged access should follow these principles:
 
 ---
 
-# 18. Summary
+# 18. Practical Lab Validation
 
-Privileged access represents one of the highest-risk areas of the Microsoft 365 environment.
+The Privileged Access Management design was validated against the Microsoft Entra ID environment used for the Tonie-Osegbo Technologies Limited enterprise lab.
 
-The organization should therefore implement:
+The validation focused on:
 
-* Least-privilege administrative roles.
-* Eligible privileged assignments where appropriate.
-* Just-In-Time access.
+* Administrative role assignment.
+* The current Global Administrator assignment.
+* Role assignment type.
+* Role assignment state.
+* Administrative access scope.
+* Microsoft 365 licensing relevant to privileged access management.
+
+The environment is designed as a simulated enterprise environment supporting approximately 250 employees, with the potential to scale toward 1,000 employees.
+
+---
+
+## 18.1 Current Administrative Role Assignment
+
+The lab administrator account:
+
+```text
+osegbotonie@41t8vn.onmicrosoft.com
+```
+
+was observed with the following assignment:
+
+| Role                 | Assignment | Status | Duration  |
+| -------------------- | ---------- | ------ | --------- |
+| Global Administrator | Direct     | Active | Permanent |
+
+This represents a highly privileged configuration.
+
+The assignment is appropriate for the initial setup and administration of the lab environment, but it also demonstrates why standing Global Administrator access should be reviewed as the environment matures.
+
+In a production environment, routine administrative activities should normally be performed using more specific administrative roles where possible.
+
+---
+
+## 18.2 Microsoft 365 Licensing
+
+The administrator account was observed with:
+
+```text
+Microsoft 365 E5 Developer
+```
+
+The tenant configuration indicates:
+
+```text
+Microsoft 365 E5 Developer
+Active
+78/78
+Direct
+```
+
+The environment therefore provides a practical basis for exploring advanced Microsoft 365 security and identity capabilities available within the lab configuration.
+
+The availability of a licensing capability does not, by itself, mean that every control has been implemented. The relevant controls must still be configured, tested, and documented.
+
+---
+
+## 18.3 Administrative Role Matrix
+
+The following role model is used as the target administrative design for the enterprise lab:
+
+| Administrative Function    | Preferred Role           |
+| -------------------------- | ------------------------ |
+| User administration        | User Administrator       |
+| Group administration       | Groups Administrator     |
+| Device administration      | Intune Administrator     |
+| Security administration    | Security Administrator   |
+| Exchange administration    | Exchange Administrator   |
+| SharePoint administration  | SharePoint Administrator |
+| Tenant-wide administration | Global Administrator     |
+
+The purpose of this model is to reduce unnecessary use of the Global Administrator role.
+
+A user who only needs to manage groups, for example, should not automatically receive tenant-wide administrative permissions.
+
+---
+
+## 18.4 Practical Finding
+
+The current lab environment demonstrates the following:
+
+### Finding 1 — A Highly Privileged Role Is Assigned
+
+The lab administrator account currently has a direct, active, permanent Global Administrator assignment.
+
+This provides the necessary administrative capability for the current lab configuration but represents a significant standing privilege.
+
+### Finding 2 — The Role Assignment Is Direct
+
+The role is assigned directly to the administrator account rather than through a group-based administrative model.
+
+This makes the assignment easy to identify, but it should still be reviewed as the lab evolves.
+
+### Finding 3 — Role Separation Is the Target Design
+
+The administrative role matrix establishes a future-state model in which administrative responsibilities are separated according to actual job functions.
+
+### Finding 4 — Privileged Access Management Is a Future Implementation Area
+
+The design establishes the target control model for:
+
+* Eligible privileged access.
+* Just-In-Time elevation.
 * Strong authentication.
 * Role separation.
-* Break-glass emergency accounts.
 * Administrative monitoring.
-* Regular access reviews.
+* Periodic access review.
+* Emergency access.
 
-The central principle is:
+These controls should be implemented and validated as the practical lab progresses.
 
-> **Administrative access should be granted only when required, for only as long as required, with appropriate security controls and auditing.**
+---
+
+## 18.5 Evidence to Capture
+
+The following evidence should be captured as part of the practical lab:
+
+* Administrative role assignment.
+* Role assignment type.
+* Role assignment duration.
+* Role assignment status.
+* Privileged role membership.
+* Administrative role activation where implemented.
+* Authentication requirements for privileged roles.
+* Audit records for administrative activity.
+* Break-glass account configuration and monitoring, where implemented.
+
+Evidence should demonstrate both the configuration and the result of the control.
+
+Screenshots should be captured with unnecessary tenant or personal information minimized where possible.
 
 ---
 
@@ -525,8 +673,9 @@ The central principle is:
 Future improvements may include:
 
 * Microsoft Entra Privileged Identity Management.
-* Access Reviews.
-* Approval workflows.
+* Eligible administrative role assignments.
+* Just-In-Time role activation.
+* Approval-based role activation.
 * Phishing-resistant authentication.
 * Privileged Access Workstations.
 * Administrative session monitoring.
@@ -537,12 +686,16 @@ Future improvements may include:
 
 ---
 
-## Conclusion
+# 20. Conclusion
 
 Privileged Access Management provides a structured approach to controlling the highest-risk permissions in the Microsoft 365 environment.
 
 The design is based on the principle that privileged access should be:
 
 > **Limited, justified, protected, temporary where possible, monitored, and regularly reviewed.**
+
+The current lab environment demonstrates the importance of this approach through its existing permanent Global Administrator assignment.
+
+The next stage is to progressively implement and validate more mature privileged access controls, including role separation, eligible access, time-limited elevation, stronger authentication, monitoring, and emergency access procedures.
 
 This approach reduces the potential impact of compromised administrative credentials and supports a stronger Zero Trust security model.
