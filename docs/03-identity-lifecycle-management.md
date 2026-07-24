@@ -205,6 +205,8 @@ Abuja-Office
 Network-Engineers
 ```
 
+These are conceptual examples of groups that might exist in an enterprise environment.
+
 The exact access assigned should depend on the employee's actual responsibilities rather than simply adding the employee to every group associated with the department.
 
 This is an important distinction.
@@ -398,11 +400,11 @@ For example, an employee leaving under normal circumstances may follow a planned
 
 ---
 
-## 6.3 Account Retention
+## 6.3 Account Deactivation and Data Retention
 
 A user account should not necessarily be deleted immediately after an employee leaves.
 
-The account or associated data may need to be retained for:
+The account should first be deactivated to prevent sign-in. Required data and records may then need to be retained for:
 
 * Business continuity.
 * Legal requirements.
@@ -507,8 +509,10 @@ This means:
 The lifecycle can therefore be summarized as:
 
 > **Join with the right access. Change access when responsibilities change. Remove access when the relationship ends.**
->
-> # 11. Practical Lab Validation
+
+---
+
+# 11. Practical Lab Validation
 
 The identity lifecycle model was validated against an existing Microsoft Entra ID environment configured for the Tonie-Osegbo Technologies Limited enterprise lab.
 
@@ -628,7 +632,9 @@ This becomes increasingly important as the organization grows from approximately
 
 The practical environment also demonstrates the importance of group ownership.
 
-For example, the following groups have documented ownership and membership structures:
+The groups reviewed during the practical validation had documented ownership and membership structures.
+
+These included:
 
 * **TonieGruppo** — Finance Department: Revenue Assurance.
 * **TonieTeknikal** — Technical Department: Technology and Innovation.
@@ -744,7 +750,7 @@ Users are assigned to multiple groups representing departments, teams, and proje
 
 ### Finding 3 — Group Ownership Is Present
 
-The environment contains groups with identifiable owners, supporting accountability for group management.
+The groups reviewed during the practical validation had identifiable owners, supporting accountability for group management.
 
 ### Finding 4 — License Assignment Can Be Tested
 
@@ -813,4 +819,3 @@ The current environment therefore provides a practical foundation for continuing
 The next phase is to capture structured evidence and validate the Joiner, Mover, and Leaver processes through controlled configuration changes.
 
 > **The design defines how identity lifecycle management should work. The practical lab validates how those principles can be implemented and tested in Microsoft Entra ID.**
-
