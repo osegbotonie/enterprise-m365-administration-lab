@@ -1,0 +1,23 @@
+GroupName,GroupType,Description,MembershipType,AccessPurpose,Owner
+GRP-DEPT-ExecutiveManagement,Department,Executive Management employees,Assigned,Department collaboration,IT Administration
+GRP-DEPT-Technology,Department,Technology department employees,Dynamic,Technology resources,IT Administration
+GRP-DEPT-NetworkOperations,Department,Network Operations employees,Dynamic,Network operations resources,IT Administration
+GRP-DEPT-Finance,Department,Finance department employees,Dynamic,Finance resources,Finance Manager
+GRP-DEPT-HumanResources,Department,Human Resources employees,Dynamic,HR resources,HR Manager
+GRP-DEPT-SalesMarketing,Department,Sales and Marketing employees,Dynamic,Sales resources,Sales Manager
+GRP-DEPT-CustomerService,Department,Customer Service employees,Dynamic,Customer Service resources,Customer Service Manager
+GRP-DEPT-LegalRegulatory,Department,Legal and Regulatory Affairs employees,Dynamic,Legal and regulatory resources,Legal Manager
+GRP-DEPT-Administration,Department,Administration employees,Dynamic,Administrative resources,Administration Manager
+GRP-LOC-Abuja,Location,Employees based in Abuja,Dynamic,Abuja office resources,IT Administration
+GRP-LOC-Lagos,Location,Employees based in Lagos,Dynamic,Lagos office resources,IT Administration
+GRP-LOC-Enugu,Location,Employees based in Enugu,Dynamic,Enugu office resources,IT Administration
+GRP-LOC-PortHarcourt,Location,Employees based in Port Harcourt,Dynamic,Port Harcourt office resources,IT Administration
+GRP-ROLE-NetworkEngineer,Role,Network Engineers,Dynamic,Network engineering resources,Network Manager
+GRP-ROLE-NetworkManager,Role,Network Managers,Dynamic,Network management resources,IT Administration
+GRP-ROLE-CloudAdministrator,Role,Cloud Administrators,Dynamic,Cloud administration resources,IT Administration
+GRP-ROLE-Accountant,Role,Accountants,Dynamic,Finance resources,Finance Manager
+GRP-ROLE-HRManager,Role,HR Managers,Dynamic,HR management resources,HR Manager
+GRP-LEVEL-Executive,Level,Executive employees,Dynamic,Executive resources,IT Administration
+GRP-LEVEL-Management,Level,Management employees,Dynamic,Management resources,IT Administration
+GRP-LEVEL-SeniorStaff,Level,Senior Staff employees,Dynamic,Senior Staff resources,IT Administration
+GRP-LEVEL-Staff,Level,Staff employees,Dynamic,Staff resources,IT Administration
