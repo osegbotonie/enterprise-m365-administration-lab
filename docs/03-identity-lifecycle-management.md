@@ -707,7 +707,7 @@ The Mover process was tested using the test identity Tonie Three.
 | --- | --- |
 | Department | Network Operations |
 | Job Title | Network Engineer |
-| Group Membership | Tonie_Test Project Team |
+| Group Membership | Tonie_Test Project Team, TonieTeknikal |
 
 **Change applied:**
 
@@ -719,10 +719,11 @@ The Mover process was tested using the test identity Tonie Three.
 
 The department change was treated as an access review trigger rather than an addition to existing access.
 
-Membership in Tonie_Test Project Team was removed, as it was tied to the previous department's project assignment and was no longer relevant to the new role. Membership in [new group] was added to reflect the access requirements of the new department.
+Membership in Tonie_Test Project Team was removed, as it was tied to the previous department's project assignment and was no longer relevant to the new role. Membership in TonieTeknikal was retained, as it already reflected access appropriate to the new department — no new group needed to be assigned.
+
+This is a useful distinction from a simpler "remove one group, add one group" model: an access review does not always result in new access being granted. In this case, reviewing Tonie Three's existing memberships against the new role was enough to confirm that one grant remained appropriate while another did not.
 
 This reflects the principle described in section 8.2 — access should be reviewed and updated to match current responsibilities, not simply accumulated over time.
-
 ---
 
 ## 11.6 Leaver Scenario Validation
