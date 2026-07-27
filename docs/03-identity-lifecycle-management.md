@@ -539,7 +539,7 @@ Examples include:
 | ------------------ | --------- | ----------------: | ----------------: |
 | Tonie-Test Support | Member    |                 0 |                 0 |
 | Tonie Two          | Member    |                 4 |                 0 |
-| Tonie Three        | Member    |                 3 |                 1 |
+| Tonie Three        | Member    |                 1 |                 1 |
 | Tonie Four         | Member    |                 4 |                 1 |
 
 These test identities provide a practical basis for validating identity lifecycle, group-based access, and license assignment scenarios.
