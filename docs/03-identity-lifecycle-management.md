@@ -697,6 +697,32 @@ A user can therefore be moved between groups to simulate:
 
 The important control is that new access should not simply be added without reviewing the user's existing access.
 
+### Practical Mover Example — Tonie Three
+
+The Mover process was tested using the test identity Tonie Three.
+
+**Before:**
+
+| Attribute | Value |
+| --- | --- |
+| Department | Network Operations |
+| Job Title | Network Engineer |
+| Group Membership | Tonie_Test Project Team |
+
+**Change applied:**
+
+| Attribute | Value |
+| --- | --- |
+| Department | Customer Service |
+| Job Title | Customer Support Specialist |
+| Group Membership | TonieTeknikal |
+
+The department change was treated as an access review trigger rather than an addition to existing access.
+
+Membership in Tonie_Test Project Team was removed, as it was tied to the previous department's project assignment and was no longer relevant to the new role. Membership in [new group] was added to reflect the access requirements of the new department.
+
+This reflects the principle described in section 8.2 — access should be reviewed and updated to match current responsibilities, not simply accumulated over time.
+
 ---
 
 ## 11.6 Leaver Scenario Validation
