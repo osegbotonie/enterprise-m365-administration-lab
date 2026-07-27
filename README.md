@@ -76,7 +76,7 @@ The docs describe how the environment is meant to work. The evidence folder is w
 
 This lab is part of a career move into cloud infrastructure and identity/security engineering. It's meant to show more than just configuring services - understanding the business problem, designing for it, implementing it, testing it, and documenting it properly.
 
-I share weekly progress on [LinkedIn](#) as the lab moves forward.
+I share weekly progress on [LinkedIn]([#](https://www.linkedin.com/in/anthony-osegbo/)) as the lab moves forward.
 
 ## Disclaimer
 
