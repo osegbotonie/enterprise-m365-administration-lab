@@ -1,34 +1,62 @@
 <#
 .SYNOPSIS
-    Exports a user, license, and group membership audit for the Tonie-Osegbo
-    Technologies Limited tenant using the Microsoft Graph PowerShell SDK.
+    Exports a user, license, and group membership audit for a manually
+    curated list of test objects only, using the Microsoft Graph
+    PowerShell SDK.
 
 .DESCRIPTION
-    Pulls core identity attributes, license assignments, and group membership
-    for all users in the tenant and writes each to a timestamped CSV in
-    /reports. Meant to back up the identity lifecycle and access governance
-    docs with something that can actually be re-run, not just a one-off
-    screenshot.
+    Pulls core identity attributes, license assignments, and group
+    membership - but only for the exact Object IDs listed in
+    $IncludeUserIds and $IncludeGroupIds below. Nothing else in the
+    tenant is queried or written out. This is deliberate: this tenant is
+    real, not a sandbox, so the script does not do any pattern or
+    name-based filtering - only an explicit allowlist of IDs you've
+    added yourself.
+
+    Group membership rows are also filtered against $IncludeUserIds, so
+    even a listed test group's real owners/members won't show up unless
+    their ID is also in the allowlist.
 
 .NOTES
     Requires the Microsoft.Graph PowerShell SDK module.
-    Run Connect-MgGraph interactively before running unattended, or set up
-    an app registration with the scopes below if this needs to run on a
-    schedule later.
-
     Required scopes: User.Read.All, Group.Read.All, GroupMember.Read.All,
     Directory.Read.All
 
+    To find Object IDs: Entra admin center > each user/group's Overview
+    page, or run this once (prints to screen, nothing exported):
+        Get-MgUser -All | Where-Object { $_.DisplayName -like "*Tonie*" } | Select-Object DisplayName, Id
+        Get-MgGroup -All | Where-Object { $_.DisplayName -like "*Tonie*" } | Select-Object DisplayName, Id
+
 .EXAMPLE
     .\Get-M365UserAndGroupAudit.ps1
-    .\Get-M365UserAndGroupAudit.ps1 -OutputPath "..\reports"
 #>
 
 param(
-    [string]$OutputPath = "..\reports"
+    [string]$OutputPath = "..\reports",
+
+    # Object IDs of the exact test users to include. Nothing else gets
+    # queried. Add IDs here before running.
+    [string[]]$IncludeUserIds = @(
+        "31fcd5e7-82f5-486c-863a-ff165b2231ac",  # Tonie-Test Support
+        "e38c7523-7fad-40e7-a3a7-b9b4951f0d7f",  # Tonie Four
+        "c1df85a3-3773-4803-b57c-9164dd4bdc2c",  # Tonie Three
+        "19c73ce3-cd47-404c-b585-e0c18696a873"   # Tonie Two
+    ),
+
+    # Object IDs of the exact test groups to include.
+    [string[]]$IncludeGroupIds = @(
+        "2fd3926f-620f-47bf-83ff-674e2c8e0ad6",  # Tonie Finance Team
+        "b559b37d-61ee-46cd-b8ad-1949b7bed86a",  # TonieGruppo
+        "f603d794-bdf8-484c-b423-e1951d2c5fa0",  # Tonie_Test Project Team
+        "fc88b3d0-6aed-4522-ab2c-148128c748c7"   # TonieTeknikal
+    )
 )
 
-# Make sure we're actually connected before doing anything else.
+if ($IncludeUserIds.Count -eq 0 -and $IncludeGroupIds.Count -eq 0) {
+    Write-Host "STOP: `$IncludeUserIds and `$IncludeGroupIds are both empty. Add the Object IDs of your test users/groups before running this. Aborting." -ForegroundColor Red
+    return
+}
+
 $context = Get-MgContext
 if (-not $context) {
     Write-Host "Not connected to Microsoft Graph. Connecting now..." -ForegroundColor Yellow
@@ -47,20 +75,24 @@ if (-not (Test-Path $OutputPath)) {
 # manager, location, account status. Maps directly to the required
 # attributes listed in docs/03-identity-lifecycle-management.md.
 
-Write-Host "Pulling user attributes..." -ForegroundColor Cyan
+Write-Host "Pulling attributes for $($IncludeUserIds.Count) listed test user(s)..." -ForegroundColor Cyan
 
-$users = Get-MgUser -All -Property Id, DisplayName, UserPrincipalName, Department, `
-    JobTitle, OfficeLocation, AccountEnabled, CreatedDateTime, `
-    OnPremisesExtensionAttributes | Select-Object `
-    DisplayName, UserPrincipalName, Department, JobTitle, OfficeLocation, `
-    AccountEnabled, CreatedDateTime
+$users = foreach ($id in $IncludeUserIds) {
+    try {
+        Get-MgUser -UserId $id -Property Id, DisplayName, UserPrincipalName, Department, `
+            JobTitle, OfficeLocation, AccountEnabled, CreatedDateTime -ErrorAction Stop
+    }
+    catch {
+        Write-Host "  Could not find user with ID $id - skipping." -ForegroundColor Yellow
+    }
+}
 
 # Manager isn't returned in the same call - it's a separate relationship
 # lookup per user, so pull it in a second pass and merge it in.
 $userReport = foreach ($user in $users) {
     $managerName = $null
     try {
-        $manager = Get-MgUserManager -UserId ($users | Where-Object { $_.UserPrincipalName -eq $user.UserPrincipalName }).Id -ErrorAction Stop
+        $manager = Get-MgUserManager -UserId $user.Id -ErrorAction Stop
         $managerName = $manager.AdditionalProperties["displayName"]
     }
     catch {
@@ -89,25 +121,26 @@ Write-Host "User attribute report written to $userReportPath" -ForegroundColor G
 # Shows who has what assigned - useful for the "license reclaimed on
 # departure" and "license assigned on join" steps in the lifecycle docs.
 
-Write-Host "Pulling license assignments..." -ForegroundColor Cyan
+Write-Host "Pulling license assignments for listed test user(s)..." -ForegroundColor Cyan
 
 $skuLookup = Get-MgSubscribedSku | Select-Object SkuId, SkuPartNumber
 $skuMap = @{}
 foreach ($sku in $skuLookup) { $skuMap[$sku.SkuId] = $sku.SkuPartNumber }
 
-$licenseReport = foreach ($user in (Get-MgUser -All -Property DisplayName, UserPrincipalName, AssignedLicenses)) {
-    if ($user.AssignedLicenses.Count -eq 0) {
+$licenseReport = foreach ($user in $users) {
+    $fullUser = Get-MgUser -UserId $user.Id -Property DisplayName, UserPrincipalName, AssignedLicenses
+    if ($fullUser.AssignedLicenses.Count -eq 0) {
         [PSCustomObject]@{
-            DisplayName       = $user.DisplayName
-            UserPrincipalName = $user.UserPrincipalName
+            DisplayName       = $fullUser.DisplayName
+            UserPrincipalName = $fullUser.UserPrincipalName
             Licenses          = "None"
         }
     }
     else {
-        $licenseNames = $user.AssignedLicenses | ForEach-Object { $skuMap[$_.SkuId] }
+        $licenseNames = $fullUser.AssignedLicenses | ForEach-Object { $skuMap[$_.SkuId] }
         [PSCustomObject]@{
-            DisplayName       = $user.DisplayName
-            UserPrincipalName = $user.UserPrincipalName
+            DisplayName       = $fullUser.DisplayName
+            UserPrincipalName = $fullUser.UserPrincipalName
             Licenses          = ($licenseNames -join "; ")
         }
     }
@@ -124,21 +157,35 @@ Write-Host "License report written to $licenseReportPath" -ForegroundColor Green
 # group or user. Also pulls the group owner, since group ownership is one
 # of the governance points called out in doc 03 and doc 06.
 
-Write-Host "Pulling group membership and ownership..." -ForegroundColor Cyan
+Write-Host "Pulling membership and ownership for $($IncludeGroupIds.Count) listed test group(s)..." -ForegroundColor Cyan
 
-$groups = Get-MgGroup -All -Property Id, DisplayName
+$groups = foreach ($id in $IncludeGroupIds) {
+    try {
+        Get-MgGroup -GroupId $id -Property Id, DisplayName -ErrorAction Stop
+    }
+    catch {
+        Write-Host "  Could not find group with ID $id - skipping." -ForegroundColor Yellow
+    }
+}
 
 $groupReport = foreach ($group in $groups) {
-    $owners = Get-MgGroupOwner -GroupId $group.Id
-    $ownerNames = ($owners | ForEach-Object { $_.AdditionalProperties["displayName"] }) -join "; "
+    # Even for a listed test group, only report owners/members whose ID is
+    # also in $IncludeUserIds - a test group can still have a real account
+    # attached as owner (e.g. you, since you created it).
+    $owners = Get-MgGroupOwner -GroupId $group.Id |
+        Where-Object { $IncludeUserIds -contains $_.Id } |
+        ForEach-Object { $_.AdditionalProperties["displayName"] }
+    $ownerNames = if ($owners) { $owners -join "; " } else { "(none in allowlist)" }
 
-    $members = Get-MgGroupMember -GroupId $group.Id
+    $members = Get-MgGroupMember -GroupId $group.Id |
+        Where-Object { $IncludeUserIds -contains $_.Id } |
+        ForEach-Object { $_.AdditionalProperties["displayName"] }
 
-    if ($members.Count -eq 0) {
+    if (-not $members) {
         [PSCustomObject]@{
             GroupName = $group.DisplayName
             Owners    = $ownerNames
-            Member    = "No members"
+            Member    = "No members in allowlist"
         }
     }
     else {
@@ -146,7 +193,7 @@ $groupReport = foreach ($group in $groups) {
             [PSCustomObject]@{
                 GroupName = $group.DisplayName
                 Owners    = $ownerNames
-                Member    = $member.AdditionalProperties["displayName"]
+                Member    = $member
             }
         }
     }
