@@ -17,3 +17,9 @@ Evidence: `evidence/collaboration-governance/05-sharepoint-external-sharing.png`
 "Anyone" is a meaningful risk for an organization like this one, which handles telecom customer and regulatory data. A link-based share with no sign-in requirement means content can end up anywhere once shared, with no way to track or revoke access to whoever it gets forwarded to.
 
 This was left unchanged rather than tightened directly, since a setting like this affects the whole organization's ability to share files day to day - changing it needs a real conversation about what legitimate business sharing currently depends on "Anyone" access, not a unilateral change made in isolation. The recommendation is to move this to "New and existing guests" at minimum, which still allows external collaboration but requires the recipient to authenticate, and to review site-level overrides for sensitive areas (e.g. Finance) separately.
+
+## Site-Level Override Already in Place
+
+Checking the site associated with one of the test groups showed it's already configured tighter than the tenant default - set to "New and existing guests" rather than inheriting "Anyone." This is a useful contrast: it shows that even without a tenant-wide policy change, individual sites can and do end up with better protection through site-level overrides. It also reinforces the recommendation above - if this level of protection is achievable at the site level already, tightening the tenant-wide default to match is a reasonable, low-disruption next step.
+
+Evidence: `evidence/collaboration-governance/06-site-sharing-settings.png`
