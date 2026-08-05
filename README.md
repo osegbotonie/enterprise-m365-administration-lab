@@ -4,7 +4,7 @@ A practical Microsoft 365 and Entra ID administration lab built around a simulat
 
 The aim is to design and build identity, access, security, device management, and collaboration controls the way a real, growing organization would need them, and to back each decision with evidence from a live M365 E5 tenant rather than just writing about how it should theoretically work.
 
-**Last updated:** July 2026 - identity lifecycle (Joiner/Mover/Leaver), Privileged Access, and all five Conditional Access policies are built and evidenced. Intune device management design is underway. Exchange/Teams/SharePoint governance and further automation are next.
+**Last updated:** August 2026 - identity lifecycle (Joiner/Mover/Leaver), Privileged Access, all five Conditional Access policies, Exchange/Teams/SharePoint governance, and monitoring/auditing are all built and evidenced. Intune device management design is documented. Additional automation and a project retrospective are next.
 
 ---
 
@@ -54,6 +54,20 @@ Logical view of how users, office locations, identity, device management, securi
 |---|---|---|
 | 16 | [Intune Device Management Architecture](docs/16-intune-device-management-architecture.md) | Enrollment strategy, compliance vs. configuration, design principles |
 | 17 | [Device Compliance Policies](docs/17-device-compliance-policies.md) | Compliance requirements matrix and how it feeds into CA-004 |
+
+### Collaboration Governance
+
+| # | Document | Description |
+|---|---|---|
+| 18 | [Exchange Online Governance](docs/18-exchange-online-governance.md) | Mailbox delegation and mail flow rules |
+| 19 | [Teams Governance](docs/19-teams-governance.md) | Guest access, tenant vs. team-level permission overrides |
+| 20 | [SharePoint Governance](docs/20-sharepoint-governance.md) | External sharing settings, findings and recommendations |
+
+### Monitoring & Auditing
+
+| # | Document | Description |
+|---|---|---|
+| 21 | [Monitoring and Auditing](docs/21-monitoring-and-auditing.md) | Audit logs, sign-in logs, and alert policy configuration |
 
 ---
 
