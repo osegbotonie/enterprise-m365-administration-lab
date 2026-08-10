@@ -4,7 +4,7 @@ A practical Microsoft 365 and Entra ID administration lab built around a simulat
 
 The aim is to design and build identity, access, security, device management, and collaboration controls the way a real, growing organization would need them, and to back each decision with evidence from a live M365 E5 tenant rather than just writing about how it should theoretically work.
 
-**Last updated:** August 2026 - identity lifecycle (Joiner/Mover/Leaver), Privileged Access, all five Conditional Access policies, Exchange/Teams/SharePoint governance, and monitoring/auditing are all built and evidenced. Intune device management design is documented. Additional automation and a project retrospective are next.
+**Status:** Complete. This lab covers the full scope originally planned - identity lifecycle, privileged access, Conditional Access, device management design, collaboration governance, monitoring and alerting, two rounds of PowerShell automation, and a closing retrospective. See the retrospective (doc 23) for what I'd do differently at real scale.
 
 ---
 
@@ -68,6 +68,13 @@ Logical view of how users, office locations, identity, device management, securi
 | # | Document | Description |
 |---|---|---|
 | 21 | [Monitoring and Auditing](docs/21-monitoring-and-auditing.md) | Audit logs, sign-in logs, and alert policy configuration |
+
+### Automation & Retrospective
+
+| # | Document | Description |
+|---|---|---|
+| 22 | [Access Review Automation](docs/22-access-review-automation.md) | Second PowerShell script - admin role review and disabled-account access drift detection |
+| 23 | [Retrospective](docs/23-retrospective.md) | What was built, what I'd do differently at real scale, what the project actually taught me |
 
 ---
 
