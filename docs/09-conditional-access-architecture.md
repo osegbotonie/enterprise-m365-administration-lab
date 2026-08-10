@@ -565,6 +565,14 @@ This model supports a Zero Trust approach by requiring access decisions to be ba
 
 ---
 
+### Notes on Report-Only Enforcement
+
+CA-001 and CA-003 are configured as permanent Report-only policies rather than moving to enforced. This is a deliberate choice: Report-only gives visibility into policy impact through sign-in logs without risking account lockouts in a lab environment with a small number of test accounts, where a misconfigured enforced policy could be harder to recover from quickly.
+
+### Notes on CA-004 and Device Compliance
+
+CA-004 (Require Compliant Devices) is configured ahead of the Intune rollout. No test devices are currently enrolled or marked compliant, so there is no real enforcement evidence yet. This will be revisited once Phase 2 (Endpoint Management) is complete.
+
 ## 17. Final Principle
 
 Conditional Access should not be viewed as a collection of unrelated security policies.

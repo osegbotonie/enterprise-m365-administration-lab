@@ -4,7 +4,7 @@ A practical Microsoft 365 and Entra ID administration lab built around a simulat
 
 The aim is to design and build identity, access, security, device management, and collaboration controls the way a real, growing organization would need them, and to back each decision with evidence from a live M365 E5 tenant rather than just writing about how it should theoretically work.
 
-**Last updated:** July 2026 - working through identity lifecycle evidence capture and Conditional Access validation. Intune, Exchange/Teams/SharePoint governance, and PowerShell automation are next.
+**Last updated:** August 2026 - identity lifecycle (Joiner/Mover/Leaver), Privileged Access, all five Conditional Access policies, Exchange/Teams/SharePoint governance, and monitoring/auditing are all built and evidenced. Intune device management design is documented. Additional automation and a project retrospective are next.
 
 ---
 
@@ -48,6 +48,27 @@ Logical view of how users, office locations, identity, device management, securi
 | 14 | [CA-005: Risk-Based Access](docs/14-ca-005-risk-based-access.md) | |
 | 15 | [Conditional Access Policy Matrix](docs/15-conditional-access-policy-matrix.md) | Combined view of all CA policies |
 
+### Device Management
+
+| # | Document | Description |
+|---|---|---|
+| 16 | [Intune Device Management Architecture](docs/16-intune-device-management-architecture.md) | Enrollment strategy, compliance vs. configuration, design principles |
+| 17 | [Device Compliance Policies](docs/17-device-compliance-policies.md) | Compliance requirements matrix and how it feeds into CA-004 |
+
+### Collaboration Governance
+
+| # | Document | Description |
+|---|---|---|
+| 18 | [Exchange Online Governance](docs/18-exchange-online-governance.md) | Mailbox delegation and mail flow rules |
+| 19 | [Teams Governance](docs/19-teams-governance.md) | Guest access, tenant vs. team-level permission overrides |
+| 20 | [SharePoint Governance](docs/20-sharepoint-governance.md) | External sharing settings, findings and recommendations |
+
+### Monitoring & Auditing
+
+| # | Document | Description |
+|---|---|---|
+| 21 | [Monitoring and Auditing](docs/21-monitoring-and-auditing.md) | Audit logs, sign-in logs, and alert policy configuration |
+
 ---
 
 ## Repository Structure
@@ -76,7 +97,7 @@ The docs describe how the environment is meant to work. The evidence folder is w
 
 This lab is part of a career move into cloud infrastructure and identity/security engineering. It's meant to show more than just configuring services - understanding the business problem, designing for it, implementing it, testing it, and documenting it properly.
 
-I share weekly progress on [LinkedIn](#) as the lab moves forward.
+I share progress on [LinkedIn](https://www.linkedin.com/in/anthony-osegbo/) as the lab moves forward.
 
 ## Disclaimer
 
